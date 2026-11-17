@@ -18,7 +18,7 @@ const frames = async (n) => { const f0 = await ev(() => window.__frames || 0); a
 const until = (fn, arg, ms = 300000) => p.waitForFunction(fn, arg, { timeout: ms, polling: 50 });
 
 await p.goto(process.env.URL || 'https://localhost:8443/', { waitUntil: 'load' });
-await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: 200000 });
+await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: +(process.env.BOOT || 600000) }); // (v1.1: BOOT, default 10 min: software rendering on a slow machine)
 await ev(() => {
   const a = window.__mobius, hub = a.hub, orig = hub.update.bind(hub), T = window.__THREE;
   window.__inj = []; window.__frames = 0;

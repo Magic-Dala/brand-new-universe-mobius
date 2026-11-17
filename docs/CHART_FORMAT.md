@@ -8,25 +8,31 @@
 | 歌曲 ID | `mobius-boss-01` |
 | 原始檔 | `Brand New Universe - Mobius Materials/Brand_New_Universe-Mobius(Music).mp3`（未修改） |
 | 遊戲用複本 | `public/audio/songs/mobius-boss-01.mp3`（MD5 `1bb3609ae47637bac251a792a6a68664`，與原檔相同） |
-| 譜面 | `public/songs/mobius-boss-01/chart.json`（由 `scripts/generate-chart.mjs` 產生） |
+| 譜面 | `public/songs/mobius-boss-01/chart.json`（v1.1 起由 `scripts/charts/mobius-boss-01.analysis.json` 經 `npm run chart` 產生） |
 | 時長 | 56.89 秒；44.1 kHz 立體聲；320 kbps |
 | BPM | **125.0**（分析值；每拍 0.48 秒，4/4 拍，每小節 1.92 秒） |
 | 第一拍偏移 | **0.310 秒**（前導靜音約 0.29 秒） |
 | 拍速漂移 | 沒有。四段分析的相位都在 0.310–0.314 秒 |
-| 分析方法 | `scripts/analyze-beats.py`：librosa beat_track，加上 hop 128 的 onset 相位搜尋。125 BPM 的相位分數是 4.45，其他 BPM 約 1.4 |
+| 分析方法 | `scripts/analyze-beats.py`：librosa beat_track，加上 hop 128 的 onset 相位搜尋。125 BPM 的相位分數是 4.45，其他 BPM 約 1.4。v1.1 起另有 `scripts/charts/analyze-song.py`（見下方「v1.1 譜面規則」） |
 
-段落（小節 k 從 `0.31 + 1.92k` 秒開始）：
+段落（v1.1 的分析結果，小節 k 從 `0.31 + 1.92k` 秒開始）：
 
 | 小節 | 秒數 | 段落 |
 |---|---|---|
-| 0–1 | 0.31–4.15 | 前奏（Boss 進場，不出音符） |
-| 2–5 | 4.15–11.83 | Verse |
-| 6–11 | 11.83–23.35 | Verse 2（雙手重音、重型彈） |
-| 12 | 23.35–25.27 | Build |
-| 13–26 | 25.27–52.15 | Chorus（集束彈、雙手） |
-| 27–28 | 52.15–55.99 | Outro |
+| 0–4 | 0.31–9.91 | 前奏（前兩小節不出音符） |
+| 5–16 | 9.91–32.95 | Verse |
+| 17–28 | 32.95–55.99 | Chorus |
+| 29 | 55.99– | Outro |
 
-各難度節奏事件數（v0.22，整排算一個）：Easy 54（含 3 排扇形光網）、Normal 97（4 排）、Hard 126（5 排）。投擲飛行時間：Easy 2.5 秒、Normal 2.05 秒、Hard 1.7 秒。
+各難度節奏事件數（整排算一個，裝甲南瓜彈＝3 個破甲拍＋1 個能量波）：
+
+| | Easy | Normal | Hard |
+|---|---|---|---|
+| v0.46–v1.0（關閉裝甲南瓜彈） | 54 | 97 | 126 |
+| v1.1（關閉裝甲南瓜彈） | 39 | 60 | 66 |
+| v1.1（開啟，預設） | 51 | 72 | 78 |
+
+v1.1 重新編譜後：Easy 34 顆普通南瓜彈、2 顆大南瓜彈、3 排扇形光網、3 顆裝甲南瓜彈；Normal 53／3／4／3；Hard 58／3／5／3。這首歌只有正拍（反拍幾乎沒有聲音），所以 Hard 只比 Normal 多一點，平均每秒 1.6 個事件（v1.0 是 2.6）。投擲飛行時間：Easy 2.5 秒、Normal 2.05 秒、Hard 1.7 秒。
 
 ### 偏移的調整
 - **譜面偏移**（`timing.offsetSec`）：歌曲本身的第一拍位置。要修改就改 `scripts/generate-chart.mjs`，再執行 `npm run chart`。
@@ -46,8 +52,7 @@
   "difficulties": {
     "normal": { "travelSec": 2.05, "events": [
       { "id": "n0", "beat": 8, "type": "pumpkin", "hand": "R", "lane": { "x": 0.75, "y": 0.3 } },
-      { "id": "n40", "beat": 52, "type": "cluster", "hand": "any", "lane": { "x": -0.2, "y": 0.5 }, "group": "c40" },
-      { "id": "n31", "beat": 46, "type": "heavy", "hand": "any", "lane": { "x": 0, "y": 0.55 } }
+      { "id": "n31", "beat": 48, "type": "heavy", "hand": "any", "lane": { "x": 0, "y": 0.6 } }
     ] }
   }
 }
@@ -55,9 +60,9 @@
 
 - **事件時間** = `offsetSec` 加上依 `tempoMap` 換算的 `beat` 秒數。單一事件也可以用 `timeSec` 直接覆寫。程式不會假設第 0 秒是第一拍。
 - `type`：
-  - `pumpkin`：光網或炸彈都可以處理。
-  - `cluster`：同拍的一群，適合藍光炸彈。
-  - `heavy`：只能用藍光炸彈。
+  - `pumpkin`：普通南瓜彈，負責一般節奏。光網或炸彈都可以處理（炸彈只拿一半分數）。
+  - `heavy`：有臉的大南瓜彈，只能用藍光炸彈。v1.1 起只放在重音（accent）上。
+  - `cluster`：**v1.1 退役**。不會再產生；`validateChart` 仍接受，載入時當作任一隻手都可以打的普通 `pumpkin`（舊的匯入歌曲存在瀏覽器裡的譜面也一樣）。
   - （v0.22）`fan_web_row`：同一拍、三條軌道各一顆普通南瓜，只能用雙手「扇形光網」一次擊破。欄位：`hand: "both"`、`tracks: [0,1,2]`、`cue: "fan"`、`practice`（選填，true = 練習排：漏接不扣護盾、不斷連擊）。執行時展開成三顆成員（id `<排id>.0/.1/.2`、`type: "fanRow"`、`row: <排id>`），判定以整排為單位一次結算。單手光網與藍光炸彈不能鎖定成員。
     ```jsonc
     { "id": "f1", "beat": 52, "type": "fan_web_row", "hand": "both", "tracks": [0, 1, 2], "cue": "fan" }
@@ -84,20 +89,56 @@
 
 - `beat`：**第一個破甲拍**。裝甲南瓜彈會在前一拍（`beat − 1`）飛到中間的判定圈停住。
 - `hits`：破甲拍的數量（預設 3，可省略），一拍一個：`beat`、`beat + 1`、`beat + 2`。每一拍在 Good 判定窗內用任一隻手的光網打中，剝掉一層；沒打中那一層就留著（不會長回來）。每個破甲拍算一個節奏事件。
-- `gap`：最後一個破甲拍到**能量波拍**的拍數（預設 2；內建規則是 Easy／Normal 2 拍、Hard 1 拍）。能量波拍 = `beat + hits − 1 + gap`，算一個節奏事件，權重 3。
+- `gap`：最後一個破甲拍到**能量波拍**的拍數（預設 2；內建規則是 Easy／Normal 2 拍、Hard 1 拍）。能量波拍 = `beat + (hits − 1) × step + gap`，算一個節奏事件，權重 3。
+- （v1.1）`step`（選填，預設 1）：兩個破甲拍之間的拍數。破甲拍之間至少要隔該難度的 `minGap`（見下方），所以 170 BPM 的 Easy／Normal 用 `step: 2`。沒有 `step` 的譜面載入方式和以前完全一樣。`validateChart` 檢查它在 0.5 到 4 拍之間、以半拍為單位；空拍範圍會自動涵蓋比較長的序列。
 - 判定：三層都剝掉＋能量波準時 → 依時間判 Perfect／Good；還有裝甲 → 一樣打爆，最多 Good；沒有能量波 → Miss，它會衝向玩家爆炸。能量波以雙掌合併那一瞬間的時間判定（跟扇形光網一樣換算到音樂時鐘）。
 - **空拍**：序列需要 8 拍空拍（能量波拍往前數 8 拍）。載入譜面時，這段時間內的其他事件會被拿掉；不要把 `fan_web_row` 排在裡面。
 - 一局的第一顆是練習：有說明橫幅，沒打掉不扣分。
-- **擺放規則**（`placeArmored`，`src/game/armored.js`；`scripts/generate-chart.mjs` 和遊戲內匯入都會用）：有段落資料時每首 3 顆：最後一顆的能量波落在最後一個音符上，另外兩顆放在段落結尾或長段落（8 小節以上）的中間，取最接近平均分布的位置；撞到扇形光網那一排就前後挪一兩個小節。沒有段落資料時大約每 32 小節一顆，加上結尾一顆。
+- **擺放規則**：內建歌曲（v1.1）由分析檔決定：放在連續重擊（run，例如換段前的過門）或長音（held note）上，能量波落在結束它的那一拍，每首 2 到 5 顆、彼此相隔至少 20 秒、三種難度同一位置。沒有分析檔時（遊戲內匯入）沿用 `placeArmored`（`src/game/armored.js`）：有段落資料時每首 3 顆：最後一顆的能量波落在最後一個音符上，另外兩顆放在段落結尾或長段落（8 小節以上）的中間，取最接近平均分布的位置；撞到扇形光網那一排就前後挪一兩個小節。沒有段落資料時大約每 32 小節一顆，加上結尾一顆。
 - 開發設定「Armored pumpkins」（`settings.arcadeArmored`）關閉時，載入譜面會把 `armored` 事件拿掉、其他事件全部保留，所以事件數跟 v0.46 一樣。
 - 手寫譜面時可以直接加這種事件；`validateChart` 會檢查 `hits`（1 到 6）和 `gap`（大於 0、最多 8 拍）。
 
+## v1.1 譜面規則（`src/game/chartRules.js`）
+
+所有譜面都遵守，不論是內建、匯入歌曲在執行時產生的、手寫的，或已經存在瀏覽器 IndexedDB 裡的舊譜面。時間都是**抵達時間（秒）**，所以在 125、150、170 BPM 意思一樣。
+
+| 規則 | 值 |
+|---|---|
+| 同時抵達 | 扇形光網那一排以外，任何 0.35 秒內最多 2 個抵達（扇形光網的三顆成員、裝甲南瓜彈的破甲拍不算） |
+| 最短間隔 `minGap` | Easy 0.60 秒、Normal 0.40 秒、Hard 0.24 秒（左右手同時的雙打算同一個時刻） |
+| 扇形光網前後 | 排前 0.72 秒、排後 0.48 秒不出其他東西（而且不少於以前的 1.5 拍／1 拍） |
+| 大南瓜彈間隔 `bombGap` | 2.9 秒（藍光炸彈本身的手勢冷卻是 0.5 秒，2.9 秒留時間瞄準、丟出、看它爆開） |
+| 大南瓜彈前後 `heavyClear` | 0.48 秒內沒有別的抵達：那個重音只留給它 |
+
+- `chartViolations(notes, difficulty)` 列出所有違規；`enforceThree(notes)` 是載入時的保險：在擠滿的 0.35 秒內拿掉最晚的普通南瓜彈（不會拿掉大南瓜彈、扇形光網或裝甲南瓜彈），結果固定。
+- 產生器（`generateEvents`、`buildChart`）在 80 到 200 BPM 都不會產生違規：步距由秒數決定，最後再經 `fitRules` 檢查一次。
+- 每種南瓜只有一個工作：普通南瓜彈＝一般節奏；大南瓜彈（藍光炸彈）＝重音（有分析檔時：該段最強的小節第一拍，例如副歌開頭、過門落點；沒有分析檔時：響亮段落裡四小節樂句的第一拍）；裝甲南瓜彈＝連續重擊或長音。
+
+## 內建歌曲（v1.1）
+
+| | Brand New Universe - Mobius | Cyber Boss: Phase 2 | Catch the Light |
+|---|---|---|---|
+| ID | `mobius-boss-01` | `cyber-boss-phase-2` | `catch-the-light` |
+| 長度 | 56.89 秒 | 139.27 秒 | 156.05 秒 |
+| BPM | 125 | 150.00 | 170（量到 169.99） |
+| 第一個小節線 | 0.31 秒 | 0.818 秒 | 0.204 秒 |
+| 音檔 | 原檔 | 原檔去掉標籤（音訊資料一個位元組都沒改） | 同左 |
+
+每首歌的分析在 `scripts/charts/<id>.analysis.json`（速度、拍子、小節線的證據、段落、每半拍的起音強度、重音、連續重擊與長音）。譜面由 `scripts/charts/build-chart.mjs` 從分析檔產生：
+
+- Easy 只放強拍、Normal 放大部分拍子（170 BPM 時用附點節奏），Hard 再加上音樂裡有的反拍；響亮段落比較密，安靜段落比較疏，Cyber Boss 的 breakdown 在 Easy／Normal 是空的，前奏前兩小節不出音符，音樂結束後沒有音符。
+- 每 45 秒至少有一段 4 秒以上的休息；任何 4 秒內最多 Easy 6、Normal 10、Hard 14 個事件。
+- 扇形光網放在樂句或段落開頭的小節線上，彼此相隔至少 8 秒，第一排是練習排。
+- 雙手同時（左＋右）：Normal 在副歌的樂句開頭，Hard 更常出現。
+- `npm run chart` 會把三首歌的譜面一個位元組都不差地重建出來（不需要 Python）。
+
 ## 接入新歌
 1. **遊戲內匯入**（不需要寫程式）：主畫面 → 設定 → 歌曲 → 匯入。系統會自動分析 BPM 和第一拍，並產生三種難度的譜面，存在瀏覽器的 IndexedDB。分析信心不足時會提示手動輸入 BPM／偏移，按「套用並重建譜面」即可。如果瀏覽器清除了儲存資料，清單會提示你重新選擇檔案。
-2. **作為內建歌曲**：
-   1. 把音檔放到 `public/audio/songs/<id>.mp3`。
-   2. 執行 `python3 scripts/analyze-beats.py <檔案>` 取得 BPM 和偏移。
-   3. 複製 `scripts/generate-chart.mjs`，修改 song、timing 和 sections 後執行。
+2. **作為內建歌曲**（v1.1）：
+   1. 把音檔放到 `public/audio/songs/<id>.mp3`（去掉標籤時不要重新編碼）。
+   2. `pip install librosa`，再執行 `python3 scripts/charts/analyze-song.py public/audio/songs/<id>.mp3 <id> --bpm-range <最低> <最高>`，產生 `scripts/charts/<id>.analysis.json`。印出的小節線證據值得用耳朵確認一次（`--offset` 可以直接指定第一個小節線）。
+   3. 在 `scripts/generate-chart.mjs` 的 `SONGS` 加一筆（標題、原始檔名、長度、需要時調整密度等選項），執行 `npm run chart`，它會印出每個難度的事件數、密度、休息、扇形光網，以及每顆大南瓜彈和裝甲南瓜彈的位置與理由。
    4. 在 `src/core/songs.js` 的 `BUILTIN_SONGS` 加入一筆。
-   5. 也可以手寫或手修 `chart.json`，載入時會用 `validateChart` 驗證。
+   5. `npm test`：`tests/songs.test.mjs` 會檢查規則與重建結果。
+   6. 也可以手寫或手修 `chart.json`，載入時會用 `validateChart` 驗證，並套用上面的規則。
 - 只能使用你有授權的音樂。

@@ -20,7 +20,7 @@ const ev = (fn, arg) => p.evaluate(fn, arg);
 const frames = async (n) => { const f0 = await ev(() => window.__frames || 0); await p.waitForFunction((x) => (window.__frames || 0) >= x, f0 + n, { timeout: 600000, polling: 100 }); };
 
 await p.goto(process.env.URL || 'https://localhost:8443/', { waitUntil: 'load' });
-await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: 200000 });
+await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: +(process.env.BOOT || 600000) }); // (v1.1: BOOT, default 10 min: software rendering on a slow machine)
 // test hooks: frame counter + input injection after the real hub update
 await ev(async () => {
   const a = window.__mobius, hub = a.hub, orig = hub.update.bind(hub), T = window.__THREE;

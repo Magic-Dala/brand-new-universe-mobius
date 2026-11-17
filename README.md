@@ -23,8 +23,10 @@ The game is played with hand tracking (controllers also work). Play standing, wi
 | Mode | What it is |
 | --- | --- |
 | **Story Mode** (start here) | From Mobius's room out into Dala City: suit up, leave through the window, swing after Green Maniac, fight him on the factory roof and finish with a rhythm battle inside the factory. Three short tutorials teach every move along the way, and each page can be skipped. |
-| **Arcade Mode** | The rhythm battle on its own. Pumpkin bombs fly down three lanes on the beat; hit each one as it reaches its ring. The hall's lights follow the music and how well you are playing. |
+| **Arcade Mode** | The rhythm battle on its own, with three songs: *Brand New Universe - Mobius*, *Cyber Boss: Phase 2* and *Catch the Light*, each on Easy, Normal and Hard (you can import your own too). Pumpkin bombs fly down three lanes on the beat; hit each one as it reaches its ring. The giant pumpkin with the face lands on the music's big accents, the Armored Pumpkin on its runs and held notes. The hall's lights follow the music and how well you are playing. |
 | **World Chase** | An endless chase through eight worlds: Foldscape City, Forest of Shadow Ruins, Redrock Canyon, Neon Tech City, Moonlit Japanese City, Cloud Palace Ancient City, Aurora Ice City and Molten Fortress. Swing between anchors, collect coins, shoot down what he throws, break his shield and bring the jet down. |
+
+In the Story chase and in World Chase, a dashed orange path shows where each pumpkin Green Maniac winds up or throws will arrive, so you can see which way it is coming. Pumpkins bend a little toward you in flight, so stopping or falling is risky, but shooting, the Light Shield and a late dodge always work.
 
 ![Dala City at sunset](docs/media/dala-city.jpg)
 
@@ -42,7 +44,7 @@ These are the moves the in-game tutorials teach, in the order you meet them.
 | Light Web | Curl your middle and ring fingers, keep index and pinky out, and aim the front of your hand. At an anchor you swing; at a pumpkin bomb you destroy it. In Arcade, web each pumpkin on the beat as it reaches its ring. | All modes |
 | Light Bomb | Make a fist to charge, throw forward, and open your hand to release. | All modes |
 | Fan Web | Three bombs in a row: hold one palm open facing up and tap it with the little-finger edge of your other fist. | Story, Arcade |
-| Light Shield | Hold an open palm toward an incoming pumpkin bomb to block it. | Story, World Chase |
+| Light Shield | Hold an open palm toward an incoming pumpkin bomb to block it; its dashed flight path shows where it is coming from. | Story, World Chase |
 | Red Target | When you see the red target on Green Maniac, fire a Light Web at it to fly in and hit him. | Story, World Chase |
 | Energy Wave | Armored Pumpkin: web it on 3 beats, then bring both open palms together to blast it. | Arcade |
 
@@ -121,8 +123,8 @@ src/art/              models, materials, the city, the factory, the sky
 src/ui/               in-VR panels, HUD and menus
 src/data/             layouts, routes and tuning tables (pure data)
 src/dev/              the three *-preview.html pages used by the browser tests
-public/               models, textures, audio, tutorial clips, the song chart
-scripts/              chart generation and beat analysis
+public/               models, textures, audio, tutorial clips, the song charts
+scripts/              song analysis (Python, librosa) and chart building (`npm run chart`)
 tests/                unit tests (*.test.mjs) and browser tests (e2e/)
 docs/                 chart format, world coordinates, asset sources, the headset test checklist
 ```
