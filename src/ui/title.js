@@ -106,7 +106,7 @@ export function initTitle(app) {
         }
         li.appendChild(row);
       } else {
-        const info = document.createElement('small'); info.textContent = 'BPM 125 · offset 0.310 s · 0:56'; li.appendChild(info);
+        const info = document.createElement('small'); info.textContent = `BPM ${s.bpm} · offset ${(s.offsetSec ?? 0).toFixed(3)} s · ${Math.floor((s.durationSec || 0) / 60)}:${String(Math.floor((s.durationSec || 0) % 60)).padStart(2, '0')}`; li.appendChild(info); // (v1.1: per built-in song)
       }
       ul.appendChild(li);
     }

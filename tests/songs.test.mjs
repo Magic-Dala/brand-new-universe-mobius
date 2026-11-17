@@ -8,10 +8,17 @@ const { SONGS, build } = await import('../scripts/generate-chart.mjs');
 const { resolveNotes, validateChart } = await import('../src/core/chart.js');
 const { CHART_RULES, chartViolations } = await import('../src/game/chartRules.js');
 const { statsFor } = await import('../scripts/charts/build-chart.mjs');
+const { BUILTIN_SONGS } = await import('../src/core/songs.js');
 const D = ['easy', 'normal', 'hard'];
 const load = (id) => JSON.parse(readFileSync(new URL(`../public/songs/${id}/chart.json`, import.meta.url), 'utf8'));
 const analysis = (id) => JSON.parse(readFileSync(new URL(`../scripts/charts/${id}.analysis.json`, import.meta.url), 'utf8'));
 const NEW = ['cyber-boss-phase-2', 'catch-the-light'];
+
+test('the built-in song list: the first song, then Cyber Boss: Phase 2 and Catch the Light', () => {
+  assert.deepEqual(BUILTIN_SONGS.map((s) => s.id), ['mobius-boss-01', 'cyber-boss-phase-2', 'catch-the-light']);
+  assert.deepEqual(BUILTIN_SONGS.map((s) => s.title), ['Brand New Universe - Mobius', 'Cyber Boss: Phase 2', 'Catch the Light']);
+  for (const s of BUILTIN_SONGS) assert.ok(s.chartUrl.endsWith(`songs/${s.id}/chart.json`));
+});
 
 test('npm run chart rebuilds all three charts byte for byte from the committed analyses', () => {
   for (const s of SONGS) {

@@ -523,7 +523,7 @@ class App {
     if (this.storyArcade) this.locomotion.placeAt(this.arenaOrigin, null); // keep facing (no forced turn)
     else this.locomotion.placeAt(this.arenaOrigin, Math.atan2(-this.arenaForward.x, -this.arenaForward.z)); // face the boss zone
     this.hud.setMode('arcade');
-    this.hud.showBanner(t('title.status.loading'), 30);
+    this.hud.showBanner(t('title.status.loading'), 120); // (v1.1: a 2½-minute song can take a while to decode; the song's start replaces it)
     this.boss.setVisible(true);
     try {
       const song = await loadSong(this.storyArcade ? 'mobius-boss-01' : settings.songId).catch(async (e) => {

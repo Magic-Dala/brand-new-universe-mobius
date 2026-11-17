@@ -96,9 +96,10 @@ export class Menus {
     const p = this.panels.select, W = p.cw, a = this.app;
     const songs = this.ctx.songs || [];
     const btns = [];
-    songs.slice(0, 4).forEach((s, i) => btns.push({
-      id: `song${i}`, x: 40, y: 180 + i * 92, w: W * 0.56, h: 82,
-      label: s.title, sub: () => (s.chart ? t('select.bpm', { bpm: s.chart.timing.bpm, len: fmtLen(s.chart.song.durationSec || 0) }) : s.id === 'mobius-boss-01' ? t('select.bpm', { bpm: 125, len: '0:56' }) : ''),
+    const shown = songs.slice(0, 6), step = Math.min(92, Math.floor(420 / Math.max(1, shown.length))); // v1.1: three built-in songs + imported ones (up to six rows fit above the controls line)
+    shown.forEach((s, i) => btns.push({
+      id: `song${i}`, x: 40, y: 180 + i * step, w: W * 0.56, h: step - 10,
+      label: s.title, sub: () => (s.chart ? t('select.bpm', { bpm: s.chart.timing.bpm, len: fmtLen(s.chart.song.durationSec || 0) }) : s.bpm ? t('select.bpm', { bpm: s.bpm, len: fmtLen(s.durationSec || 0) }) : ''),
       selected: () => settings.songId === s.id, onClick: () => { settings.songId = s.id; p.dirty = true; },
     }));
     const dx = W * 0.56 + 70, dw = W - dx - 40;
