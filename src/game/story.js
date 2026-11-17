@@ -74,6 +74,7 @@ export class Story {
     this.app.resetCityForStory?.();
     this.combat.resetRun(); // v0.47: the run summary starts again
     if (this.combat.on) { this.combat.prepare(); this.combat.compile(); audio.loadStorySfx?.(); } // pools + shaders + samples before play (a no-op until audio is unlocked)
+    else { const fx = this.app._bombPathFx, r = this.app.renderer; if (fx && r?.compile) { fx.prewarm(true); try { r.compile(fx.mesh, this.app.camera, this.app.scene); } catch { /* compiled at the first throw instead */ } fx.prewarm(false); } } // v1.1: the path preview of the v0.46 chase (Story combat off)
     this.app.fx.prewarmVfx?.(4); // v0.30 vfx: kit shaders compiled at the story start, never during play
     this.enterStage(stage);
   }

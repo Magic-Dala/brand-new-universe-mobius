@@ -1,6 +1,8 @@
 // v0.21 story chase: Green Maniac lobs ordinary pumpkin bombs back at the player (not beat-synced).
-// Each bomb is aimed ONCE at release (where the player is + a limited lead), then flies ballistically —
-// it never homes. The player shoots it with a wrist web or swings out of the way. Pooled; bombs that
+// Each bomb is aimed at release (where the player is + a limited lead), then flies ballistically.
+// v1.1 (settings.bombTracking): it tracks the player a little during the flight (src/game/bombPath.js: mild, lets go
+// before arrival, never further than BOMB_PATH.tracking.maxShift from the release aim); off = it never homes (v1.0).
+// v1.1 (settings.bombPath): a dashed path shows where each held or flying pumpkin will arrive (src/game/bombPathFx.js). The player shoots it with a wrist web or swings out of the way. Pooled; bombs that
 // time out, hit the city or drift out of range are recycled. Damage feedback = the arcade's (flash +
 // sound + haptics), no camera motion.
 import * as THREE from 'three';
@@ -11,8 +13,12 @@ import { pickTarget, angularZoneSize } from './aim.js';
 import { STORY_COMBAT } from '../data/storyCombat.js';
 import { mulberry32 } from '../data/box.js';
 import { sweptHit } from '../worlds/chaseCombat.js';
+import { BOMB_PATH } from '../data/bombPath.js';
+import { FIGHT } from '../worlds/bossFight.js';
+import { trackedAim, steer, tracking, passedPlayer, samplePath } from './bombPath.js';
+import { BombPathFx } from './bombPathFx.js';
 
-const _v = new THREE.Vector3(), _w = new THREE.Vector3();
+const _v = new THREE.Vector3(), _w = new THREE.Vector3(), _pa = new THREE.Vector3(), _pv = new THREE.Vector3(), _up35 = new THREE.Vector3(0, 0.35, 0);
 
 /** Aim point with limited prediction (pure – unit tested). */
 export function bombAimPoint(chest, vel, T, cfg = STORY_COMBAT.bombs, out = new THREE.Vector3()) {
@@ -27,6 +33,24 @@ export function launchVelocity(from, target, T, g, out = new THREE.Vector3()) {
 }
 export function flightTimeFor(dist, cfg = STORY_COMBAT.bombs) { return THREE.MathUtils.clamp(dist / cfg.speed, cfg.flightTime[0], cfg.flightTime[1]); }
 
+/**
+ * v1.1 path preview for Green Maniac's telegraph (World Chase and Story chase share it): each held pumpkin gets the
+ * flight it would take if released this frame — the same flight time, spread offset and gravity as the release code in
+ * worldChase.js / storyCombat.js. T = the telegraph state ({ kind, heavyT }), k = 0 … 1 through the telegraph.
+ */
+const _pd = new THREE.Vector3(), _pl = new THREE.Vector3(), _po = new THREE.Vector3();
+export function planHeldThrows(B, held, T, k, chest, bossPos) {
+  const F = FIGHT;
+  let i = 0;
+  if (T.kind === 'spread') { _pd.copy(chest).sub(bossPos).setY(0).normalize(); _pl.set(-_pd.z, 0, _pd.x); } // the lateral axis at the player (as at the release)
+  for (const it of held) {
+    if (!it.active || it.phase !== 'held') continue;
+    if (T.kind === 'spread') B.planHeld(it, F.spread.flight + 0.08 * Math.abs(i - 1), _po.copy(_pl).multiplyScalar((i - 1) * F.spread.lateral), null, k);
+    else if (T.kind === 'heavy') B.planHeld(it, T.heavyT || (F.heavy.flight[0] + F.heavy.flight[1]) / 2, null, F.heavy.gravity, k);
+    else B.planHeld(it, THREE.MathUtils.clamp(flightTimeFor(it.pos.distanceTo(chest), B.cfg), F.single.flight[0], F.single.flight[1]), null, null, k);
+    i++;
+  }
+}
 export class ChaseBombs {
   constructor(app, cfg = STORY_COMBAT.bombs) {
     this.app = app; this.cfg = cfg;
@@ -35,24 +59,30 @@ export class ChaseBombs {
     // v0.44 palm shield: asked for every flying pumpkin before its own proximity / wall tests.
     // 0 = nothing in its way, 1 = its path meets a raised shield (the proximity fuse waits), 2 = blocked (consumed via blockAt).
     this.blocker = (it) => app.shield?.tryBlock(this, it) || 0;
+    // v1.1 tracking (today's lead and cap + BOMB_PATH.tracking) and the path preview (one shared ribbon per app)
+    this.trackCfg = { ...BOMB_PATH.tracking, leadFactor: cfg.leadFactor, maxLead: cfg.maxLead };
+    this.pathCfg = BOMB_PATH.preview;
+    this.pathFx = app.scene ? BombPathFx.for(app) : null; this.paths = this.pathFx ? this.pathFx.owner() : null;
+    this._pChest = new THREE.Vector3(); this._pVel = new THREE.Vector3(); this._pHead = new THREE.Vector3(); this._pTime = 0; this._inUpdate = false; this._pReady = false;
     this.reset();
   }
   _mk(kind = 'normal') { // v0.42: 'giant' = the World Chase heavy pumpkin (evil-face model)
     const p = createPumpkinBomb({ model: kind });
     const scale = kind === 'giant' ? (this.cfg.giantScale ?? 1.25) : this.cfg.scale;
     p.root.scale.setScalar(scale); p.root.visible = false; this.root.add(p.root);
-    return { p, kind, scale, active: false, phase: null, t: 0, pos: new THREE.Vector3(), vel: new THREE.Vector3(), prev: new THREE.Vector3(), id: 0, hl: 0 };
+    return { p, kind, scale, active: false, phase: null, t: 0, pos: new THREE.Vector3(), vel: new THREE.Vector3(), prev: new THREE.Vector3(), id: 0, hl: 0,
+      T: 0, aim0: new THREE.Vector3(), off: new THREE.Vector3(), trk: false, plan: false, pT: 0, pOff: new THREE.Vector3(), pG: 0, pK: 0, relA: 0 }; // (v1.1: tracking + the held path plan)
   }
   _get(kind = 'normal') {
     let it = this.items.find((x) => !x.active && (x.kind || 'normal') === kind);
     if (!it) { const n = this.items.filter((x) => (x.kind || 'normal') === kind).length; if (n >= (kind === 'giant' ? 2 : this.cfg.maxActive + 1)) return null; it = this._mk(kind); this.items.push(it); }
-    it.active = true; it.t = 0; it.p.root.visible = true; it.p.setGlow(0.4); it.p.setHighlight?.(0); it.blast = null; it.launchT = null; it.g = null;
+    it.active = true; it.t = 0; it.p.root.visible = true; it.p.setGlow(0.4); it.p.setHighlight?.(0); it.blast = null; it.launchT = null; it.g = null; it.trk = false; it.plan = false;
     it.p.root.scale.setScalar(it.scale ?? this.cfg.scale);
     return it;
   }
-  _free(it) { it.active = false; it.phase = null; it.p.root.visible = false; if (it.hl) { it.hl = 0; it.p.setHighlight?.(0); } }
+  _free(it) { it.active = false; it.phase = null; it.trk = false; it.plan = false; it.p.root.visible = false; if (it.hl) { it.hl = 0; it.p.setHighlight?.(0); } if (!this._inUpdate) this._drawPaths(); } // (v1.1: a path disappears the frame its pumpkin goes)
   reset(seed = 1) {
-    for (const it of this.items) this._free(it);
+    this._inUpdate = true; for (const it of this.items) this._free(it); this._inUpdate = false; this._drawPaths();
     this.rand = mulberry32(seed >>> 0 || 1);
     this.timer = this.cfg.firstDelay; this.windup = null; this.seq = 0; this._chest0 = null;
     this.stats = { thrown: 0, destroyed: 0, hits: 0, exploded: 0, fizzled: 0, recycled: 0, blocked: 0 };
@@ -65,12 +95,13 @@ export class ChaseBombs {
    * (a pause only stops NEW throws, it never freezes or deletes bombs already in the air).
    */
   update(dt, { allow, boss, chest, playerVel }) {
-    const C = this.cfg;
+    const C = this.cfg; this._inUpdate = true;
     // ---- schedule / windup
     if (this.windup) {
       const w = this.windup, it = w.it; w.t += dt;
       boss.throwPoint(it.pos); it.p.root.position.copy(it.pos);
       it.p.setGlow(0.5 + 0.5 * Math.abs(Math.sin(w.t * 14))); it.p.update(dt); it.p.root.lookAt(chest);
+      this.planHeld(it, flightTimeFor(it.pos.distanceTo(chest), C), null, C.gravity, w.t / (C.windup + GREEN_MANIAC_THROW_RELEASE)); // v1.1 path preview
       if (!allow && !w.thrown) { this._free(it); this.windup = null; } // cancelled (turn / tether / roof)
       else {
         if (!w.thrown && w.t >= C.windup) { w.thrown = true; w.tThrow = w.t; boss.throw(); }
@@ -91,6 +122,7 @@ export class ChaseBombs {
       if (!it.active || it.phase !== 'fly') continue;
       it.t += dt;
       it.prev.copy(it.pos);
+      if (it.trk) this._track(it, chest, playerVel, dt); // v1.1 soft tracking (off: the v1.0 ballistic flight, untouched)
       it.vel.y -= (it.g ?? C.gravity) * dt;
       it.pos.addScaledVector(it.vel, dt);
       it.p.root.position.copy(it.pos); if (it.kind === 'giant') it.p.root.lookAt(chest); else it.p.root.rotation.y += dt * 4; it.p.update(dt); // (v0.42: the heavy pumpkin keeps its evil face toward Mobius)
@@ -110,6 +142,50 @@ export class ChaseBombs {
       if (dc > C.recycleDist) { this.stats.recycled++; this._free(it); }
     }
     (this._chest0 || (this._chest0 = new THREE.Vector3())).copy(chest);
+    this._inUpdate = false;
+    this._pChest.copy(chest); this._pVel.copy(playerVel); this._pTime += dt; this._pReady = true;
+    this._drawPaths();
+  }
+  /** v1.1: one step of the soft tracking (src/game/bombPath.js). Once off it stays off (let-go window, passed the player). */
+  _track(it, chest, playerVel, dt) {
+    const K = this.trackCfg, tRem = it.T - (it.t - dt);
+    if (!tracking(tRem, it.pos.distanceTo(chest), passedPlayer(it.pos, it.vel, chest), K)) { it.trk = false; return; }
+    trackedAim(it.aim0, chest, playerVel, tRem, it.off, K, it.target);
+    steer(it.pos, it.vel, it.target, tRem, it.g ?? this.cfg.gravity, it.kind === 'giant' ? K.accel.giant : K.accel.normal, dt, it.vel);
+  }
+  /**
+   * v1.1 path preview for a pumpkin still in his hand: the flight it would take if released this frame (flight time T,
+   * spread offset `offset` or null, gravity g), k = 0 … 1 how far the telegraph is (the path fades in over it).
+   */
+  planHeld(it, T, offset, g, k) {
+    if (!it?.active || it.phase !== 'held') return;
+    it.plan = true; it.pT = T; it.pG = g ?? this.cfg.gravity; it.pK = Math.max(0, Math.min(1, k)); if (offset) it.pOff.copy(offset); else it.pOff.set(0, 0, 0);
+  }
+  /** v1.1: rebuild this chase's paths (every frame at the end of update, and when a pumpkin goes between frames). */
+  _drawPaths() {
+    const R = this.paths; if (!R || !this._pReady) return;
+    const P = this.pathCfg, op = P.opacity; let n = 0;
+    if (settings.bombPath !== false) {
+      const chest = this._pChest, vel = this._pVel;
+      for (const it of this.items) {
+        if (!it.active || n >= R.recs.length) continue;
+        const rec = R.recs[n];
+        if (it.phase === 'fly') {
+          const g = it.g ?? this.cfg.gravity, tRem = it.T - it.t; if (!(tRem > 0.02)) continue;
+          samplePath(it.pos, it.vel, g, tRem, rec.n, rec.pts);
+          rec.alpha = it.relA + (op.flying - it.relA) * Math.min(1, it.t / P.fadeIn);
+        } else if (it.phase === 'held' && it.plan) {
+          bombAimPoint(chest, vel, it.pT, this.cfg, _pa).add(it.pOff);
+          launchVelocity(it.pos, _pa, it.pT, it.pG, _pv);
+          samplePath(it.pos, _pv, it.pG, it.pT, rec.n, rec.pts);
+          rec.alpha = op.held * it.pK;
+        } else continue;
+        rec.kind = it.kind === 'giant' ? 'giant' : 'normal'; n++;
+      }
+    }
+    R.count = n;
+    const cam = this.app.camera; if (cam?.getWorldPosition) cam.getWorldPosition(this._pHead); else this._pHead.copy(this._pChest).add(_up35);
+    this.pathFx.commit(this._pHead, this._pTime);
   }
   /** opts (v0.42 World Chase): { T (flight s), offset (Vector3 added to the aim point), blast (m), gravity (m/s²) }. */
   _launch(it, chest, playerVel, opts = {}) {
@@ -120,6 +196,8 @@ export class ChaseBombs {
     if (opts.blast) it.blast = opts.blast;
     it.g = opts.gravity ?? null; // (v0.42: the heavy pumpkin flies a flatter arc — stays in view)
     launchVelocity(it.pos, target, T, it.g ?? C.gravity, it.vel);
+    it.relA = this.pathCfg.opacity.held * (it.plan ? it.pK : 1); it.plan = false; // v1.1: the held path becomes the flying one without a jump
+    it.T = T; it.aim0.copy(target); if (opts.offset) it.off.copy(opts.offset); else it.off.set(0, 0, 0); it.trk = settings.bombTracking !== false; // v1.1 tracking state (the release itself is v1.0's)
     it.phase = 'fly'; it.t = 0; it.target = target.clone(); it.p.setGlow(0.7); it.id = ++this.seq; it.prev.copy(it.pos);
     this.app.fx.vfx?.pumpkinFlight(it.p, { scale: C.scale }); // v0.30 vfx (visual only)
     this.stats.thrown++;
@@ -185,8 +263,8 @@ export class ChaseBombs {
   }
   /** v0.41: the pumpkin the assist is aiming at shows a highlight (level 1; 0 clears). */
   highlight(it, lvl) { if (it && it.hl !== lvl) { it.hl = lvl; it.p.setHighlight?.(lvl); } }
-  clear() { for (const it of this.items) this._free(it); this.windup = null; }
+  clear() { this._inUpdate = true; for (const it of this.items) this._free(it); this.windup = null; this._inUpdate = false; this._drawPaths(); }
   /** v0.40 floating origin: flying bombs move with the world. */
-  shift(dx, dz) { for (const it of this.items) if (it.active) { it.pos.x += dx; it.pos.z += dz; it.p.root.position.x += dx; it.p.root.position.z += dz; if (it.target) { it.target.x += dx; it.target.z += dz; } } }
+  shift(dx, dz) { for (const it of this.items) if (it.active) { it.pos.x += dx; it.pos.z += dz; it.p.root.position.x += dx; it.p.root.position.z += dz; if (it.target) { it.target.x += dx; it.target.z += dz; } it.aim0.x += dx; it.aim0.z += dz; } this._pChest.x += dx; this._pChest.z += dz; } // (v1.1: + the release aim and the last chest of the paths)
 }
 void _w;

@@ -236,6 +236,8 @@ export class Menus {
       row(() => 'Wall run', () => t(settings.wallRun ? 'common.on' : 'common.off'), () => (settings.wallRun = !settings.wallRun), () => (settings.wallRun = !settings.wallRun));
       row(() => t('settings.webPull'), () => t(settings.webPull ? 'common.on' : 'common.off'), () => (settings.webPull = !settings.webPull), () => (settings.webPull = !settings.webPull)); // v0.44
       row(() => t('settings.palmShield'), () => t(settings.palmShield ? 'common.on' : 'common.off'), () => (settings.palmShield = !settings.palmShield), () => (settings.palmShield = !settings.palmShield)); // v0.44
+      row(() => t('settings.bombPath'), () => t(settings.bombPath !== false ? 'common.on' : 'common.off'), () => (settings.bombPath = settings.bombPath === false), () => (settings.bombPath = settings.bombPath === false)); // v1.1
+      row(() => t('settings.bombTracking'), () => t(settings.bombTracking !== false ? 'common.on' : 'common.off'), () => (settings.bombTracking = settings.bombTracking === false), () => (settings.bombTracking = settings.bombTracking === false)); // v1.1
       row(() => 'Wind effect', () => t(settings.windFx ? 'common.on' : 'common.off'), () => (settings.windFx = !settings.windFx), () => (settings.windFx = !settings.windFx));
       row(() => 'Designed sound', () => t(settings.designedSfx ? 'common.on' : 'common.off'), () => (settings.designedSfx = !settings.designedSfx), () => (settings.designedSfx = !settings.designedSfx)); // v0.45
       row(() => 'Impact time', () => t(settings.impactTime ? 'common.on' : 'common.off'), () => (settings.impactTime = !settings.impactTime), () => (settings.impactTime = !settings.impactTime)); // v0.45

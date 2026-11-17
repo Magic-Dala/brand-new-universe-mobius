@@ -70,7 +70,10 @@ export class StoryAttacks {
     this.fightT = 0; this.sinceHeavy = 0; this.recent = []; this.next = 2.5; this._cancel = false;
     this.stats = { single: 0, spread: 0, heavy: 0, cancelled: 0 };
     this._ev.length = 0;
-    let s = seed >>> 0 || 1; this.rand = () => { s = (s + 0x6d2b79f5) >>> 0; let x = s; x = Math.imul(x ^ (x >>> 15), x | 1); x ^= x + Math.imul(x ^ (x >>> 7), x | 61); return ((x ^ (x >>> 14)) >>> 0) / 4294967296; };
+    let s = seed >>> 0 || 1;
+    const f = (v) => { let x = v; x = Math.imul(x ^ (x >>> 15), x | 1); x ^= x + Math.imul(x ^ (x >>> 7), x | 61); return ((x ^ (x >>> 14)) >>> 0) / 4294967296; };
+    this.rand = () => { s = (s + 0x6d2b79f5) >>> 0; return f(s); };
+    this.peek = () => f((s + 0x6d2b79f5) >>> 0); // v1.1: the next rand() without taking it (the heavy throw's flight time, known to its path preview)
   }
   /** 'idle' | 'telegraph' | 'hold' */
   get state() { return this._state; }

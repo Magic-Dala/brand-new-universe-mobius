@@ -14,7 +14,7 @@ import { COLORS } from '../ui/panel.js';
 import { ChaseWorld } from './chaseWorld.js';
 import { WorldRenderer } from './worldRenderer.js';
 import { mapById, getWorldBest, setWorldBest } from './maps.js';
-import { ChaseBombs } from '../game/chaseBombs.js';
+import { ChaseBombs, planHeldThrows } from '../game/chaseBombs.js';
 import { isEnvAnchor, WEB_HOLD_GRACE } from '../game/locomotion.js';
 import { STORY_COMBAT } from '../data/storyCombat.js';
 import { pickTarget, angularZoneSize } from '../game/aim.js';
@@ -216,7 +216,9 @@ export class WorldChase {
     for (let i = 0; i < 900 && (this.renderer.pending > 0 || this.world.pendingNear(start, 400) > 0); i++) { this.renderer.pump(20); yield 'wait'; } // (behind the black screen: bigger slices)
     app.worldName = 'world';
     this.renderer.update(0, start);
+    this.bombs.pathFx?.prewarm(true); // v1.1: the path preview's program is built now, not at the first throw
     try { app.renderer.compile(app.scene, app.camera); } catch (e) { console.warn('compile world', e); }
+    this.bombs.pathFx?.prewarm(false);
     yield 'compiled';
     app.loader.hide();
     this.begin();
@@ -903,6 +905,7 @@ export class WorldChase {
         else it.pos.copy(_w);
         it.p.root.position.copy(it.pos); it.p.setGlow(0.5 + 0.5 * Math.abs(Math.sin(T.t * (T.kind === 'heavy' ? 9 : 14)))); it.p.update(dt); it.p.root.lookAt(chest);
       });
+      planHeldThrows(B, this.held, T, k, chest, boss.root.position); // v1.1 path preview: the flight each held pumpkin would take if released now
     }
     // the heavy pumpkin's counter window (time AND distance) → ring around it
     let hv = null;
@@ -919,7 +922,7 @@ export class WorldChase {
     const corePop = () => _w.copy(this.corePos).add(_v.set(0, 1.4, 0)).clone();
     switch (e.type) {
       case 'telegraph': {
-        const k = e.attack; this._tele = { kind: k, t: 0, threw: false, turned: false };
+        const k = e.attack; this._tele = { kind: k, t: 0, threw: false, turned: false, heavyT: k === 'heavy' ? H.flight[0] + Math.random() * (H.flight[1] - H.flight[0]) : 0 }; // (v1.1: the heavy flight time is rolled here, so its path preview shows the flight the release will use)
         this.held.length = 0;
         const n = k === 'spread' ? 3 : 1;
         for (let i = 0; i < n; i++) { const it = B._get(k === 'heavy' ? 'giant' : 'normal'); if (it) { it.phase = 'held'; boss.throwPoint(it.pos); it.p.root.position.copy(it.pos); this.held.push(it); } }
@@ -937,7 +940,7 @@ export class WorldChase {
           _d.copy(chest).sub(boss.root.position).setY(0).normalize(); _hf.set(-_d.z, 0, _d.x); // lateral axis at the player
           its.forEach((it, i) => B._launch(it, chest, loco.vel, { T: FIGHT.spread.flight + 0.08 * Math.abs(i - 1), offset: _hp.copy(_hf).multiplyScalar((i - 1) * FIGHT.spread.lateral) }));
         } else if (k === 'heavy') {
-          const it = its[0], T = H.flight[0] + Math.random() * (H.flight[1] - H.flight[0]);
+          const it = its[0], T = this._tele?.heavyT || H.flight[0] + Math.random() * (H.flight[1] - H.flight[0]);
           B._launch(it, chest, loco.vel, { T, blast: H.blast, gravity: H.gravity }); it.launchT = this.clock;
           app.hud.showBanner(t('fight.counterNow'), 1.3, COLORS.perfect, '');
         } else { const it = its[0]; B._launch(it, chest, loco.vel, { T: THREE.MathUtils.clamp(flightTimeFor(it.pos.distanceTo(chest), B.cfg), FIGHT.single.flight[0], FIGHT.single.flight[1]) }); }
