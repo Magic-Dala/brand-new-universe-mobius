@@ -65,9 +65,9 @@ test('the current song: three per difficulty, the last wave on the final note, 8
     for (let i = 1; i < starts.length; i++) assert.ok(starts[i] - starts[i - 1] >= 16, 'sequences are well apart');
   }
 });
-test('the switch: off = the v0.46 event count (54 / 97 / 126), on = other notes inside a sequence are dropped', () => {
+test('the switch: off = the chart without its armored events (39 / 60 / 66; v0.46–v1.0: 54 / 97 / 126), on = other notes inside a sequence are dropped', () => {
   const rhythm = (events) => events.filter((e) => e.type !== 'armored').length; // one per event; a Fan Web row is one
-  const want = { easy: 54, normal: 97, hard: 126 };
+  const want = { easy: 39, normal: 60, hard: 66 }; // v1.1: the first song re-charted from its analysis (scripts/charts/mobius-boss-01.analysis.json)
   for (const d of ['easy', 'normal', 'hard']) {
     const ev = chart.difficulties[d].events;
     assert.equal(ev.filter((e) => e.type === 'armored').length, 3, `${d}: the shipped chart carries three armored events`);

@@ -2,9 +2,9 @@
 // music clock; headless Chrome with software rendering). Groups (ONLY=show,play,off,wave,chart2): prints PASS / FAIL lines.
 import { readFileSync } from 'node:fs';
 import { launch, openArcade } from './arcadeharness.mjs';
-// The first song's rhythm events with armored pumpkins off (v0.46–v1.0: 54 / 97 / 126; v1.1: after the loader's never-three rule; the
+// The first song's rhythm events with armored pumpkins off (v0.46–v1.0: 54 / 97 / 126; v1.1: the loader's never-three rule, then the
 // chart rebuilt from its analysis — see docs/CHART_FORMAT.md). The hall-show tests use such numbers only as inputs.
-const OFF_COUNTS = { easy: 52, normal: 94, hard: 114 };
+const OFF_COUNTS = { easy: 39, normal: 60, hard: 66 };
 const ONLY = (process.env.ONLY || 'show,play,off,wave,chart2').split(',');
 let pass = 0, fail = 0;
 const ok = (c, name, detail = '') => { if (c) { pass++; console.log(`PASS ${name}${detail ? ` | ${detail}` : ''}`); } else { fail++; console.log(`FAIL ${name}${detail ? ` | ${detail}` : ''}`); } };
