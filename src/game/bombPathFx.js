@@ -74,13 +74,13 @@ export class BombPathFx {
       for (let r = 0; r < ow.count && p < this.P; r++) {
         const rec = ow.recs[r], pts = rec.pts;
         // clip at the fadeNear sphere around the head: the path ends where it reaches it
-        let n = rec.n;
-        _a.fromArray(pts, 0); if (_a.distanceTo(head) < C.fadeNear) continue;
+        let n = rec.n; const near = C.fadeNear + 0.01; // (1 cm outside: the float32 vertex buffer must not round a point inside)
+        _a.fromArray(pts, 0); if (_a.distanceTo(head) < near) continue;
         for (let i = 1; i < rec.n; i++) {
           _b.fromArray(pts, i * 3);
-          if (_b.distanceTo(head) < C.fadeNear) {
+          if (_b.distanceTo(head) < near) {
             _a.fromArray(pts, (i - 1) * 3); let lo = 0, hi = 1; // bisect the crossing on segment i−1 → i
-            for (let k = 0; k < 12; k++) { const m = (lo + hi) / 2; _t.lerpVectors(_a, _b, m); if (_t.distanceTo(head) < C.fadeNear) hi = m; else lo = m; }
+            for (let k = 0; k < 12; k++) { const m = (lo + hi) / 2; _t.lerpVectors(_a, _b, m); if (_t.distanceTo(head) < near) hi = m; else lo = m; }
             _t.lerpVectors(_a, _b, lo); _t.toArray(pts, i * 3); n = i + 1; break;
           }
         }
