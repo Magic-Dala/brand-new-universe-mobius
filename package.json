@@ -1,0 +1,32 @@
+{
+  "name": "brand-new-universe-mobius",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Brand New Universe - Mobius: WebXR rhythm-action VR game for Meta Quest 3 (IWSDK + three.js)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "dev:usb": "MOBIUS_HTTP=1 vite --host",
+    "dev:noemu": "MOBIUS_EMULATOR=0 vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "chart": "node scripts/generate-chart.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@iwsdk/core": "1.0.1",
+    "three": "npm:super-three@0.181.0"
+  },
+  "devDependencies": {
+    "@iwsdk/vite-plugin-dev": "1.0.1",
+    "@vitejs/plugin-basic-ssl": "^2.3.0",
+    "gltfpack": "^1.3.0",
+    "vite": "^7.3.7"
+  },
+  "overrides": {
+    "three": "npm:super-three@0.181.0"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}

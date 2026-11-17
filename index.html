@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Brand New Universe - Mobius</title>
+  <meta name="description" content="WebXR rhythm-action VR game for Meta Quest 3" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%23061830%22/%3E%3Cpath d=%22M14 40c0-9 7-14 12-8l12 8c5 6 12 1 12-8s-7-14-12-8L26 32c-5 6-12 1-12 8z%22 fill=%22none%22 stroke=%22%2322d3ff%22 stroke-width=%225%22/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/src/ui/title.css" />
+</head>
+<body>
+  <div id="scene"></div>
+  <div id="title" class="title">
+    <div class="vignette"></div>
+    <div class="panel">
+      <div class="logo" aria-label="Brand New Universe - Mobius">
+        <div class="brand" data-i18n="app.brand">BRAND NEW UNIVERSE</div>
+        <svg class="mobius-word" viewBox="0 0 620 150" role="img" aria-label="MOBIUS">
+          <defs>
+            <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff" /><stop offset="0.48" stop-color="#e6eef5" /><stop offset="0.52" stop-color="#9fb2c2" /><stop offset="1" stop-color="#f4f8fb" />
+            </linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+          </defs>
+          <path d="M 20 120 C 160 70, 380 -10, 560 22" fill="none" stroke="#22d3ff" stroke-width="4" filter="url(#glow)" opacity="0.9" />
+          <circle cx="560" cy="22" r="7" fill="#7ef0ff" filter="url(#glow)" />
+          <text x="300" y="118" text-anchor="middle" font-size="128" font-style="italic" font-weight="900" fill="url(#chrome)" stroke="#16222e" stroke-width="3" letter-spacing="-4" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" transform="skewX(-12) translate(22 0)">MOBIUS</text>
+          <path d="M 120 140 C 250 132, 400 110, 500 76" fill="none" stroke="#22d3ff" stroke-width="3" filter="url(#glow)" opacity="0.8" />
+        </svg>
+      </div>
+      <button id="enter" class="btn primary" disabled><span data-i18n="title.enter">Enter VR Game</span><span class="chev">›</span></button>
+      <button id="open-settings" class="btn secondary"><span class="gear">⚙</span><span data-i18n="title.settings">Settings</span></button>
+      <div class="row">
+        <span class="icon" aria-hidden="true">🌐</span>
+        <label class="sr" for="lang" data-i18n="title.language">Language</label>
+        <select id="lang" class="select"></select>
+      </div>
+      <div class="row vol">
+        <span class="icon" aria-hidden="true">🔊</span>
+        <label for="volume" data-i18n="title.volume">Master Volume</label>
+        <input id="volume" type="range" min="0" max="100" step="1" />
+        <output id="volume-out">80%</output>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <button id="enter-desktop" class="link" hidden data-i18n="title.enterDesktop">Enter Desktop Preview</button>
+    </div>
+    <div class="version">v1.0.0 · IWSDK 1.0.1</div>
+  </div>
+
+  <dialog id="settings" class="settings">
+    <form method="dialog" class="settings-inner">
+      <header><h2 data-i18n="settings.title">Settings</h2><button class="btn small" value="close" data-i18n="settings.close">Close</button></header>
+      <section>
+        <h3 data-i18n="settings.audio">Audio</h3>
+        <label><span data-i18n="settings.music">Music Volume</span><input type="range" min="0" max="100" data-setting="musicVolume" data-scale="100" /></label>
+        <label><span data-i18n="settings.sfx">Effects Volume</span><input type="range" min="0" max="100" data-setting="sfxVolume" data-scale="100" /></label>
+        <label><span data-i18n="settings.offset">Audio / Input Offset</span><input type="number" step="5" min="-300" max="300" data-setting="offsetMs" /><small data-i18n="settings.offset.help"></small></label>
+      </section>
+      <section>
+        <h3 data-i18n="settings.gameplay">Gameplay</h3>
+        <label><span data-i18n="settings.assist">Aim Assist Margin</span><input type="number" step="1" min="0" max="60" data-setting="assistMargin" data-scale="100" /><small data-i18n="settings.assist.help"></small></label>
+        <label><span data-i18n="settings.aimMode">Web Aim Direction</span>
+          <select data-setting="aimMode"><option value="hand" data-i18n="settings.aimMode.hand"></option><option value="palm" data-i18n="settings.aimMode.palm"></option></select></label>
+        <label><span data-i18n="settings.anchorAssist">Anchor Aim Tolerance</span><input type="number" step="1" min="2" max="20" data-setting="anchorAssistDeg" /><small data-i18n="settings.anchorAssist.help"></small></label>
+        <label class="check"><input type="checkbox" data-setting="noFail" /><span data-i18n="settings.noFail">No-Fail</span></label>
+        <label class="check"><input type="checkbox" data-setting="haptics" /><span data-i18n="settings.haptics">Vibration</span></label>
+      </section>
+      <section>
+        <h3 data-i18n="settings.comfort">Comfort</h3>
+        <label><span data-i18n="settings.snap">Snap Turn Angle</span><select data-setting="snapAngle" data-num="1"><option>30</option><option>45</option><option>60</option><option>90</option></select></label>
+        <label class="check"><input type="checkbox" data-setting="vignette" /><span data-i18n="settings.vignette"></span></label>
+        <label><span data-i18n="settings.swingSpeed">Swing Speed Limit</span><input type="number" step="1" min="6" max="30" data-setting="swingSpeedLimit" /></label>
+        <label class="check"><input type="checkbox" data-setting="seated" /><span data-i18n="settings.seated"></span></label>
+        <label class="check"><input type="checkbox" data-setting="thumbFallback" /><span data-i18n="settings.thumbFallback"></span></label>
+      </section>
+      <section>
+        <h3 data-i18n="settings.hud">HUD</h3>
+        <label><span data-i18n="settings.hudIntensity">HUD Intensity</span><input type="range" min="25" max="100" data-setting="hudIntensity" data-scale="100" /></label>
+        <label class="check"><input type="checkbox" data-setting="devTools" /><span data-i18n="settings.devTools"></span></label>
+      </section>
+      <section>
+        <h3 data-i18n="settings.songs">Songs</h3>
+        <label class="file"><span data-i18n="settings.import">Import Song…</span><input id="import" type="file" accept="audio/*,.mp3,.ogg,.wav,.m4a" /></label>
+        <small data-i18n="settings.import.help"></small>
+        <div id="import-status" class="status small"></div>
+        <ul id="song-list" class="song-list"></ul>
+      </section>
+      <footer><button class="btn small" type="button" id="reset-settings" data-i18n="settings.reset">Reset</button></footer>
+    </form>
+  </dialog>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+ "size": 512,
+ "layers": [
+  {
+   "layer": 0,
+   "name": "brick_red",
+   "source": "polyhaven",
+   "asset": "red_brick",
+   "url": "https://polyhaven.com/a/red_brick",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 1,
+   "name": "brick_dark",
+   "source": "polyhaven",
+   "asset": "brick_wall_02",
+   "url": "https://polyhaven.com/a/brick_wall_02",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 2,
+   "name": "brick_cream",
+   "source": "polyhaven",
+   "asset": "sandstone_brick_wall_01",
+   "url": "https://polyhaven.com/a/sandstone_brick_wall_01",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 3,
+   "name": "limestone",
+   "source": "polyhaven",
+   "asset": "white_sandstone_blocks_02",
+   "url": "https://polyhaven.com/a/white_sandstone_blocks_02",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 4,
+   "name": "concrete",
+   "source": "polyhaven",
+   "asset": "brushed_concrete",
+   "url": "https://polyhaven.com/a/brushed_concrete",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 5,
+   "name": "asphalt",
+   "source": "polyhaven",
+   "asset": "asphalt_02",
+   "url": "https://polyhaven.com/a/asphalt_02",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 6,
+   "name": "metal",
+   "source": "polyhaven",
+   "asset": "metal_plate",
+   "url": "https://polyhaven.com/a/metal_plate",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 7,
+   "name": "paving",
+   "source": "polyhaven",
+   "asset": "concrete_pavement",
+   "url": "https://polyhaven.com/a/concrete_pavement",
+   "license": "CC0 1.0"
+  },
+  {
+   "layer": 8,
+   "name": "glass_grime",
+   "source": "ambientcg",
+   "asset": "SurfaceImperfections003",
+   "url": "https://ambientcg.com/view?id=SurfaceImperfections003",
+   "license": "CC0 1.0"
+  }
+ ]
+}

@@ -1,0 +1,583 @@
+{
+ "version": 1,
+ "generator": "tools/blender/build_foldscape_kit.py",
+ "blender": "5.2.3 LTS Release Candidate",
+ "units": "metres",
+ "up": "+Y (glTF)",
+ "axes": "x along the facade (left\u2192right seen from outside), y up, z out of the wall",
+ "origin": {
+  "facade": "bottom-centre of the bay at the storey floor line, on the wall plane (z=0)",
+  "roof": "footprint centre at roof level (y=0)"
+ },
+ "colorEncoding": "COLOR_0 R = baked AO, G = material id / 8, B = edge wear; TEXCOORD_0 = planar metres",
+ "materials": [
+  {
+   "id": 0,
+   "name": "wall"
+  },
+  {
+   "id": 1,
+   "name": "stone"
+  },
+  {
+   "id": 2,
+   "name": "iron"
+  },
+  {
+   "id": 3,
+   "name": "sash"
+  },
+  {
+   "id": 4,
+   "name": "wood"
+  },
+  {
+   "id": 5,
+   "name": "tar"
+  },
+  {
+   "id": 6,
+   "name": "sheet"
+  },
+  {
+   "id": 7,
+   "name": "glass"
+  }
+ ],
+ "grid": {
+  "bay": [
+   3.0,
+   3.3
+  ],
+  "opening": {
+   "hw": 0.65,
+   "y0": 0.62,
+   "y1": 2.68,
+   "spring": 2.3,
+   "rise": 0.4
+  },
+  "glassBay": [
+   3.2,
+   3.8
+  ],
+  "storefrontHeight": 4.5
+ },
+ "lodClasses": {
+  "bay": {
+   "budgetLOD0": 180,
+   "budgetLOD1": 60
+  },
+  "trim": {
+   "budgetLOD0": 240,
+   "budgetLOD1": 60
+  },
+  "fe": {
+   "budgetLOD0": 900,
+   "budgetLOD1": 200
+  },
+  "roof": {
+   "budgetLOD0": 900,
+   "budgetLOD1": 220
+  },
+  "crown": {
+   "budgetLOD0": 1100,
+   "budgetLOD1": 260
+  },
+  "store": {
+   "budgetLOD0": 260,
+   "budgetLOD1": 60
+  }
+ },
+ "ownership": "loaded once per WorldRenderer through a ref-counted cache (src/worlds/art/foldscapeArt.js); geometries disposed when the last foldscape renderer releases it",
+ "pieces": [
+  {
+   "name": "fs_bay_rect",
+   "cls": "bay",
+   "frame": "facade",
+   "size": [
+    3.0,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -0.88,
+     0.44,
+     0
+    ],
+    "max": [
+     0.88,
+     3,
+     0.17
+    ]
+   },
+   "maxZ": 0.17,
+   "tris": [
+    82,
+    18
+   ],
+   "meshes": [
+    "fs_bay_rect_LOD0",
+    "fs_bay_rect_LOD1"
+   ],
+   "notes": "flat stone lintel + keystone, stone sill, brick jamb returns, double-hung sash",
+   "opening": {
+    "shape": "rect",
+    "hw": 0.65,
+    "y0": 0.62,
+    "y1": 2.68,
+    "spring": 2.3,
+    "rise": 0.4
+   }
+  },
+  {
+   "name": "fs_bay_arch",
+   "cls": "bay",
+   "frame": "facade",
+   "size": [
+    3.0,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -0.87,
+     0.44,
+     0
+    ],
+    "max": [
+     0.87,
+     3,
+     0.17
+    ]
+   },
+   "maxZ": 0.17,
+   "tris": [
+    136,
+    30
+   ],
+   "meshes": [
+    "fs_bay_arch_LOD0",
+    "fs_bay_arch_LOD1"
+   ],
+   "notes": "segmental brick arch of radiating voussoirs, stone keystone + sill, arched sash",
+   "opening": {
+    "shape": "arch",
+    "hw": 0.65,
+    "y0": 0.62,
+    "y1": 2.68,
+    "spring": 2.3,
+    "rise": 0.4
+   }
+  },
+  {
+   "name": "fs_bay_stone",
+   "cls": "bay",
+   "frame": "facade",
+   "size": [
+    3.0,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     3.3,
+     0.15
+    ]
+   },
+   "maxZ": 0.15,
+   "tris": [
+    156,
+    20
+   ],
+   "meshes": [
+    "fs_bay_stone_LOD0",
+    "fs_bay_stone_LOD1"
+   ],
+   "notes": "limestone pilasters with capitals, recessed spandrel panel, cast-stone lintel, bronze sash",
+   "opening": {
+    "shape": "rect",
+    "hw": 0.65,
+    "y0": 0.62,
+    "y1": 2.68,
+    "spring": 2.3,
+    "rise": 0.4
+   }
+  },
+  {
+   "name": "fs_glass_bay",
+   "cls": "bay",
+   "frame": "facade",
+   "size": [
+    3.2,
+    3.8
+   ],
+   "bounds": {
+    "min": [
+     -1.65,
+     0,
+     0
+    ],
+    "max": [
+     1.6,
+     3.8,
+     0.24
+    ]
+   },
+   "maxZ": 0.24,
+   "tris": [
+    18,
+    6
+   ],
+   "meshes": [
+    "fs_glass_bay_LOD0",
+    "fs_glass_bay_LOD1"
+   ],
+   "notes": "dark metal mullion fins at the 1.6 m curtain-wall grid + spandrel band at the floor line"
+  },
+  {
+   "name": "fs_store",
+   "cls": "store",
+   "frame": "facade",
+   "size": [
+    3.0,
+    4.5
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     4.5,
+     0.36
+    ]
+   },
+   "maxZ": 0.36,
+   "tris": [
+    38,
+    22
+   ],
+   "meshes": [
+    "fs_store_LOD0",
+    "fs_store_LOD1"
+   ],
+   "notes": "ground-floor storefront: cast-iron piers, kickplate, display glass + transom, sign fascia, cap cornice"
+  },
+  {
+   "name": "fs_belt",
+   "cls": "trim",
+   "frame": "facade",
+   "size": [
+    3.0,
+    0.38
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     0.38,
+     0.18
+    ]
+   },
+   "maxZ": 0.18,
+   "tris": [
+    12,
+    6
+   ],
+   "meshes": [
+    "fs_belt_LOD0",
+    "fs_belt_LOD1"
+   ],
+   "notes": "stone belt course at a floor line"
+  },
+  {
+   "name": "fs_cornice",
+   "cls": "trim",
+   "frame": "facade",
+   "size": [
+    3.0,
+    1.4
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     -0.3
+    ],
+    "max": [
+     1.5,
+     1.4,
+     0.92
+    ]
+   },
+   "maxZ": 0.92,
+   "tris": [
+    202,
+    14
+   ],
+   "meshes": [
+    "fs_cornice_LOD0",
+    "fs_cornice_LOD1"
+   ],
+   "notes": "bracketed sheet-metal cornice, top flush with the roof; frieze + modillions + crown moulding; back edge sits on the roof (z<0)"
+  },
+  {
+   "name": "fs_parapet",
+   "cls": "trim",
+   "frame": "facade",
+   "size": [
+    3.0,
+    1.3
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     -0.34
+    ],
+    "max": [
+     1.5,
+     1.3,
+     0.36
+    ]
+   },
+   "maxZ": 0.36,
+   "tris": [
+    146,
+    12
+   ],
+   "meshes": [
+    "fs_parapet_LOD0",
+    "fs_parapet_LOD1"
+   ],
+   "notes": "limestone parapet: plinth, short balusters, coping (sits on the roof edge, z -0.3..0.36)"
+  },
+  {
+   "name": "fs_quoin",
+   "cls": "trim",
+   "frame": "facade",
+   "size": [
+    0.62,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -0.31,
+     0.03,
+     0
+    ],
+    "max": [
+     0.31,
+     3.27,
+     0.09
+    ]
+   },
+   "maxZ": 0.09,
+   "tris": [
+    50,
+    10
+   ],
+   "meshes": [
+    "fs_quoin_LOD0",
+    "fs_quoin_LOD1"
+   ],
+   "notes": "alternating long/short stone corner blocks (symmetric; centred 0.31 m in from the face edge)"
+  },
+  {
+   "name": "fs_fire_escape",
+   "cls": "fe",
+   "frame": "facade",
+   "size": [
+    6.0,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -3,
+     -2.919,
+     0.005
+    ],
+    "max": [
+     3,
+     1.43,
+     1.25
+    ]
+   },
+   "maxZ": 1.25,
+   "tris": [
+    308,
+    76
+   ],
+   "meshes": [
+    "fs_fire_escape_LOD0",
+    "fs_fire_escape_LOD1"
+   ],
+   "notes": "one storey: open grating platform, picket railings, diagonal stair down to the platform below, brackets. Stair hangs to y=-2.85 (the storey below)."
+  },
+  {
+   "name": "fs_fire_escape_base",
+   "cls": "fe",
+   "frame": "facade",
+   "size": [
+    6.0,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -3,
+     -2.65,
+     0.005
+    ],
+    "max": [
+     3,
+     1.43,
+     1.25
+    ]
+   },
+   "maxZ": 1.25,
+   "tris": [
+    284,
+    62
+   ],
+   "meshes": [
+    "fs_fire_escape_base_LOD0",
+    "fs_fire_escape_base_LOD1"
+   ],
+   "notes": "lowest platform: drop ladder (rails + rungs) instead of a stair, hanging 3.1 m"
+  },
+  {
+   "name": "fs_water_tank",
+   "cls": "roof",
+   "frame": "roof",
+   "size": [
+    4.4,
+    9.4
+   ],
+   "bounds": {
+    "min": [
+     -2.167,
+     0,
+     -2.2
+    ],
+    "max": [
+     2.167,
+     9.51,
+     2.2
+    ]
+   },
+   "maxZ": 2.2,
+   "tris": [
+    768,
+    184
+   ],
+   "meshes": [
+    "fs_water_tank_LOD0",
+    "fs_water_tank_LOD1"
+   ],
+   "notes": "timber water tank: steel stand with X bracing, timber deck, stave tub with 5 iron hoops, conical tar roof, finial, side ladder"
+  },
+  {
+   "name": "fs_hvac",
+   "cls": "roof",
+   "frame": "roof",
+   "size": [
+    2.4,
+    1.6
+   ],
+   "bounds": {
+    "min": [
+     -1.1,
+     0,
+     -0.7
+    ],
+    "max": [
+     1.1,
+     1.55,
+     0.74
+    ]
+   },
+   "maxZ": 0.74,
+   "tris": [
+    90,
+    10
+   ],
+   "meshes": [
+    "fs_hvac_LOD0",
+    "fs_hvac_LOD1"
+   ],
+   "notes": "galvanised rooftop unit with louvres and a fan shroud"
+  },
+  {
+   "name": "fs_bulkhead",
+   "cls": "roof",
+   "frame": "roof",
+   "size": [
+    3.2,
+    3.4
+   ],
+   "bounds": {
+    "min": [
+     -1.7,
+     0,
+     -1.4
+    ],
+    "max": [
+     1.7,
+     4.4,
+     1.42
+    ]
+   },
+   "maxZ": 1.42,
+   "tris": [
+    60,
+    33
+   ],
+   "meshes": [
+    "fs_bulkhead_LOD0",
+    "fs_bulkhead_LOD1"
+   ],
+   "notes": "brick stair bulkhead with door, coping and a vent stack"
+  },
+  {
+   "name": "fs_crown",
+   "cls": "crown",
+   "frame": "roof",
+   "size": [
+    16.0,
+    26.0
+   ],
+   "bounds": {
+    "min": [
+     -8.2,
+     0,
+     -8.2
+    ],
+    "max": [
+     8.2,
+     26,
+     8.2
+    ]
+   },
+   "maxZ": 8.2,
+   "tris": [
+    622,
+    98
+   ],
+   "meshes": [
+    "fs_crown_LOD0",
+    "fs_crown_LOD1"
+   ],
+   "notes": "tiered limestone tower crown for a 16 m footprint (uniformly scaled to the top tier): frieze, three ribbed setbacks, lantern, needle"
+  }
+ ]
+}

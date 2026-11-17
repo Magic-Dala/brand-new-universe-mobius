@@ -1,0 +1,1399 @@
+{
+ "version": 1,
+ "axes": "x along facade, y up, z out of wall",
+ "colorEncoding": "R=AO, G=matId/8, B=edge",
+ "units": "metres",
+ "generator": "tools/blender/build_city_kit.py",
+ "origin": {
+  "facade": "bottom-centre of the bay on the wall plane (z=0)",
+  "roof": "footprint centre at roof level (y=0)",
+  "hero": "ground centre"
+ },
+ "materials": [
+  {
+   "id": 0,
+   "name": "wall"
+  },
+  {
+   "id": 1,
+   "name": "stone"
+  },
+  {
+   "id": 2,
+   "name": "metal"
+  },
+  {
+   "id": 3,
+   "name": "glass"
+  },
+  {
+   "id": 4,
+   "name": "copper"
+  },
+  {
+   "id": 5,
+   "name": "canvas"
+  },
+  {
+   "id": 6,
+   "name": "concrete"
+  },
+  {
+   "id": 7,
+   "name": "emissive"
+  }
+ ],
+ "pieces": [
+  {
+   "name": "brick_bay_a",
+   "family": "brick",
+   "kind": "bay",
+   "bay": [
+    3.0,
+    3.3
+   ],
+   "opening": {
+    "width": 1.31,
+    "y0": 0.62,
+    "y1": 2.68
+   },
+   "bounds": {
+    "min": [
+     -0.96,
+     0.42,
+     0
+    ],
+    "max": [
+     0.96,
+     3.06,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    80,
+    18
+   ],
+   "meshes": [
+    "brick_bay_a_LOD0",
+    "brick_bay_a_LOD1"
+   ]
+  },
+  {
+   "name": "brick_bay_b",
+   "family": "brick",
+   "kind": "bay",
+   "bay": [
+    3.0,
+    3.3
+   ],
+   "opening": {
+    "width": 1.31,
+    "y0": 0.62,
+    "y1": 2.68
+   },
+   "bounds": {
+    "min": [
+     -0.86,
+     0.42,
+     0
+    ],
+    "max": [
+     0.86,
+     3.2,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    81,
+    22
+   ],
+   "meshes": [
+    "brick_bay_b_LOD0",
+    "brick_bay_b_LOD1"
+   ]
+  },
+  {
+   "name": "brick_bay_c",
+   "family": "brick",
+   "kind": "bay",
+   "bay": [
+    3.0,
+    3.3
+   ],
+   "opening": {
+    "width": 1.31,
+    "y0": 0.62,
+    "y1": 2.68
+   },
+   "bounds": {
+    "min": [
+     -1.3,
+     0.3,
+     0
+    ],
+    "max": [
+     1.3,
+     2.96,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    88,
+    22
+   ],
+   "meshes": [
+    "brick_bay_c_LOD0",
+    "brick_bay_c_LOD1"
+   ]
+  },
+  {
+   "name": "brick_pier",
+   "family": "brick",
+   "kind": "trim",
+   "bay": [
+    0.5,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -0.29,
+     0,
+     0
+    ],
+    "max": [
+     0.29,
+     3.3,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    52,
+    12
+   ],
+   "meshes": [
+    "brick_pier_LOD0",
+    "brick_pier_LOD1"
+   ]
+  },
+  {
+   "name": "brick_belt",
+   "family": "brick",
+   "kind": "trim",
+   "bay": [
+    3.0,
+    0.32
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     0.32,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    54,
+    8
+   ],
+   "meshes": [
+    "brick_belt_LOD0",
+    "brick_belt_LOD1"
+   ]
+  },
+  {
+   "name": "brick_cornice_a",
+   "family": "brick",
+   "kind": "cornice",
+   "bay": [
+    3.0,
+    1.2
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     1.2,
+     0.78
+    ]
+   },
+   "maxZ": 0.78,
+   "tris": [
+    198,
+    30
+   ],
+   "meshes": [
+    "brick_cornice_a_LOD0",
+    "brick_cornice_a_LOD1"
+   ]
+  },
+  {
+   "name": "brick_cornice_b",
+   "family": "brick",
+   "kind": "cornice",
+   "bay": [
+    3.0,
+    0.8
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     0.8,
+     0.5
+    ]
+   },
+   "maxZ": 0.5,
+   "tris": [
+    108,
+    18
+   ],
+   "meshes": [
+    "brick_cornice_b_LOD0",
+    "brick_cornice_b_LOD1"
+   ]
+  },
+  {
+   "name": "brick_crown_a",
+   "family": "brick",
+   "kind": "crown",
+   "bay": [
+    3.0,
+    1.1
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     1.1,
+     0.32
+    ]
+   },
+   "maxZ": 0.32,
+   "tris": [
+    198,
+    30
+   ],
+   "meshes": [
+    "brick_crown_a_LOD0",
+    "brick_crown_a_LOD1"
+   ]
+  },
+  {
+   "name": "brick_crown_b",
+   "family": "brick",
+   "kind": "crown",
+   "bay": [
+    3.0,
+    1.7
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     1.7,
+     0.32
+    ]
+   },
+   "maxZ": 0.32,
+   "tris": [
+    174,
+    30
+   ],
+   "meshes": [
+    "brick_crown_b_LOD0",
+    "brick_crown_b_LOD1"
+   ]
+  },
+  {
+   "name": "brick_crown_c",
+   "family": "brick",
+   "kind": "crown",
+   "bay": [
+    3.0,
+    1.43
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     1.43,
+     0.32
+    ]
+   },
+   "maxZ": 0.32,
+   "tris": [
+    198,
+    28
+   ],
+   "meshes": [
+    "brick_crown_c_LOD0",
+    "brick_crown_c_LOD1"
+   ]
+  },
+  {
+   "name": "brick_fire_escape_bay",
+   "family": "brick",
+   "kind": "bay",
+   "bay": [
+    3.0,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     -1.022,
+     -0.001
+    ],
+    "max": [
+     1.5,
+     3.345,
+     1.2
+    ]
+   },
+   "maxZ": 1.2,
+   "tris": [
+    360,
+    64
+   ],
+   "meshes": [
+    "brick_fire_escape_bay_LOD0",
+    "brick_fire_escape_bay_LOD1"
+   ]
+  },
+  {
+   "name": "brick_quoin",
+   "family": "brick",
+   "kind": "trim",
+   "bay": [
+    0.6,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -0.6,
+     0.03,
+     0
+    ],
+    "max": [
+     0,
+     3.27,
+     0.1
+    ]
+   },
+   "maxZ": 0.1,
+   "tris": [
+    54,
+    10
+   ],
+   "meshes": [
+    "brick_quoin_LOD0",
+    "brick_quoin_LOD1"
+   ]
+  },
+  {
+   "name": "brick_lintel_band",
+   "family": "brick",
+   "kind": "trim",
+   "bay": [
+    3.0,
+    3.3
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     2.68,
+     0
+    ],
+    "max": [
+     1.5,
+     3.08,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    54,
+    12
+   ],
+   "meshes": [
+    "brick_lintel_band_LOD0",
+    "brick_lintel_band_LOD1"
+   ]
+  },
+  {
+   "name": "ind_bay",
+   "family": "industrial",
+   "kind": "bay",
+   "bay": [
+    4.0,
+    4.2
+   ],
+   "opening": {
+    "width": 3.0,
+    "y0": 0.92,
+    "y1": 3.54
+   },
+   "bounds": {
+    "min": [
+     -1.75,
+     0.8,
+     0
+    ],
+    "max": [
+     1.75,
+     3.9,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    80,
+    24
+   ],
+   "meshes": [
+    "ind_bay_LOD0",
+    "ind_bay_LOD1"
+   ]
+  },
+  {
+   "name": "deco_bay",
+   "family": "deco",
+   "kind": "bay",
+   "bay": [
+    3.2,
+    3.9
+   ],
+   "opening": {
+    "width": 2.0,
+    "y0": 0.61,
+    "y1": 3.29
+   },
+   "bounds": {
+    "min": [
+     -1.6,
+     0,
+     0
+    ],
+    "max": [
+     1.6,
+     3.9,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    80,
+    18
+   ],
+   "meshes": [
+    "deco_bay_LOD0",
+    "deco_bay_LOD1"
+   ]
+  },
+  {
+   "name": "deco_spandrel_bay",
+   "family": "deco",
+   "kind": "bay",
+   "bay": [
+    3.2,
+    3.9
+   ],
+   "opening": {
+    "width": 2.0,
+    "y0": 0.61,
+    "y1": 3.29
+   },
+   "bounds": {
+    "min": [
+     -1.6,
+     0,
+     0
+    ],
+    "max": [
+     1.6,
+     3.9,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    80,
+    20
+   ],
+   "meshes": [
+    "deco_spandrel_bay_LOD0",
+    "deco_spandrel_bay_LOD1"
+   ]
+  },
+  {
+   "name": "deco_fin_bay",
+   "family": "deco",
+   "kind": "bay",
+   "bay": [
+    3.2,
+    3.9
+   ],
+   "opening": {
+    "width": 2.0,
+    "y0": 0.61,
+    "y1": 3.29
+   },
+   "bounds": {
+    "min": [
+     -1.6,
+     0,
+     0
+    ],
+    "max": [
+     1.14,
+     3.9,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    81,
+    18
+   ],
+   "meshes": [
+    "deco_fin_bay_LOD0",
+    "deco_fin_bay_LOD1"
+   ]
+  },
+  {
+   "name": "deco_setback_parapet",
+   "family": "deco",
+   "kind": "crown",
+   "bay": [
+    3.2,
+    2.4
+   ],
+   "bounds": {
+    "min": [
+     -1.6,
+     0,
+     0
+    ],
+    "max": [
+     1.6,
+     2.4,
+     0.42
+    ]
+   },
+   "maxZ": 0.42,
+   "tris": [
+    197,
+    34
+   ],
+   "meshes": [
+    "deco_setback_parapet_LOD0",
+    "deco_setback_parapet_LOD1"
+   ]
+  },
+  {
+   "name": "deco_belt",
+   "family": "deco",
+   "kind": "trim",
+   "bay": [
+    3.2,
+    0.36
+   ],
+   "bounds": {
+    "min": [
+     -1.6,
+     0,
+     0
+    ],
+    "max": [
+     1.6,
+     0.36,
+     0.13
+    ]
+   },
+   "maxZ": 0.13,
+   "tris": [
+    58,
+    12
+   ],
+   "meshes": [
+    "deco_belt_LOD0",
+    "deco_belt_LOD1"
+   ]
+  },
+  {
+   "name": "deco_corner",
+   "family": "deco",
+   "kind": "trim",
+   "bay": [
+    0.6,
+    3.9
+   ],
+   "bounds": {
+    "min": [
+     -0.62,
+     0,
+     0
+    ],
+    "max": [
+     0,
+     3.9,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    54,
+    10
+   ],
+   "meshes": [
+    "deco_corner_LOD0",
+    "deco_corner_LOD1"
+   ]
+  },
+  {
+   "name": "deco_medallion",
+   "family": "deco",
+   "kind": "trim",
+   "bay": [
+    1.2,
+    1.2
+   ],
+   "bounds": {
+    "min": [
+     -0.6,
+     0,
+     0
+    ],
+    "max": [
+     0.6,
+     1.2,
+     0.12
+    ]
+   },
+   "maxZ": 0.12,
+   "tris": [
+    56,
+    16
+   ],
+   "meshes": [
+    "deco_medallion_LOD0",
+    "deco_medallion_LOD1"
+   ]
+  },
+  {
+   "name": "glass_curtain_bay",
+   "family": "glass",
+   "kind": "bay",
+   "bay": [
+    1.6,
+    3.8
+   ],
+   "bounds": {
+    "min": [
+     -0.85,
+     0,
+     0
+    ],
+    "max": [
+     0.75,
+     3.8,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    42,
+    8
+   ],
+   "meshes": [
+    "glass_curtain_bay_LOD0",
+    "glass_curtain_bay_LOD1"
+   ]
+  },
+  {
+   "name": "glass_spandrel",
+   "family": "glass",
+   "kind": "trim",
+   "bay": [
+    1.6,
+    0.61
+   ],
+   "bounds": {
+    "min": [
+     -0.8,
+     0,
+     0
+    ],
+    "max": [
+     0.8,
+     0.61,
+     0.14
+    ]
+   },
+   "maxZ": 0.14,
+   "tris": [
+    46,
+    10
+   ],
+   "meshes": [
+    "glass_spandrel_LOD0",
+    "glass_spandrel_LOD1"
+   ]
+  },
+  {
+   "name": "glass_corner",
+   "family": "glass",
+   "kind": "trim",
+   "bay": [
+    0.3,
+    3.8
+   ],
+   "bounds": {
+    "min": [
+     -0.6,
+     0,
+     0
+    ],
+    "max": [
+     0,
+     3.8,
+     0.16
+    ]
+   },
+   "maxZ": 0.16,
+   "tris": [
+    52,
+    8
+   ],
+   "meshes": [
+    "glass_corner_LOD0",
+    "glass_corner_LOD1"
+   ]
+  },
+  {
+   "name": "glass_crown_fin",
+   "family": "glass",
+   "kind": "crown",
+   "bay": [
+    3.2,
+    3.0
+   ],
+   "bounds": {
+    "min": [
+     -1.6,
+     0,
+     0
+    ],
+    "max": [
+     1.6,
+     3.04,
+     0.74
+    ]
+   },
+   "maxZ": 0.74,
+   "tris": [
+    104,
+    20
+   ],
+   "meshes": [
+    "glass_crown_fin_LOD0",
+    "glass_crown_fin_LOD1"
+   ]
+  },
+  {
+   "name": "storefront_a",
+   "family": "shared",
+   "kind": "storefront",
+   "bay": [
+    3.0,
+    4.6
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     4.6,
+     1.4
+    ]
+   },
+   "maxZ": 1.4,
+   "tris": [
+    270,
+    44
+   ],
+   "meshes": [
+    "storefront_a_LOD0",
+    "storefront_a_LOD1"
+   ]
+  },
+  {
+   "name": "storefront_b",
+   "family": "shared",
+   "kind": "storefront",
+   "bay": [
+    3.0,
+    4.6
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     4.6,
+     1.1
+    ]
+   },
+   "maxZ": 1.1,
+   "tris": [
+    270,
+    46
+   ],
+   "meshes": [
+    "storefront_b_LOD0",
+    "storefront_b_LOD1"
+   ]
+  },
+  {
+   "name": "storefront_c",
+   "family": "shared",
+   "kind": "storefront",
+   "bay": [
+    3.0,
+    4.6
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     4.6,
+     1.38
+    ]
+   },
+   "maxZ": 1.38,
+   "tris": [
+    270,
+    48
+   ],
+   "meshes": [
+    "storefront_c_LOD0",
+    "storefront_c_LOD1"
+   ]
+  },
+  {
+   "name": "storefront_d",
+   "family": "shared",
+   "kind": "storefront",
+   "bay": [
+    3.0,
+    4.6
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     4.6,
+     0.34
+    ]
+   },
+   "maxZ": 0.34,
+   "tris": [
+    270,
+    40
+   ],
+   "meshes": [
+    "storefront_d_LOD0",
+    "storefront_d_LOD1"
+   ]
+  },
+  {
+   "name": "glass_podium_storefront",
+   "family": "glass",
+   "kind": "storefront",
+   "bay": [
+    3.0,
+    4.6
+   ],
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     0
+    ],
+    "max": [
+     1.5,
+     4.6,
+     1.2
+    ]
+   },
+   "maxZ": 1.2,
+   "tris": [
+    228,
+    30
+   ],
+   "meshes": [
+    "glass_podium_storefront_LOD0",
+    "glass_podium_storefront_LOD1"
+   ]
+  },
+  {
+   "name": "roof_bulkhead",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -2.15,
+     0,
+     -1.65
+    ],
+    "max": [
+     2.15,
+     4.08,
+     1.65
+    ]
+   },
+   "maxZ": 1.65,
+   "tris": [
+    262,
+    20
+   ],
+   "meshes": [
+    "roof_bulkhead_LOD0",
+    "roof_bulkhead_LOD1"
+   ]
+  },
+  {
+   "name": "roof_water_tower",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -1.863,
+     0,
+     -1.863
+    ],
+    "max": [
+     1.863,
+     8.1,
+     1.9
+    ]
+   },
+   "maxZ": 1.9,
+   "tris": [
+    370,
+    62
+   ],
+   "meshes": [
+    "roof_water_tower_LOD0",
+    "roof_water_tower_LOD1"
+   ]
+  },
+  {
+   "name": "roof_hvac",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -2.1,
+     0,
+     -0.7
+    ],
+    "max": [
+     3.04,
+     1.38,
+     0.79
+    ]
+   },
+   "maxZ": 0.79,
+   "tris": [
+    388,
+    70
+   ],
+   "meshes": [
+    "roof_hvac_LOD0",
+    "roof_hvac_LOD1"
+   ]
+  },
+  {
+   "name": "roof_billboard",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -4.1,
+     0,
+     -2.644
+    ],
+    "max": [
+     4.1,
+     7.622,
+     1.4
+    ]
+   },
+   "maxZ": 1.4,
+   "tris": [
+    360,
+    50
+   ],
+   "meshes": [
+    "roof_billboard_LOD0",
+    "roof_billboard_LOD1"
+   ]
+  },
+  {
+   "name": "roof_antenna",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -0.6,
+     0,
+     -0.6
+    ],
+    "max": [
+     0.6,
+     10.73,
+     0.6
+    ]
+   },
+   "maxZ": 0.6,
+   "tris": [
+    360,
+    62
+   ],
+   "meshes": [
+    "roof_antenna_LOD0",
+    "roof_antenna_LOD1"
+   ]
+  },
+  {
+   "name": "roof_vent",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -0.685,
+     0,
+     -0.513
+    ],
+    "max": [
+     0.75,
+     1.4,
+     0.82
+    ]
+   },
+   "maxZ": 0.82,
+   "tris": [
+    360,
+    70
+   ],
+   "meshes": [
+    "roof_vent_LOD0",
+    "roof_vent_LOD1"
+   ]
+  },
+  {
+   "name": "roof_skylight",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -1.24,
+     0,
+     -0.84
+    ],
+    "max": [
+     1.24,
+     1.11,
+     0.84
+    ]
+   },
+   "maxZ": 0.84,
+   "tris": [
+    218,
+    14
+   ],
+   "meshes": [
+    "roof_skylight_LOD0",
+    "roof_skylight_LOD1"
+   ]
+  },
+  {
+   "name": "roof_chimney",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -0.56,
+     0,
+     -0.56
+    ],
+    "max": [
+     0.56,
+     3,
+     0.56
+    ]
+   },
+   "maxZ": 0.56,
+   "tris": [
+    196,
+    38
+   ],
+   "meshes": [
+    "roof_chimney_LOD0",
+    "roof_chimney_LOD1"
+   ]
+  },
+  {
+   "name": "roof_planter",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     -0.5
+    ],
+    "max": [
+     1.5,
+     1.036,
+     0.5
+    ]
+   },
+   "maxZ": 0.5,
+   "tris": [
+    360,
+    42
+   ],
+   "meshes": [
+    "roof_planter_LOD0",
+    "roof_planter_LOD1"
+   ]
+  },
+  {
+   "name": "roof_satellite",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -0.65,
+     0,
+     -0.45
+    ],
+    "max": [
+     0.65,
+     1.78,
+     0.7
+    ]
+   },
+   "maxZ": 0.7,
+   "tris": [
+    216,
+    32
+   ],
+   "meshes": [
+    "roof_satellite_LOD0",
+    "roof_satellite_LOD1"
+   ]
+  },
+  {
+   "name": "roof_parapet_rail",
+   "family": "shared",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -1.5,
+     0,
+     -0.08
+    ],
+    "max": [
+     1.5,
+     1.096,
+     0.08
+    ]
+   },
+   "maxZ": 0.08,
+   "tris": [
+    192,
+    24
+   ],
+   "meshes": [
+    "roof_parapet_rail_LOD0",
+    "roof_parapet_rail_LOD1"
+   ]
+  },
+  {
+   "name": "deco_crown_spire",
+   "family": "deco",
+   "kind": "roof",
+   "bounds": {
+    "min": [
+     -3.25,
+     0,
+     -3.25
+    ],
+    "max": [
+     3.25,
+     18.195,
+     3.25
+    ]
+   },
+   "maxZ": 3.25,
+   "tris": [
+    980,
+    206
+   ],
+   "meshes": [
+    "deco_crown_spire_LOD0",
+    "deco_crown_spire_LOD1"
+   ]
+  },
+  {
+   "name": "hero_deco_tower",
+   "family": "hero",
+   "kind": "hero",
+   "bounds": {
+    "min": [
+     -21.2,
+     0,
+     -21.2
+    ],
+    "max": [
+     21.2,
+     267.17,
+     21.2
+    ]
+   },
+   "maxZ": 21.2,
+   "tris": [
+    1108,
+    220
+   ],
+   "meshes": [
+    "hero_deco_tower_LOD0",
+    "hero_deco_tower_LOD1"
+   ]
+  },
+  {
+   "name": "hero_glass_tower",
+   "family": "hero",
+   "kind": "hero",
+   "bounds": {
+    "min": [
+     -30,
+     0,
+     -30
+    ],
+    "max": [
+     30,
+     307.67,
+     30
+    ]
+   },
+   "maxZ": 30,
+   "tris": [
+    888,
+    250
+   ],
+   "meshes": [
+    "hero_glass_tower_LOD0",
+    "hero_glass_tower_LOD1"
+   ]
+  },
+  {
+   "name": "hero_taipei_tower",
+   "family": "hero",
+   "kind": "hero",
+   "bounds": {
+    "min": [
+     -30,
+     0,
+     -30
+    ],
+    "max": [
+     30,
+     353.51,
+     30
+    ]
+   },
+   "maxZ": 30,
+   "tris": [
+    1052,
+    376
+   ],
+   "meshes": [
+    "hero_taipei_tower_LOD0",
+    "hero_taipei_tower_LOD1"
+   ]
+  },
+  {
+   "name": "hero_spire_tower",
+   "family": "hero",
+   "kind": "hero",
+   "bounds": {
+    "min": [
+     -18,
+     0,
+     -18
+    ],
+    "max": [
+     18,
+     228,
+     18
+    ]
+   },
+   "maxZ": 18,
+   "tris": [
+    606,
+    226
+   ],
+   "meshes": [
+    "hero_spire_tower_LOD0",
+    "hero_spire_tower_LOD1"
+   ]
+  }
+ ]
+}

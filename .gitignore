@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+/_to_delete/
+
+# Local-only working folders: source models, recordings and working documents stay out of the repository
+/3D_Models/
+/bgm/
+/Voiceover/
+/story_mode_tutorials/
+/arcade_mode_tutorials/
+/Brand New Universe - Mobius Materials/
+/tools/
+/art/*
+!/art/factory/
+/art/factory/*
+!/art/factory/factory_layout.json
+/docs/*
+!/docs/CHART_FORMAT.md
+!/docs/WORLD_COORDINATES.md
+!/docs/ASSETS.md
+!/docs/QUEST3_TEST_CHECKLIST.md
+!/docs/architecture/
+!/docs/media/

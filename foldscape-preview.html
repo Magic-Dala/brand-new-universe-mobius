@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Foldscape City — art preview</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #20141a; overflow: hidden; font: 12px/1.35 system-ui, sans-serif; }
+  canvas { display: block; }
+  #ui { position: fixed; top: 8px; left: 8px; display: flex; flex-wrap: wrap; gap: 4px; z-index: 2; max-width: 70vw; }
+  #ui a, #ui button { padding: 4px 8px; background: rgba(20,16,32,.78); color: #9fe8ff; border: 1px solid #3a7a9a; border-radius: 4px; text-decoration: none; cursor: pointer; font: inherit; }
+  #ui a.on { background: #2a6a8a; color: #fff; }
+  #stats { position: fixed; bottom: 8px; left: 8px; color: #fff; background: rgba(0,0,0,.55); padding: 4px 8px; border-radius: 4px; z-index: 2; white-space: pre; font-family: ui-monospace, monospace; }
+  #help { position: fixed; bottom: 8px; right: 8px; color: #ddd; background: rgba(0,0,0,.45); padding: 4px 8px; border-radius: 4px; z-index: 2; }
+  body.clean #ui, body.clean #stats, body.clean #help { display: none; }
+</style>
+</head>
+<body>
+<div id="ui"></div>
+<div id="stats"></div>
+<div id="help">drag: look · WASD/QE: move · P: pause · [ ]: route −/+ 20 m · #view=…&amp;s=…&amp;q=high|low|off&amp;dbg=anchors,cols · ?clean</div>
+<script type="module" src="./src/dev/foldscapePreview.js"></script>
+</body>
+</html>

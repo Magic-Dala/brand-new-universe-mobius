@@ -1,0 +1,869 @@
+{
+ "generator": "tools/blender/build_forest_kit.py",
+ "blender": "5.2.3 LTS Release Candidate",
+ "frame": "glTF Y-up metres; +Z = corridor side when placed; tree pieces normalised to trunk radius 1 (trunk height 16)",
+ "colorEncoding": "COLOR_0 R = baked AO, G = material id / 8, B = variation / moss mask; TEXCOORD_0 = metres (leaf cards, id 8: atlas uv)",
+ "materials": [
+  "bark",
+  "stone",
+  "leaf",
+  "moss",
+  "dark",
+  "vine",
+  "rock",
+  "fern",
+  "leafcard"
+ ],
+ "leafAtlas": {
+  "file": "models/forest/forest_leaf.png",
+  "size": [
+   1024,
+   1024
+  ],
+  "materialId": 8,
+  "tiles": {
+   "spray_a": [
+    0.0,
+    0.5,
+    0.5,
+    0.5
+   ],
+   "spray_b": [
+    0.5,
+    0.5,
+    0.5,
+    0.5
+   ],
+   "dense": [
+    0.0,
+    0.0,
+    0.5,
+    0.5
+   ],
+   "hang": [
+    0.5,
+    0.0,
+    0.5,
+    0.5
+   ]
+  },
+  "uvConvention": "Blender uv, glTF export flips v: load with flipY = false",
+  "stats": {
+   "spray_a": {
+    "leaves": 219,
+    "leafPx": 35,
+    "leafFrac": 0.067,
+    "coverage": 0.183
+   },
+   "spray_b": {
+    "leaves": 270,
+    "leafPx": 25,
+    "leafFrac": 0.05,
+    "coverage": 0.122
+   },
+   "dense": {
+    "leaves": 372,
+    "leafPx": 42,
+    "leafFrac": 0.083,
+    "coverage": 0.293
+   },
+   "hang": {
+    "leaves": 12,
+    "leafPx": 78,
+    "leafFrac": 0.151,
+    "coverage": 0.102
+   }
+  },
+  "cardLength": {
+   "cn_canopy_a": 0.55,
+   "cn_canopy_b": 0.55,
+   "cn_canopy_c": 0.72
+  }
+ },
+ "pieces": [
+  {
+   "name": "tr_trunk_a",
+   "cls": "trunk",
+   "frame": "tree",
+   "note": "straight giant trunk, 13 bark ridges, strong base flare",
+   "bmin": [
+    -3.059,
+    -0.531,
+    -2.206
+   ],
+   "bmax": [
+    2.429,
+    16.27,
+    2.265
+   ],
+   "tris": [
+    1884,
+    300
+   ]
+  },
+  {
+   "name": "tr_trunk_b",
+   "cls": "trunk",
+   "frame": "tree",
+   "note": "S-bent trunk, 9 deep flutes",
+   "bmin": [
+    -2.52,
+    -0.592,
+    -3.29
+   ],
+   "bmax": [
+    2.321,
+    16.27,
+    2.354
+   ],
+   "tris": [
+    1929,
+    300
+   ]
+  },
+  {
+   "name": "tr_trunk_c",
+   "cls": "trunk",
+   "frame": "tree",
+   "note": "leaning trunk, 17 fine ridges",
+   "bmin": [
+    -2.827,
+    -0.509,
+    -1.861
+   ],
+   "bmax": [
+    2.383,
+    16.27,
+    1.819
+   ],
+   "tris": [
+    1839,
+    300
+   ]
+  },
+  {
+   "name": "tr_crown_a",
+   "cls": "crown",
+   "frame": "tree",
+   "note": "4 heavy limbs + side branches, corridor side only a steep limb",
+   "bmin": [
+    -8.529,
+    -2.17,
+    -7.527
+   ],
+   "bmax": [
+    6.946,
+    10.498,
+    6.053
+   ],
+   "tris": [
+    1920,
+    505
+   ],
+   "tips": [
+    [
+     -8.5,
+     3.103,
+     0.0
+    ],
+    [
+     -3.994,
+     3.522,
+     2.796
+    ],
+    [
+     0.0,
+     3.349,
+     -7.5
+    ],
+    [
+     2.467,
+     3.25,
+     -3.54
+    ],
+    [
+     6.921,
+     2.96,
+     -1.046
+    ],
+    [
+     2.931,
+     3.015,
+     -2.772
+    ],
+    [
+     0.0,
+     10.46,
+     6.0
+    ],
+    [
+     -1.974,
+     4.147,
+     2.858
+    ],
+    [
+     -4.793,
+     3.551,
+     -4.391
+    ],
+    [
+     -3.719,
+     2.969,
+     -0.507
+    ]
+   ]
+  },
+  {
+   "name": "tr_crown_b",
+   "cls": "crown",
+   "frame": "tree",
+   "note": "wide umbrella crown (kapok-like)",
+   "bmin": [
+    -9.582,
+    -2.193,
+    -8.326
+   ],
+   "bmax": [
+    8.954,
+    7.733,
+    5.611
+   ],
+   "tris": [
+    1920,
+    505
+   ],
+   "tips": [
+    [
+     -9.553,
+     2.236,
+     -2.955
+    ],
+    [
+     -5.44,
+     3.835,
+     1.761
+    ],
+    [
+     -3.505,
+     2.298,
+     -8.29
+    ],
+    [
+     1.083,
+     3.527,
+     -5.041
+    ],
+    [
+     8.924,
+     2.325,
+     -3.258
+    ],
+    [
+     3.108,
+     3.692,
+     -4.462
+    ],
+    [
+     -6.855,
+     2.475,
+     4.124
+    ],
+    [
+     -4.585,
+     3.241,
+     -0.313
+    ],
+    [
+     1.093,
+     7.691,
+     5.39
+    ],
+    [
+     2.296,
+     3.451,
+     2.218
+    ]
+   ]
+  },
+  {
+   "name": "tr_crown_c",
+   "cls": "crown",
+   "frame": "tree",
+   "note": "tall forked crown",
+   "bmin": [
+    -6.925,
+    -2.163,
+    -6.026
+   ],
+   "bmax": [
+    5.846,
+    12.886,
+    4.832
+   ],
+   "tris": [
+    1536,
+    404
+   ],
+   "tips": [
+    [
+     -6.86,
+     6.521,
+     1.391
+    ],
+    [
+     -2.789,
+     3.704,
+     2.915
+    ],
+    [
+     5.777,
+     5.896,
+     -3.952
+    ],
+    [
+     4.034,
+     3.583,
+     0.03
+    ],
+    [
+     0.0,
+     3.679,
+     -6.0
+    ],
+    [
+     -1.974,
+     2.834,
+     -2.858
+    ],
+    [
+     -1.478,
+     12.861,
+     4.777
+    ],
+    [
+     -2.282,
+     4.291,
+     1.81
+    ]
+   ]
+  },
+  {
+   "name": "tr_roots",
+   "cls": "roots",
+   "frame": "tree",
+   "note": "plank buttress roots (7 fins) + flare, Blender alternative to the Tripo stump",
+   "bmin": [
+    -2.729,
+    -0.4,
+    -2.933
+   ],
+   "bmax": [
+    2.854,
+    3.831,
+    3.199
+   ],
+   "tris": [
+    1040,
+    355
+   ]
+  },
+  {
+   "name": "tr_mount",
+   "cls": "mount",
+   "frame": "metric",
+   "note": "bark burl behind a swing anchor: back z=\u22121 inside the bark, front face z=0 (the anchor plane), 2.6 \u00d7 3 m",
+   "bmin": [
+    -1.266,
+    -3.636,
+    -1.756
+   ],
+   "bmax": [
+    1.366,
+    3.636,
+    0.609
+   ],
+   "tris": [
+    550,
+    160
+   ]
+  },
+  {
+   "name": "cn_canopy_a",
+   "cls": "canopy",
+   "frame": "tree",
+   "note": "domed open foliage clump: 9 branches carrying leaf-spray cards (alpha atlas), \u2248 5.5 m sprays (\u2248 35 cm leaves) at scale 10, dense inner masses",
+   "bmin": [
+    -1.867,
+    -0.136,
+    -1.777
+   ],
+   "bmax": [
+    1.648,
+    1.592,
+    1.727
+   ],
+   "tris": [
+    756,
+    90
+   ],
+   "alpha": true
+  },
+  {
+   "name": "cn_canopy_b",
+   "cls": "canopy",
+   "frame": "tree",
+   "note": "wide umbrella foliage tier: 9 low, long branches with spray cards",
+   "bmin": [
+    -1.572,
+    -0.142,
+    -2.187
+   ],
+   "bmax": [
+    1.637,
+    1.232,
+    2.183
+   ],
+   "tris": [
+    756,
+    90
+   ],
+   "alpha": true
+  },
+  {
+   "name": "cn_canopy_c",
+   "cls": "canopy",
+   "frame": "tree",
+   "note": "small foliage clump (side-branch ends, ruin tops): 5 branches, \u2248 3.6 m sprays at scale 5 (the most numerous foliage piece: lightest)",
+   "bmin": [
+    -1.701,
+    -0.146,
+    -1.521
+   ],
+   "bmax": [
+    1.274,
+    1.586,
+    1.634
+   ],
+   "tris": [
+    360,
+    40
+   ],
+   "alpha": true
+  },
+  {
+   "name": "vn_hang",
+   "cls": "vine",
+   "frame": "metric",
+   "note": "hanging vine curtain: 5 strands from y=0 down to y=\u221210 m, 3 m wide, hanging leaf cards (atlas) along them",
+   "bmin": [
+    -2.431,
+    -10.26,
+    -0.401
+   ],
+   "bmax": [
+    2.559,
+    0.034,
+    0.917
+   ],
+   "tris": [
+    712,
+    234
+   ],
+   "alpha": true
+  },
+  {
+   "name": "rt_wrap",
+   "cls": "wrap",
+   "frame": "metric",
+   "note": "strangler roots down a wall: wall plane z=0, 6 m wide, y 0..18 m, feet flare out to z\u22642.2 at the ground",
+   "bmin": [
+    -3.487,
+    -0.295,
+    0.005
+   ],
+   "bmax": [
+    3.382,
+    18.58,
+    3.759
+   ],
+   "tris": [
+    1630,
+    532
+   ]
+  },
+  {
+   "name": "rn_walltop",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "broken wall crown: 6 m wide \u00d7 1.2 m deep, jagged 0\u20133.5 m (sits on a wall top, y = 0 = the top)",
+   "bmin": [
+    -2.98,
+    0.02,
+    -0.6
+   ],
+   "bmax": [
+    2.98,
+    1.78,
+    0.616
+   ],
+   "tris": [
+    308,
+    84
+   ]
+  },
+  {
+   "name": "rn_parapet",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "chipped parapet 4 m long \u00d7 0.7 m: base course + crenels, one missing",
+   "bmin": [
+    -2.0,
+    0.0,
+    -0.375
+   ],
+   "bmax": [
+    2.0,
+    1.502,
+    0.475
+   ],
+   "tris": [
+    220,
+    60
+   ]
+  },
+  {
+   "name": "rn_arch",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "complete arch: 10 m inner span, springing at y=0, 2.6 m deep, imposts + 4 m pier stubs",
+   "bmin": [
+    -6.6,
+    -3.98,
+    -1.5
+   ],
+   "bmax": [
+    6.6,
+    7.4,
+    1.5
+   ],
+   "tris": [
+    688,
+    240
+   ]
+  },
+  {
+   "name": "rn_arch_broken",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "broken arch: left half + a hanging voussoir, the crown fallen (10 m span frame)",
+   "bmin": [
+    -6.6,
+    -3.98,
+    -1.5
+   ],
+   "bmax": [
+    1.997,
+    6.288,
+    1.5
+   ],
+   "tris": [
+    372,
+    176
+   ]
+  },
+  {
+   "name": "rn_column",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "ruined square pillar 2.2 m, 11 m, broken top, plinth (origin = ground centre)",
+   "bmin": [
+    -1.5,
+    -0.0,
+    -1.5
+   ],
+   "bmax": [
+    1.5,
+    11.065,
+    1.5
+   ],
+   "tris": [
+    572,
+    156
+   ]
+  },
+  {
+   "name": "rn_bridge_end",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "broken bridge end: deck x 0..9 m (attached at x=0), 6 m wide, top y=0, jagged far end, parapets, arch spandrel below",
+   "bmin": [
+    -7.1,
+    -2.392,
+    -3.0
+   ],
+   "bmax": [
+    8.715,
+    6.583,
+    3.0
+   ],
+   "tris": [
+    1580,
+    456
+   ]
+  },
+  {
+   "name": "rn_niche",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "arched niche surround 2.6 \u00d7 4.2 m on a wall (wall plane z=0, protrudes 0.55 m), dark recess panel",
+   "bmin": [
+    -1.3,
+    -0.0,
+    -0.005
+   ],
+   "bmax": [
+    1.3,
+    3.7,
+    0.7
+   ],
+   "tris": [
+    403,
+    171
+   ]
+  },
+  {
+   "name": "rn_rubble",
+   "cls": "masonry",
+   "frame": "metric",
+   "note": "fallen cut blocks + rocks, 6 \u00d7 4 m footprint, \u2264 2 m tall (ground)",
+   "bmin": [
+    -2.905,
+    -0.148,
+    -1.993
+   ],
+   "bmax": [
+    3.107,
+    1.046,
+    2.225
+   ],
+   "tris": [
+    324,
+    76
+   ]
+  },
+  {
+   "name": "rk_boulder",
+   "cls": "rock",
+   "frame": "metric",
+   "note": "mossy stream boulder, radius \u2248 1 m (ground origin)",
+   "bmin": [
+    -0.959,
+    -0.071,
+    -1.004
+   ],
+   "bmax": [
+    1.009,
+    0.965,
+    1.06
+   ],
+   "tris": [
+    320,
+    80
+   ]
+  },
+  {
+   "name": "rk_boulder_b",
+   "cls": "rock",
+   "frame": "metric",
+   "note": "flat stepping boulder pair",
+   "bmin": [
+    -1.398,
+    -0.054,
+    -0.953
+   ],
+   "bmax": [
+    1.174,
+    0.628,
+    0.885
+   ],
+   "tris": [
+    340,
+    100
+   ]
+  },
+  {
+   "name": "fx_fern",
+   "cls": "plant",
+   "frame": "metric",
+   "note": "fern clump: 9 arching fronds, \u2248 2.6 m across (two-sided strips)",
+   "bmin": [
+    -1.359,
+    0.1,
+    -1.625
+   ],
+   "bmax": [
+    1.44,
+    0.767,
+    1.756
+   ],
+   "tris": [
+    252,
+    60
+   ]
+  },
+  {
+   "name": "fx_bush",
+   "cls": "plant",
+   "frame": "metric",
+   "note": "leafy bank shrub \u2248 3 m (ground origin): arching leafy stems (atlas cards) from a woody base",
+   "bmin": [
+    -1.336,
+    -0.366,
+    -1.255
+   ],
+   "bmax": [
+    1.477,
+    1.603,
+    1.456
+   ],
+   "tris": [
+    124,
+    16
+   ],
+   "alpha": true
+  }
+ ],
+ "heroes": {
+  "hero_roots": {
+   "source": "tree stump 3d model.glb",
+   "sourceSha256": "a2032a65a19f94713283d8e0e5d55c704c6512386fd5d9370eccf3325c544056",
+   "sourceTris": 8017,
+   "sourceTexture": [
+    8192,
+    8192
+   ],
+   "texture": "models/forest/hero_roots.jpg",
+   "textureSize": [
+    1024,
+    1024
+   ],
+   "tris": [
+    6000,
+    1499
+   ],
+   "bounds": [
+    [
+     -0.473,
+     -0.0,
+     -0.5
+    ],
+    [
+     0.473,
+     0.444,
+     0.5
+    ]
+   ]
+  },
+  "hero_ruin": {
+   "source": "ancient ruin with roots 3d model.glb",
+   "sourceSha256": "549965f795fb4be4f47e7a9d100148fc4a77b80f7283238da800045332b3c4fc",
+   "sourceTris": 10130,
+   "sourceTexture": [
+    8192,
+    8192
+   ],
+   "texture": "models/forest/hero_ruin.jpg",
+   "textureSize": [
+    1024,
+    1024
+   ],
+   "tris": [
+    7000,
+    1799
+   ],
+   "bounds": [
+    [
+     -0.486,
+     0.0,
+     -0.297
+    ],
+    [
+     0.486,
+     1.0,
+     0.297
+    ]
+   ]
+  },
+  "hero_statue": {
+   "source": "stone knight 3d model.glb",
+   "sourceSha256": "d8fe65c3fc5c66386fa0fcaf42169d4d3370b0e22d8304e8b56a7b42c47e604a",
+   "sourceTris": 22851,
+   "sourceTexture": [
+    8192,
+    8192
+   ],
+   "texture": "models/forest/hero_statue.jpg",
+   "textureSize": [
+    1024,
+    1024
+   ],
+   "tris": [
+    8000,
+    8000
+   ],
+   "bounds": [
+    [
+     -0.41,
+     0.002,
+     -0.323
+    ],
+    [
+     0.41,
+     1.002,
+     0.324
+    ]
+   ]
+  },
+  "hero_altar": {
+   "source": "ancient stone altar 3d model.glb",
+   "sourceSha256": "b9b22ed33f8fc898b267bfc26c694410aacf14ea678192fb106a240e0e6b4672",
+   "sourceTris": 19048,
+   "sourceTexture": [
+    2048,
+    2048
+   ],
+   "texture": "models/forest/hero_altar.jpg",
+   "textureSize": [
+    1024,
+    1024
+   ],
+   "tris": [
+    7000,
+    1800
+   ],
+   "bounds": [
+    [
+     -0.5,
+     0.0,
+     -0.251
+    ],
+    [
+     0.5,
+     0.944,
+     0.251
+    ]
+   ]
+  }
+ },
+ "stumpTopRadius": 0.105,
+ "stumpTopY": 0.444,
+ "files": {
+  "forest_kit.glb": 1241984,
+  "forest_leaf.png": 566510,
+  "forest_heroes.glb": 2001588,
+  "hero_roots.jpg": 340258,
+  "hero_ruin.jpg": 312236,
+  "hero_statue.jpg": 346364,
+  "hero_altar.jpg": 226528
+ }
+}

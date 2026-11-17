@@ -1,0 +1,3063 @@
+{
+ "format": "mobius-chart",
+ "version": 1,
+ "song": {
+  "id": "test-click-96-150",
+  "title": "Click 96 → 150",
+  "artist": "test fixture",
+  "audio": {
+   "src": "tests/fixtures/click-96-150.wav"
+  },
+  "durationSec": 83.9
+ },
+ "timing": {
+  "bpm": 96,
+  "offsetSec": 0.2,
+  "beatsPerBar": 4,
+  "tempoMap": [
+   {
+    "beat": 0,
+    "bpm": 96
+   },
+   {
+    "beat": 48,
+    "bpm": 150
+   }
+  ]
+ },
+ "difficulties": {
+  "easy": {
+   "travelSec": 2.5,
+   "events": [
+    {
+     "id": "n0",
+     "beat": 8,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n1",
+     "beat": 12,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n2",
+     "beat": 16,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n3",
+     "beat": 20,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n4",
+     "beat": 24,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n5",
+     "beat": 28,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n6",
+     "beat": 32,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n7",
+     "beat": 36,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n8",
+     "beat": 40,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n9",
+     "beat": 44,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n10",
+     "beat": 48,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n11",
+     "beat": 52,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n12",
+     "beat": 56,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n13",
+     "beat": 60,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n14",
+     "beat": 64,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n15",
+     "beat": 68,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n16",
+     "beat": 72,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n17",
+     "beat": 76,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n18",
+     "beat": 80,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n19",
+     "beat": 84,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n20",
+     "beat": 88,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n21",
+     "beat": 92,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n22",
+     "beat": 96,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n23",
+     "beat": 100,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n24",
+     "beat": 104,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n25",
+     "beat": 108,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n26",
+     "beat": 112,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n27",
+     "beat": 116,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n28",
+     "beat": 120,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "a0",
+     "beat": 123,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 2
+    },
+    {
+     "id": "n29",
+     "beat": 124,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n30",
+     "beat": 128,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n31",
+     "beat": 132,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n32",
+     "beat": 136,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n33",
+     "beat": 140,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n34",
+     "beat": 144,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n35",
+     "beat": 148,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n36",
+     "beat": 152,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n37",
+     "beat": 156,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n38",
+     "beat": 160,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n39",
+     "beat": 164,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n40",
+     "beat": 168,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "a1",
+     "beat": 172,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 2
+    },
+    {
+     "id": "n41",
+     "beat": 172,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n42",
+     "beat": 176,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    }
+   ]
+  },
+  "normal": {
+   "travelSec": 2.05,
+   "events": [
+    {
+     "id": "n0",
+     "beat": 8,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n1",
+     "beat": 10,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n2",
+     "beat": 12,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n3",
+     "beat": 14,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n4",
+     "beat": 16,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n5",
+     "beat": 18,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n6",
+     "beat": 20,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n7",
+     "beat": 22,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n8",
+     "beat": 24,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n9",
+     "beat": 26,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n10",
+     "beat": 28,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n11",
+     "beat": 30,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n12",
+     "beat": 32,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n13",
+     "beat": 34,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n14",
+     "beat": 36,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n15",
+     "beat": 38,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n16",
+     "beat": 40,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n17",
+     "beat": 42,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n18",
+     "beat": 44,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n19",
+     "beat": 46,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n20",
+     "beat": 48,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n21",
+     "beat": 50,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n22",
+     "beat": 52,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n23",
+     "beat": 54,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n24",
+     "beat": 56,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n25",
+     "beat": 58,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n26",
+     "beat": 60,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n27",
+     "beat": 62,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n28",
+     "beat": 64,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n29",
+     "beat": 66,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n30",
+     "beat": 68,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n31",
+     "beat": 70,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n32",
+     "beat": 72,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n33",
+     "beat": 74,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n34",
+     "beat": 76,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n35",
+     "beat": 78,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n36",
+     "beat": 80,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n37",
+     "beat": 82,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n38",
+     "beat": 84,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n39",
+     "beat": 86,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n40",
+     "beat": 88,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n41",
+     "beat": 90,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n42",
+     "beat": 92,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n43",
+     "beat": 94,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n44",
+     "beat": 96,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n45",
+     "beat": 98,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n46",
+     "beat": 100,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n47",
+     "beat": 102,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n48",
+     "beat": 104,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n49",
+     "beat": 106,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n50",
+     "beat": 108,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n51",
+     "beat": 110,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n52",
+     "beat": 112,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n53",
+     "beat": 114,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n54",
+     "beat": 116,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n55",
+     "beat": 118,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n56",
+     "beat": 120,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n57",
+     "beat": 122,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "a0",
+     "beat": 123,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 2
+    },
+    {
+     "id": "n58",
+     "beat": 124,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n59",
+     "beat": 126,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n60",
+     "beat": 128,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n61",
+     "beat": 130,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n62",
+     "beat": 132,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n63",
+     "beat": 134,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n64",
+     "beat": 136,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n65",
+     "beat": 138,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n66",
+     "beat": 140,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n67",
+     "beat": 142,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n68",
+     "beat": 144,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n69",
+     "beat": 146,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n70",
+     "beat": 148,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n71",
+     "beat": 150,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n72",
+     "beat": 152,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n73",
+     "beat": 154,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n74",
+     "beat": 156,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n75",
+     "beat": 158,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n76",
+     "beat": 160,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n77",
+     "beat": 162,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n78",
+     "beat": 164,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n79",
+     "beat": 166,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n80",
+     "beat": 168,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n81",
+     "beat": 170,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "a1",
+     "beat": 172,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 2
+    },
+    {
+     "id": "n82",
+     "beat": 172,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n83",
+     "beat": 174,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n84",
+     "beat": 176,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    }
+   ]
+  },
+  "hard": {
+   "travelSec": 1.7,
+   "events": [
+    {
+     "id": "n0",
+     "beat": 8,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n1",
+     "beat": 9,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n2",
+     "beat": 10,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n3",
+     "beat": 11,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n4",
+     "beat": 12,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n5",
+     "beat": 13,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n6",
+     "beat": 14,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n7",
+     "beat": 15,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n8",
+     "beat": 16,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n9",
+     "beat": 17,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n10",
+     "beat": 18,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n11",
+     "beat": 19,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n12",
+     "beat": 20,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n13",
+     "beat": 21,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n14",
+     "beat": 22,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n15",
+     "beat": 23,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n16",
+     "beat": 24,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n17",
+     "beat": 25,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n18",
+     "beat": 26,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n19",
+     "beat": 27,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n20",
+     "beat": 28,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n21",
+     "beat": 29,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n22",
+     "beat": 30,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n23",
+     "beat": 31,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n24",
+     "beat": 32,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n25",
+     "beat": 33,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n26",
+     "beat": 34,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n27",
+     "beat": 35,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n28",
+     "beat": 36,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n29",
+     "beat": 37,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n30",
+     "beat": 38,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n31",
+     "beat": 39,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n32",
+     "beat": 40,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n33",
+     "beat": 41,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n34",
+     "beat": 42,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n35",
+     "beat": 43,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n36",
+     "beat": 44,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n37",
+     "beat": 45,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n38",
+     "beat": 46,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n39",
+     "beat": 47,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n40",
+     "beat": 48,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n41",
+     "beat": 49,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n42",
+     "beat": 50,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n43",
+     "beat": 51,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n44",
+     "beat": 52,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n45",
+     "beat": 53,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n46",
+     "beat": 54,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n47",
+     "beat": 55,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n48",
+     "beat": 56,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n49",
+     "beat": 57,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n50",
+     "beat": 58,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n51",
+     "beat": 59,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n52",
+     "beat": 60,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n53",
+     "beat": 61,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n54",
+     "beat": 62,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n55",
+     "beat": 63,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n56",
+     "beat": 64,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n57",
+     "beat": 65,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n58",
+     "beat": 66,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n59",
+     "beat": 67,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n60",
+     "beat": 68,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n61",
+     "beat": 69,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n62",
+     "beat": 70,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n63",
+     "beat": 71,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n64",
+     "beat": 72,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n65",
+     "beat": 73,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n66",
+     "beat": 74,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n67",
+     "beat": 75,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n68",
+     "beat": 76,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n69",
+     "beat": 77,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n70",
+     "beat": 78,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n71",
+     "beat": 79,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n72",
+     "beat": 80,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n73",
+     "beat": 81,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n74",
+     "beat": 82,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n75",
+     "beat": 83,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n76",
+     "beat": 84,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n77",
+     "beat": 85,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n78",
+     "beat": 86,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n79",
+     "beat": 87,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n80",
+     "beat": 88,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n81",
+     "beat": 89,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n82",
+     "beat": 90,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n83",
+     "beat": 91,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n84",
+     "beat": 92,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n85",
+     "beat": 93,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n86",
+     "beat": 94,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n87",
+     "beat": 95,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n88",
+     "beat": 96,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n89",
+     "beat": 97,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n90",
+     "beat": 98,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n91",
+     "beat": 99,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n92",
+     "beat": 100,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n93",
+     "beat": 101,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n94",
+     "beat": 102,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n95",
+     "beat": 103,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n96",
+     "beat": 104,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n97",
+     "beat": 105,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n98",
+     "beat": 106,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n99",
+     "beat": 107,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n100",
+     "beat": 108,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n101",
+     "beat": 109,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n102",
+     "beat": 110,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n103",
+     "beat": 111,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n104",
+     "beat": 112,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n105",
+     "beat": 113,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n106",
+     "beat": 114,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n107",
+     "beat": 115,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n108",
+     "beat": 116,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n109",
+     "beat": 117,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n110",
+     "beat": 118,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n111",
+     "beat": 119,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n112",
+     "beat": 120,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n113",
+     "beat": 121,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n114",
+     "beat": 122,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n115",
+     "beat": 123,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "a0",
+     "beat": 124,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 1
+    },
+    {
+     "id": "n116",
+     "beat": 124,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n117",
+     "beat": 125,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n118",
+     "beat": 126,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n119",
+     "beat": 127,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n120",
+     "beat": 128,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n121",
+     "beat": 129,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n122",
+     "beat": 130,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n123",
+     "beat": 131,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n124",
+     "beat": 132,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n125",
+     "beat": 133,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n126",
+     "beat": 134,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n127",
+     "beat": 135,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n128",
+     "beat": 136,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n129",
+     "beat": 137,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n130",
+     "beat": 138,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n131",
+     "beat": 139,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n132",
+     "beat": 140,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n133",
+     "beat": 141,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n134",
+     "beat": 142,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n135",
+     "beat": 143,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n136",
+     "beat": 144,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n137",
+     "beat": 145,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n138",
+     "beat": 146,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n139",
+     "beat": 147,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n140",
+     "beat": 148,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n141",
+     "beat": 149,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n142",
+     "beat": 150,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n143",
+     "beat": 151,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n144",
+     "beat": 152,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n145",
+     "beat": 153,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n146",
+     "beat": 154,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n147",
+     "beat": 155,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n148",
+     "beat": 156,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n149",
+     "beat": 157,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n150",
+     "beat": 158,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n151",
+     "beat": 159,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n152",
+     "beat": 160,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n153",
+     "beat": 161,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n154",
+     "beat": 162,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n155",
+     "beat": 163,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n156",
+     "beat": 164,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n157",
+     "beat": 165,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n158",
+     "beat": 166,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n159",
+     "beat": 167,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n160",
+     "beat": 168,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n161",
+     "beat": 169,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n162",
+     "beat": 170,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n163",
+     "beat": 171,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n164",
+     "beat": 172,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "a1",
+     "beat": 173,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 1
+    },
+    {
+     "id": "n165",
+     "beat": 173,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n166",
+     "beat": 174,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n167",
+     "beat": 175,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.7,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n168",
+     "beat": 176,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.7,
+      "y": 0.5
+     }
+    }
+   ]
+  }
+ }
+}
