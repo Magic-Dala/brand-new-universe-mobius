@@ -1,5 +1,7 @@
 # Brand New Universe – Mobius
 
+![Brand New Universe – Mobius: be ordinary, or be the hero?](docs/media/cover.jpg)
+
 A VR rhythm-action game for Meta Quest 3 that runs in the headset's browser. You are Mobius, a hero in a suit of blue light: you fire light webs, throw light bombs and swing between the towers of Dala City with your bare hands, while Green Maniac rains pumpkin bombs on you from his Green Bat Jet, in time with the music. No install and no controllers needed; open a link, put your hands up and play.
 
 ![Mobius's room, where every run begins](docs/media/story-room.jpg)
