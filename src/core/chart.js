@@ -8,8 +8,10 @@
 //             },
 //   "difficulties": { "easy": { "travelSec": 2.4, "events": [...] }, "normal": {...}, "hard": {...} }
 // }
-// event: { "id": "n12", "beat": 16, "type": "pumpkin"|"cluster"|"heavy",
-//          "hand": "L"|"R"|"any", "lane": { "x": -1..1, "y": 0..1 }, "group"?: "c3" }
+// event: { "id": "n12", "beat": 16, "type": "pumpkin"|"heavy"|"fan_web_row"|"armored",
+//          "hand": "L"|"R"|"any"|"both", "lane": { "x": -1..1, "y": 0..1 } }
+// v1.1: `cluster` is retired (still accepted: it loads as an ordinary pumpkin for either hand). Every chart keeps the
+// rules of src/game/chartRules.js (never three arrivals at once outside a Fan Web row, one job per pumpkin).
 // Event time = offsetSec + seconds(beat) via tempo map. Never assumes beat 0 at t=0.
 
 export const CHART_FORMAT = 'mobius-chart';
@@ -24,6 +26,7 @@ export const HANDS = ['L', 'R', 'any', 'both'];
  */
 export const ROW_TYPE = 'fan_web_row';
 import { ARMORED, ARMORED_TYPE, applyArmored, addArmored } from '../game/armored.js';
+import { CHART_RULES, enforceThree, fitRules } from '../game/chartRules.js';
 export { addArmored };
 
 /** Build beat→seconds converter from a tempo map. */
@@ -82,6 +85,7 @@ export function validateChart(c) {
       if (e.type === ARMORED_TYPE) { // v0.48: `beat` = the first shell beat; hits shell beats one beat apart, the wave `gap` beats after the last
         if (e.hits !== undefined && !(Number.isInteger(e.hits) && e.hits >= 1 && e.hits <= 6)) err(`${d}: ${e.id} armored hits must be 1..6`);
         if (e.gap !== undefined && !(e.gap > 0 && e.gap <= 8)) err(`${d}: ${e.id} armored gap must be 0..8 beats`);
+        if (e.step !== undefined && !(e.step > 0 && e.step <= 4 && Number.isInteger(e.step * 2))) err(`${d}: ${e.id} armored step must be 0.5..4 beats in half beats`); // v1.1
       }
       ids.add(e.id);
     }
@@ -89,7 +93,12 @@ export function validateChart(c) {
   return c;
 }
 
-/** Resolve a difficulty into sorted runtime notes with absolute times. */
+/**
+ * Resolve a difficulty into sorted runtime notes with absolute times. v1.1: a stored `cluster` loads as an ordinary
+ * pumpkin for either hand, and the loader's guard (enforceThree) keeps at most two arrivals inside any 0.35 s outside a
+ * Fan Web row — so hand-written charts and imported songs already stored in a browser keep the rule too. `dropped`: the
+ * ids it removed.
+ */
 export function resolveNotes(chart, difficulty, { armored = false } = {}) {
   const clock = makeBeatClock(chart.timing);
   const diff = chart.difficulties[difficulty] || chart.difficulties.normal || Object.values(chart.difficulties)[0];
@@ -99,19 +108,21 @@ export function resolveNotes(chart, difficulty, { armored = false } = {}) {
   for (const e of applyArmored(diff.events, armored)) {
     const time = e.timeSec ?? clock.beatToSec(e.beat);
     if (e.type === ARMORED_TYPE) {
-      const hits = e.hits ?? ARMORED.hits, gap = e.gap ?? 2;
-      sequences.push({ id: e.id, beat: e.beat, hits, gap, time, shellTimes: Array.from({ length: hits }, (_, i) => clock.beatToSec(e.beat + i)), waveTime: clock.beatToSec(e.beat + hits - 1 + gap), holdTime: clock.beatToSec(e.beat - 1) });
+      const hits = e.hits ?? ARMORED.hits, gap = e.gap ?? 2, step = e.step ?? 1; // (v1.1 step: beats between shell beats)
+      sequences.push({ id: e.id, beat: e.beat, hits, gap, step, time, shellTimes: Array.from({ length: hits }, (_, i) => clock.beatToSec(e.beat + i * step)), waveTime: clock.beatToSec(e.beat + (hits - 1) * step + gap), holdTime: clock.beatToSec(e.beat - 1) });
       continue;
     }
     if (e.type === ROW_TYPE) { // one row → three member bombs (same time, one per lane); judged as ONE event
       (e.tracks || [0, 1, 2]).forEach((track, k) => notes.push({ id: `${e.id}.${k}`, beat: e.beat, time, type: 'fanRow', hand: 'both', track, row: e.id, member: k, practice: !!e.practice, cue: e.cue || 'fan', lane: { x: track - 1, y: 0.5 } }));
       continue;
     }
+    if (e.type === 'cluster') { const { group, ...rest } = e; void group; notes.push({ ...rest, type: 'pumpkin', hand: 'any', time, lane: { x: e.lane?.x ?? 0, y: e.lane?.y ?? 0.5 } }); continue; } // v1.1: retired
     notes.push({ ...e, time, lane: { x: e.lane?.x ?? 0, y: e.lane?.y ?? 0.5 } });
   }
   notes.sort((a, b) => a.time - b.time || a.id.localeCompare(b.id));
   sequences.sort((a, b) => a.time - b.time);
-  return { notes, sequences, travelSec: diff.travelSec || 2.0, clock };
+  const { notes: kept, dropped } = enforceThree(notes, CHART_RULES); // v1.1: never three at once
+  return { notes: kept, sequences, travelSec: diff.travelSec || 2.0, clock, dropped };
 }
 
 // ===========================================================================
@@ -125,40 +136,47 @@ function rng(seed) {
 }
 
 const DIFF_PARAMS = {
-  easy: { travelSec: 2.5, chorusEighths: false, verseEvery: 2, chorusEvery: 2, clusters: 'rare', heavies: 'rare' },
-  normal: { travelSec: 2.05, chorusEighths: false, verseEvery: 1, chorusEvery: 1, clusters: 'some', heavies: 'some' },
-  hard: { travelSec: 1.7, chorusEighths: true, verseEvery: 1, chorusEvery: 0.5, clusters: 'many', heavies: 'many' },
+  easy: { travelSec: 2.5, chorusEighths: false, verseEvery: 2, chorusEvery: 2, heavies: 'rare' },
+  normal: { travelSec: 2.05, chorusEighths: false, verseEvery: 1, chorusEvery: 1, heavies: 'some' },
+  hard: { travelSec: 1.7, chorusEighths: true, verseEvery: 1, chorusEvery: 0.5, heavies: 'many' },
 };
 
-export function generateEvents({ totalBars, sections, beatsPerBar = 4, difficulty = 'normal', seed = 1, lastBeat = Infinity }) {
+/**
+ * Procedural events for one difficulty. v1.1: every step comes from the difficulty's minGap in SECONDS (chartRules.js),
+ * not from a fixed number of beats, so the same patterns stay playable from 80 to 200 BPM (a step that would be too
+ * short at this tempo is lengthened: 1 → 1.5 → 2 … beats). The `cluster` of three is retired: its slot becomes an
+ * ordinary pumpkin, or — on an accent (the first beat of a four-bar phrase in a loud section) when the Light Bomb has had
+ * bombGap seconds since the last one — a giant pumpkin. Giant pumpkins go on accents only. fitRules() in buildChart
+ * makes sure whatever is left keeps every rule.
+ */
+export function generateEvents({ totalBars, sections, beatsPerBar = 4, difficulty = 'normal', seed = 1, lastBeat = Infinity, bpm = 120, rules = CHART_RULES }) {
   const P = DIFF_PARAMS[difficulty];
   const R = rng(seed * 97 + difficulty.length * 13);
+  const spb = 60 / bpm, minB = (rules.minGap[difficulty] ?? rules.minGap.normal) / spb; // the shortest step in beats
+  const fit = (want) => { for (const s of [want, 1, 1.5, 2, 3, 4, 6, 8]) if (s >= want - 1e-9 && s >= minB - 1e-9) return s; return 8; };
   const ev = [];
   let n = 0, side = 1, phrase = 0;
   const kindAt = (bar) => (sections.find((s) => bar >= s.fromBar && bar < s.toBar) || { kind: 'verse' }).kind;
-  const lastBombBeat = { v: -99 };
-  const push = (beat, type, hand, x, y, group) => {
+  let lastBomb = -Infinity;
+  const push = (beat, type, hand, x, y) => {
     if (beat > lastBeat) return;
-    ev.push({ id: `n${n++}`, beat: Math.round(beat * 1000) / 1000, type, hand, lane: { x: +x.toFixed(2), y: +y.toFixed(2) }, ...(group ? { group } : {}) });
+    ev.push({ id: `n${n++}`, beat: Math.round(beat * 1000) / 1000, type, hand, lane: { x: +x.toFixed(2), y: +y.toFixed(2) } });
   };
   const handFor = (s) => (s < 0 ? 'L' : 'R');
+  const bombAllowed = (beat) => (beat - lastBomb) * spb >= rules.bombGap; // the Light Bomb's spacing, in seconds
+  const heavyBar = (barInPhrase) => P.heavies === 'many' || P.heavies === 'some' ? barInPhrase === 0 : barInPhrase === 0 && phrase % 2 === 0;
   for (let bar = 0; bar < totalBars; bar++) {
     const kind = kindAt(bar);
     const b0 = bar * beatsPerBar;
     if (kind === 'intro') continue;
     const barInPhrase = bar % 4;
     if (barInPhrase === 0) phrase++;
-    const bombAllowed = (beat) => beat - lastBombBeat.v >= 6; // light-bomb cooldown safety (≥ 2.9 s)
     const lateralPattern = [0.75, 0.45, 0.85, 0.35][phrase % 4];
 
     if (kind === 'verse' || kind === 'verse2') {
-      const step = kind === 'verse' ? Math.max(2, P.verseEvery * 2) : P.verseEvery;
+      const step = fit(kind === 'verse' ? Math.max(2, P.verseEvery * 2) : P.verseEvery);
       for (let k = 0; k < beatsPerBar; k += step) {
         const beat = b0 + k;
-        // phrase ending: heavy on the last bar's beat 3 of verse2
-        if (kind === 'verse2' && barInPhrase === 3 && k === 2 && P.heavies !== 'rare' && bombAllowed(beat)) {
-          push(beat, 'heavy', 'any', 0, 0.55); lastBombBeat.v = beat; continue;
-        }
         side = -side;
         const y = 0.3 + 0.4 * ((k / beatsPerBar + bar * 0.37) % 1);
         push(beat, 'pumpkin', handFor(side), side * lateralPattern, y);
@@ -166,37 +184,27 @@ export function generateEvents({ totalBars, sections, beatsPerBar = 4, difficult
       // two-hand accent at phrase start (verse2)
       if (kind === 'verse2' && barInPhrase === 0 && difficulty !== 'easy') {
         push(b0 + 0.001, 'pumpkin', 'L', -0.95, 0.7);
-        // existing first note becomes right-hand counterpart
         const first = ev.find((e) => e.beat === b0 && e.type === 'pumpkin' && e.hand !== 'L' && Math.abs(e.lane.x) > 0);
         if (first) { first.hand = 'R'; first.lane.x = 0.95; } else push(b0, 'pumpkin', 'R', 0.95, 0.7);
       }
     } else if (kind === 'build') {
       // rising stream, alternating, climbing height
-      const step = difficulty === 'hard' ? 0.5 : 1;
+      const step = fit(difficulty === 'hard' ? 0.5 : 1);
       for (let k = 0; k < beatsPerBar; k += step) {
         side = -side;
         push(b0 + k, 'pumpkin', handFor(side), side * (0.3 + 0.15 * k), 0.15 + 0.2 * k);
       }
     } else if (kind === 'chorus') {
-      const clusterBar = P.clusters === 'many' ? barInPhrase % 2 === 0 : P.clusters === 'some' ? barInPhrase === 0 : barInPhrase === 0 && phrase % 2 === 0;
-      for (let k = 0; k < beatsPerBar; k += 1) {
+      const every = fit(P.chorusEvery >= 2 ? 2 : 1), eighth = P.chorusEighths && 0.5 >= minB - 1e-9;
+      for (let k = 0; k < beatsPerBar; k += every) {
         const beat = b0 + k;
-        if (k === 0 && clusterBar && bombAllowed(beat)) {
-          const cx = (R() - 0.5) * 0.6, cy = 0.45 + R() * 0.2, g = `c${n}`;
-          push(beat, 'cluster', 'any', cx - 0.22, cy, g);
-          push(beat, 'cluster', 'any', cx + 0.22, cy, g);
-          push(beat, 'cluster', 'any', cx, cy + 0.22, g);
-          lastBombBeat.v = beat;
-          continue;
+        if (k === 0 && heavyBar(barInPhrase) && bombAllowed(beat)) { // the accent: the phrase's first beat in a loud section
+          push(beat, 'heavy', 'any', (R() - 0.5) * 0.8, 0.6); lastBomb = beat; continue;
         }
-        if (k === 2 && barInPhrase === 2 && P.heavies !== 'rare' && bombAllowed(beat)) {
-          push(beat, 'heavy', 'any', (R() - 0.5) * 0.8, 0.6); lastBombBeat.v = beat; continue;
-        }
-        if (P.chorusEvery >= 2 && k % 2 === 1) continue;
         side = -side;
         const zig = (k % 2 ? 0.45 : 0.85) * side;
         push(beat, 'pumpkin', handFor(side), zig, 0.25 + 0.5 * R());
-        if (P.chorusEighths && (k === 1 || k === 3)) {
+        if (eighth && (k === 1 || k === 3)) {
           side = -side;
           push(beat + 0.5, 'pumpkin', handFor(side), side * 0.6, 0.35 + 0.3 * R());
         }
@@ -206,12 +214,8 @@ export function generateEvents({ totalBars, sections, beatsPerBar = 4, difficult
         }
       }
     } else if (kind === 'outro') {
-      if (barInPhrase % 2 === 0) {
-        side = -side; push(b0, 'pumpkin', handFor(side), side * 0.6, 0.5);
-        side = -side; push(b0 + 2, 'pumpkin', handFor(side), side * 0.6, 0.5);
-      } else if (bombAllowed(b0)) {
-        push(b0, 'heavy', 'any', 0, 0.55); lastBombBeat.v = b0;
-      }
+      const step = fit(2);
+      for (let k = 0; k < beatsPerBar; k += step) { side = -side; if (barInPhrase % 2 === 0 || k === 0) push(b0 + k, 'pumpkin', handFor(side), side * 0.6, 0.5); }
     }
   }
   return { travelSec: P.travelSec, events: ev };
@@ -230,18 +234,21 @@ export function addFanRows(diff, beats, { clearBefore = 1.5, clearAfter = 1.0, p
   return diff;
 }
 
-export function buildChart({ song, timing, sections, totalBars, lastBeat, seed = 1, fanRows = null, armored = true }) {
+export function buildChart({ song, timing, sections, totalBars, lastBeat, seed = 1, fanRows = null, armored = true, rules = CHART_RULES }) {
   const chart = {
     format: CHART_FORMAT, version: CHART_VERSION,
     song, timing: { beatsPerBar: 4, ...timing },
-    generator: { name: 'mobius-chartgen', version: 1, seed, sections },
+    generator: { name: 'mobius-chartgen', version: 2, seed, sections },
     difficulties: {},
   };
+  const bpm = chart.timing.bpm, spb = 60 / bpm, clock = makeBeatClock(chart.timing);
+  const clear = { clearBefore: Math.max(rules.rowClear.beatsBefore, rules.rowClear.before / spb), clearAfter: Math.max(rules.rowClear.beatsAfter, rules.rowClear.after / spb) }; // (v1.1: seconds, never less than 1.5 / 1 beats)
   for (const d of ['easy', 'normal', 'hard']) {
-    chart.difficulties[d] = generateEvents({ totalBars, sections, difficulty: d, seed, lastBeat, beatsPerBar: chart.timing.beatsPerBar });
-    if (fanRows?.[d]) addFanRows(chart.difficulties[d], fanRows[d]);
+    chart.difficulties[d] = generateEvents({ totalBars, sections, difficulty: d, seed, lastBeat, beatsPerBar: chart.timing.beatsPerBar, bpm, rules });
+    if (fanRows?.[d]) addFanRows(chart.difficulties[d], fanRows[d], clear);
   }
-  if (armored) addArmored(chart); // v0.48: armored pumpkin sequences, placed by rule (any chart)
+  if (armored) addArmored(chart, ARMORED, rules.minGap); // v0.48: armored pumpkin sequences, placed by rule (any chart); v1.1: with `step` where a beat is shorter than minGap
+  for (const d of ['easy', 'normal', 'hard']) chart.difficulties[d].events = fitRules(chart.difficulties[d].events, clock, d, rules); // v1.1: never a violation
   return validateChart(chart);
 }
 

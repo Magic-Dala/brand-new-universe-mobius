@@ -2,6 +2,9 @@
 // music clock; headless Chrome with software rendering). Groups (ONLY=show,play,off,wave,chart2): prints PASS / FAIL lines.
 import { readFileSync } from 'node:fs';
 import { launch, openArcade } from './arcadeharness.mjs';
+// The first song's rhythm events with armored pumpkins off (v0.46–v1.0: 54 / 97 / 126; v1.1: after the loader's never-three rule; the
+// chart rebuilt from its analysis — see docs/CHART_FORMAT.md). The hall-show tests use such numbers only as inputs.
+const OFF_COUNTS = { easy: 52, normal: 94, hard: 114 };
 const ONLY = (process.env.ONLY || 'show,play,off,wave,chart2').split(',');
 let pass = 0, fail = 0;
 const ok = (c, name, detail = '') => { if (c) { pass++; console.log(`PASS ${name}${detail ? ` | ${detail}` : ''}`); } else { fail++; console.log(`FAIL ${name}${detail ? ` | ${detail}` : ''}`); } };
@@ -97,11 +100,11 @@ if (ONLY.includes('play') || ONLY.includes('off') || ONLY.includes('wave') || ON
       }
       return R;
     });
-    const want = { easy: 54, normal: 97, hard: 126 };
+    const want = OFF_COUNTS;
     for (const d of ['easy', 'normal', 'hard']) {
       const x = r[d];
       ok(x.state === 'results' && !x.failed && x.armored?.sequences === 3 && x.armored.full === 3 && x.armored.miss === 0 && x.armored.partial === 0 && x.armored.shellHits === 9, `${d}: autoplay of the whole song, every armored pumpkin destroyed (3 of 3, all layers off)`, JSON.stringify(x.armored));
-      ok(x.judged === x.total && x.counts.miss === 0 && x.log === 12, `${d}: totals consistent with the event count`, `${x.total} rhythm events (${want[d]} in v0.46), judged ${x.judged}: ${JSON.stringify(x.counts)}, rank ${x.rank}; 12 armored judgements (3 × (3 shell beats + 1 wave))`);
+      ok(x.judged === x.total && x.counts.miss === 0 && x.log === 12, `${d}: totals consistent with the event count`, `${x.total} rhythm events (${want[d]} with armored pumpkins off), judged ${x.judged}: ${JSON.stringify(x.counts)}, rank ${x.rank}; 12 armored judgements (3 × (3 shell beats + 1 wave))`);
       ok(x.real === true && x.stages.join() === '0,1,2,3' && x.maxVisible === 1, `${d}: the real model, stages 0 to 3 shown one at a time`, `stages ${x.stages.join()}, most visible at once ${x.maxVisible}`);
     }
     ok(r.easy.programs === r.hard.programs, 'three songs in a row with armored pumpkins and the show: no shader program added', `${r.easy.programs} → ${r.hard.programs}`);
@@ -116,8 +119,8 @@ if (ONLY.includes('play') || ONLY.includes('off') || ONLY.includes('wave') || ON
       X.settings.arcadeArmored = true;
       return R;
     });
-    ok(r.off.easy.total === 54 && r.off.normal.total === 97 && r.off.hard.total === 126 && r.off.hard.seqs === 0, 'arcadeArmored = false: 54 / 97 / 126 rhythm events, as in v0.46', `${r.off.easy.total} / ${r.off.normal.total} / ${r.off.hard.total}; on: ${r.on.easy.total} / ${r.on.normal.total} / ${r.on.hard.total}`);
-    ok(r.run.counts.perfect + r.run.counts.good === 97 && r.run.counts.miss === 0 && r.run.armored.sequences === 0 && r.run.armored.waves === 0 && !r.run.pumpkin && r.ctx === false, 'arcadeArmored = false: a whole Normal run has no armored pumpkin, no wave, and the wave gesture is not even listened for', JSON.stringify(r.run));
+    ok(r.off.easy.total === OFF_COUNTS.easy && r.off.normal.total === OFF_COUNTS.normal && r.off.hard.total === OFF_COUNTS.hard && r.off.hard.seqs === 0, `arcadeArmored = false: ${OFF_COUNTS.easy} / ${OFF_COUNTS.normal} / ${OFF_COUNTS.hard} rhythm events (the first song's events without its armored ones)`, `${r.off.easy.total} / ${r.off.normal.total} / ${r.off.hard.total}; on: ${r.on.easy.total} / ${r.on.normal.total} / ${r.on.hard.total}`);
+    ok(r.run.counts.perfect + r.run.counts.good === OFF_COUNTS.normal && r.run.counts.miss === 0 && r.run.armored.sequences === 0 && r.run.armored.waves === 0 && !r.run.pumpkin && r.ctx === false, 'arcadeArmored = false: a whole Normal run has no armored pumpkin, no wave, and the wave gesture is not even listened for', JSON.stringify(r.run));
   }
   if (ONLY.includes('wave')) {
     const r = await p.evaluate(async () => {
