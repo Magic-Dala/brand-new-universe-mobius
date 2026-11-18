@@ -4,6 +4,7 @@
 import { pickBgm, bgmGain, bgmUrl } from './core/bgm.js';
 import * as THREE from 'three';
 import { World, createSystem, SessionMode, ReferenceSpaceType, VisibilityState } from '@iwsdk/core';
+import { hideDefaultInputVisuals, defaultInputVisualsHidden } from './input/hideDefaultHands.js';
 import { t, getLang, setLang, LANGS, onLangChange } from './core/i18n.js';
 import './worlds/i18n.js';
 import { settings, getBest, setBest, onSettingsChange } from './core/settings.js';
@@ -201,6 +202,7 @@ class App {
     this.title = initTitle(this);
     this.setTitleView();
     window.__mobius = this; window.__THREE = THREE; window.__t = t; // debug/test hooks
+    window.__mobiusHandsHidden = () => defaultInputVisualsHidden(this.world.input); // v1.1: true = no default engine hand / controller mesh drawn
     await this.title.checkXR();
   }
 
@@ -246,6 +248,7 @@ class App {
     // v0.47: the Story chase / the chase after the factory while the combat loop runs → scaled time, music bus, Fan Web, Light Bomb lock
     const storyFight = this._storyFight = storyCombatOn && ['chase', 'endless'].includes(this.story.stage) && !!this.story.combat?.running;
     const dt = Math.min(0.1, Math.max(0, delta || tNow - this._lastT)); this._lastT = tNow;
+    hideDefaultInputVisuals(this.world.input); // v1.1: IWSDK re-shows its white-outlined default hands every frame; keep only ours
     // v0.45 impact time: only the World Chase world simulation runs on simDt; head / hands / HUD / menus keep real dt.
     // Frozen while paused; reset (scale 1) the moment the chase is not running (menus, map change, restart, defeat, Arcade…).
     const warpOn = (this.state === 'world' && this.worldChase.running) || storyFight;
