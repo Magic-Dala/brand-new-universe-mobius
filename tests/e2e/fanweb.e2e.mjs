@@ -4,7 +4,7 @@ const b = await chromium.launch({ executablePath: process.env.CHROME || undefine
 const p = await b.newPage({ viewport: { width: 320, height: 180 }, ignoreHTTPSErrors: true });
 const logs = []; p.on('pageerror', (e) => logs.push(`[pageerror] ${e.message}\n${e.stack}`));
 await p.goto(process.env.URL || 'https://localhost:8443/', { waitUntil: 'load' });
-await p.waitForTimeout(6000);
+await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: +(process.env.BOOT || 600000) }); // (v1.1: wait for the game itself; a fixed 6 s was too short on a slow machine)
 await p.click('#enter-desktop', { force: true }).catch(() => p.click('#enter', { force: true })); await p.waitForTimeout(800);
 const out = await p.evaluate(async () => {
   const a = window.__mobius, ar = a.arcade, T = window.__THREE, R = {};

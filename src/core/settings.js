@@ -77,6 +77,8 @@ export const DEFAULTS = {
   cityQOff: [], // v0.25: v1 features turned off one by one (win, ground, var, ao, shade, tex) — see src/art/cityQuality.js
   swingReelSpeed: 7, // m/s automatic rope retraction while swinging (v0.44: unchanged on purpose — the route regression bots depend on it; pulling the web by hand adds its own rope take-in + speed, see PULL in src/data/handCombat.js)
   webPull: true, // v0.44: pull an anchored web's hand back toward the body to accelerate toward that anchor
+  bombPath: true, // v1.1: chase pumpkins show their flight path (held and in flight; Story chase / World Chase)
+  bombTracking: true, // v1.1: chase pumpkins track the player a little in flight (off = the v1.0 ballistic flight)
   palmShield: true, // v0.44: open hand, palm forward, raised = light-web shield (Story chase / World Chase; not the Arcade)
   swingMinRope: 5, // rope never shorter than this (m)
   swingSteer: true, // swinging: horizontal motion turns toward where the headset looks

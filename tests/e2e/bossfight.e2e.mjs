@@ -18,7 +18,8 @@ const frames = async (n) => { const f0 = await ev(() => window.__frames || 0); a
 const until = (fn, arg, ms = 300000) => p.waitForFunction(fn, arg, { timeout: ms, polling: 50 });
 
 await p.goto(process.env.URL || 'https://localhost:8443/', { waitUntil: 'load' });
-await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: 200000 });
+const WAIT = +(process.env.WAIT || 60000); // (v1.1: game-clock waits in real ms; raise on a slow software renderer)
+await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: +(process.env.BOOT || 600000) }); // (v1.1: BOOT, default 10 min: software rendering on a slow machine)
 await ev(() => {
   const a = window.__mobius, hub = a.hub, orig = hub.update.bind(hub), T = window.__THREE;
   window.__inj = []; window.__frames = 0;
@@ -39,14 +40,14 @@ const enter = async (id) => {
 };
 const home = async () => {
   await ev(() => { const w = window.__mobius.worldChase; w.bench = null; w.debug.setBossHp(0.001); w._bossHit(5, w.bossPos.clone(), null, 'test'); });
-  await until(() => window.__mobius.menus.current === 'worldResults', null, 120000);
+  await until(() => window.__mobius.menus.current === 'worldResults', null, Math.max(WAIT, 120000));
   await ev(() => window.__mobius.menus.panels.worldResults.buttons.find((x) => x.id === 'home').onClick());
-  await until(() => window.__mobius.state === 'title', null, 120000);
+  await until(() => window.__mobius.state === 'title', null, Math.max(WAIT, 120000));
 };
 const F = () => ev(() => window.__F());
 /** v0.46: Green Maniac back at his chase lead (beyond close range, ≥ the 14 m attack range) before a forced throw — after a
  *  stagger the player can now reach him (no brake floor while staggered), and close range then holds the gap at ~2–15 m */
-const lead = async () => { await ev(() => { const w = window.__mobius.worldChase; w.bossS = w.playerS + 26; w._bv = w.bench ? w.bench.speed : w._bv; }); await until(() => window.__mobius.worldChase.closeRange.state === 'far', null, 120000); };
+const lead = async () => { await ev(() => { const w = window.__mobius.worldChase; w.bossS = w.playerS + 26; w._bv = w.bench ? w.bench.speed : w._bv; }); await until(() => window.__mobius.worldChase.closeRange.state === 'far', null, Math.max(WAIT, 120000)); };
 /** keep the fight quiet (no new decisions) until a test forces an attack */
 const quiet = () => ev(() => { const w = window.__mobius.worldChase; w.fight.nextAttackIn = 1e9; }); // (v0.46 revision 4: no tether cooldown any more. With the shield up a web at him is always a strike; a web at a STAGGERED boss attaches to the jet / starts the fly-in by rule — the stagger checks below choose that on purpose)
 
@@ -68,7 +69,7 @@ if (FULL) {
   check(`a second web inside the rate limit does nothing (two webs in one frame: shield ${f1.stability}→${f2.stability} (−4 once), HP ${f1.hp.toFixed(2)}→${f2.hp.toFixed(2)}, last ${f2.hit?.kind})`, Math.abs(f1.stability - f2.stability - 4) < 1e-6 && Math.abs(f1.hp - f2.hp - 0.1) < 1e-6 && f2.hit?.kind === 'blocked', JSON.stringify({ hit: f2.hit, pick: f2.pick }));
   await shot('fight-protected-hit');
   // ---- single: the held pumpkin is decorative (no lock / no hit) until the release, then the assist takes it
-  await ev(() => window.__mobius.worldChase.debug.attack('single')); await until(() => window.__mobius.worldChase.held.length > 0, null, 60000);
+  await ev(() => window.__mobius.worldChase.debug.attack('single')); await until(() => window.__mobius.worldChase.held.length > 0, null, WAIT);
   const held = await ev(() => { const w = window.__mobius.worldChase, it = w.held[0]; window.__webTo(it.pos); return { phase: it.phase, icon: w.fightFx.iconKind }; });
   await frames(3);
   f = await F();
@@ -82,7 +83,7 @@ if (FULL) {
   await quiet(); await frames(30);
   // ---- heavy: windup → core shut before ventAt (no core target) → vent → core hit = COUNTER → stagger, boss slows
   await until(() => window.__mobius.worldChase.fight.state === 'protected');
-  await lead(); await ev(() => window.__mobius.worldChase.debug.attack('heavy')); await until(() => window.__mobius.worldChase.held.length > 0, null, 60000);
+  await lead(); await ev(() => window.__mobius.worldChase.debug.attack('heavy')); await until(() => window.__mobius.worldChase.held.length > 0, null, WAIT);
   const pre = await ev(() => { const w = window.__mobius.worldChase; window.__webTo(w.corePos); return { t: w.fight.t, core: w.fight.coreEligible, icon: w.fightFx.iconKind, held: w.held[0]?.kind }; });
   await frames(1); f = await F();
   check(`heavy windup (t ${pre.t.toFixed(2)} s) (icon "${pre.icon}", held ${pre.held}): core shut → aimed web is not a core hit (${f.pick?.took})`, !pre.core && pre.icon === 'heavy' && pre.held === 'giant' && f.pick?.core === null && f.state === 'telegraph');
@@ -101,11 +102,11 @@ if (FULL) {
   const S = (on) => ev(async (on) => { (await import('/src/core/settings.js')).settings.closeCombat = on; }, on);
   await S(false); await frames(4); await ev(() => window.__webTo(window.__mobius.worldChase.corePos)); await frames(2);
   const fA = await F();
-  await ev(() => window.__lb(window.__mobius.worldChase.corePos)); await until(() => window.__mobius.worldChase.lightBombs.active.length === 0, null, 60000); await frames(2);
+  await ev(() => window.__lb(window.__mobius.worldChase.corePos)); await until(() => window.__mobius.worldChase.lightBombs.active.length === 0, null, WAIT); await frames(2);
   const fB = await F();
   check(`staggered (close combat off): web on the core ${hpS.toFixed(1)}→${fA.hp.toFixed(1)} (−5, ${fA.pick?.took}), Light Bomb →${fB.hp.toFixed(1)} (−16 core), feedback ${fA.hit?.kind}/${fB.hit?.kind}`, Math.abs(hpS - fA.hp - 5) < 1e-6 && Math.abs(fA.hp - fB.hp - 16) < 1e-6 && fB.hit?.zone === 'core' && fA.pick?.took === 'core', JSON.stringify({ pick: fA.pick, hit: fA.hit }));
   await S(true);
-  await until(() => { const w = window.__mobius.worldChase; return w.closeRange.state === 'close' || w.fight.state !== 'staggered'; }, null, 120000);
+  await until(() => { const w = window.__mobius.worldChase; return w.closeRange.state === 'close' || w.fight.state !== 'staggered'; }, null, Math.max(WAIT, 120000));
   const lz0 = await ev(() => { const w = window.__mobius.worldChase; w.fight.lastWebT = -99; window.__webTo(w.corePos); return { lunges: w.fightStats.lunges, cr: w.closeRange.state, gap: +(w.bossS - w.playerS).toFixed(1), fight: w.fight.state }; }); await frames(1);
   const lz1 = await ev(() => { const w = window.__mobius.worldChase, r = { lunges: w.fightStats.lunges, lunging: w._lunging, how: w.lastPick?.how, took: w.lastPick?.took }; w._endLunge('test'); return r; }); // (the dev bench flies the rig: end the fly-in here)
   check(`staggered inside close range (${lz0.cr}, ${lz0.gap} m): a web at the core → the fly-in hit (took ${lz1.took}, ${lz1.how}, lunges ${lz0.lunges} → ${lz1.lunges})`, lz0.fight === 'staggered' && lz0.cr === 'close' && lz1.how === 'lunge' && lz1.lunges === lz0.lunges + 1, JSON.stringify({ lz0, lz1 }));
@@ -116,7 +117,7 @@ if (FULL) {
   // pause freezes the fight timers
   const tP0 = await ev(() => { const w = window.__mobius.worldChase; w._benchHold = w.bench; w.bench = null; const t = window.__F().t; window.__mobius.toggleMenu(); return t; }); /* the dev bench would keep flying the rig while paused */ await frames(20); const tP1 = (await F()).t; await ev(() => { window.__mobius.toggleMenu(); const w = window.__mobius.worldChase; w.bench = w._benchHold; }); await frames(5);
   check(`pause suspends the stagger timer (${tP0} → ${tP1} while paused)`, tP0 === tP1);
-  await until(() => window.__mobius.worldChase.fight.state === 'recovering', null, 120000);
+  await until(() => window.__mobius.worldChase.fight.state === 'recovering', null, Math.max(WAIT, 120000));
   f = await F(); check(`opening ends readably → recovering (shield re-forms: ${f.stability})`, f.state === 'recovering' && f.stability === 60);
   await shot('fight-recovering');
   await until(() => window.__mobius.worldChase.fight.state === 'protected'); await quiet();
@@ -126,19 +127,19 @@ if (FULL) {
   const hk = await ev(() => { const w = window.__mobius.worldChase, it = w.bombs.items.find((x) => x.active && x.kind === 'giant' && x.phase === 'fly'); if (!it) return null; const dj = it.pos.distanceTo(window.__mobius.boss.root.position); window.__webTo(it.pos, 4); return { dj: +dj.toFixed(1), ts: +(w.clock - it.launchT).toFixed(2) }; });
   await frames(3); f = await F();
   check(`heavy pumpkin destroyed ${hk?.ts} s after the release, ${hk?.dj} m from the jet → COUNTER`, !!hk && f.state === 'staggered' && f.hit?.src === 'counter', JSON.stringify({ state: f.state, hit: f.hit, pick: f.pick, menus: await ev(() => [window.__mobius.menus.open, window.__mobius.hub.ctx.allowAttack]) }));
-  await ev(() => { const w = window.__mobius.worldChase; w.fight.t = 99; }); await until(() => window.__mobius.worldChase.fight.state === 'protected', null, 120000); await quiet();
+  await ev(() => { const w = window.__mobius.worldChase; w.fight.t = 99; }); await until(() => window.__mobius.worldChase.fight.state === 'protected', null, Math.max(WAIT, 120000)); await quiet();
   // ---- far kill: no counter (time + position); missed opening → recovering → next cycle
   await ev(() => { const w = window.__mobius.worldChase; if (w.bench) w.bench.speed = 5; w._bv = Math.min(w._bv, 6); }); // (slow the bench so the late pumpkin is still in front of Mobius)
   await lead(); await ev(() => window.__mobius.worldChase.debug.attack('heavy'));
   await until(() => window.__mobius.worldChase.fight.state === 'vent');
-  await until(() => { const w = window.__mobius.worldChase, it = w.bombs.items.find((x) => x.active && x.kind === 'giant' && x.phase === 'fly'); return !it || w.clock - it.launchT > w.fight.cfg.heavy.counterTime + 0.1; }, null, 60000);
+  await until(() => { const w = window.__mobius.worldChase, it = w.bombs.items.find((x) => x.active && x.kind === 'giant' && x.phase === 'fly'); return !it || w.clock - it.launchT > w.fight.cfg.heavy.counterTime + 0.1; }, null, WAIT);
   const far = await ev(() => { const w = window.__mobius.worldChase, it = w.bombs.items.find((x) => x.active && x.kind === 'giant' && x.phase === 'fly'); if (!it) return null; const r = { dj: +it.pos.distanceTo(window.__mobius.boss.root.position).toFixed(1), ts: +(w.clock - it.launchT).toFixed(2) }; window.__webTo(it.pos, 2); return r; });
   await frames(3); f = await F();
   check(`a late / far heavy kill (${far?.ts} s, ${far?.dj} m) only blocks it — no counter`, !!far && f.state === 'vent' && f.stats.counters === 2 && f.fs.heavyKills >= 2, JSON.stringify({ state: f.state, counters: f.stats.counters, kills: f.fs.heavyKills, pick: f.pick }));
-  await until(() => window.__mobius.worldChase.fight.state === 'recovering', null, 60000);
+  await until(() => window.__mobius.worldChase.fight.state === 'recovering', null, WAIT);
   await ev(() => { const w = window.__mobius.worldChase; if (w.bench) w.bench.speed = 16; });
   f = await F(); check(`missed opening → recovering (missed ${f.stats.missedHeavies}), no failure`, f.stats.missedHeavies === 1);
-  await until(() => window.__mobius.worldChase.fight.state === 'protected', null, 60000);
+  await until(() => window.__mobius.worldChase.fight.state === 'protected', null, WAIT);
   // ---- swing anchors are not stolen by the core assist (core open, aim clearly at an anchor)
   await lead(); await ev(() => window.__mobius.worldChase.debug.attack('heavy')); await until(() => window.__mobius.worldChase.fight.coreEligible);
   const sw0 = await ev(() => {
@@ -149,13 +150,13 @@ if (FULL) {
   await frames(3);
   const sw1 = await ev(() => ({ swings: window.__mobius.locomotion.stats.swings, took: window.__mobius.worldChase.lastPick?.took }));
   check(`core open: a web aimed at an anchor ${sw0?.ang}° from the core swings (took "${sw1.took}")`, !!sw0 && sw1.swings === sw0.swings + 1 && sw1.took === 'swing');
-  await ev(() => { window.__mobius.locomotion.detach(true); window.__mobius.worldChase.fight.t = 99; }); await until(() => ['recovering', 'protected'].includes(window.__mobius.worldChase.fight.state)); await until(() => window.__mobius.worldChase.fight.state === 'protected', null, 60000); await quiet();
+  await ev(() => { window.__mobius.locomotion.detach(true); window.__mobius.worldChase.fight.t = 99; }); await until(() => ['recovering', 'protected'].includes(window.__mobius.worldChase.fight.state)); await until(() => window.__mobius.worldChase.fight.state === 'protected', null, WAIT); await quiet();
   // ---- phase 2: spread (three pumpkins), Fan Web clears the group (desktop V = the two-hand gesture's event)
   await ev(() => window.__mobius.worldChase.debug.phase(2)); await ev(() => { window.__mobius.worldChase.fight.nextAttackIn = 0.01; window.__mobius.worldChase.fight.recent = ['spread']; }); await frames(3);
   f = await F(); check(`phase change at a safe boundary → phase ${f.phase}`, f.phase === 2);
   await quiet(); await until(() => window.__mobius.worldChase.fight.state === 'protected');
-  await ev(() => window.__mobius.worldChase.debug.attack('spread')); await until(() => window.__mobius.worldChase.held.length === 3, null, 60000);
-  await until(() => { const w = window.__mobius.worldChase, fly = w.bombs.items.filter((x) => x.active && x.phase === 'fly'); return fly.length === 3 && fly.every((it) => it.pos.distanceTo(window.__chest()) < 30); }, null, 60000);
+  await ev(() => window.__mobius.worldChase.debug.attack('spread')); await until(() => window.__mobius.worldChase.held.length === 3, null, WAIT);
+  await until(() => { const w = window.__mobius.worldChase, fly = w.bombs.items.filter((x) => x.active && x.phase === 'fly'); return fly.length === 3 && fly.every((it) => it.pos.distanceTo(window.__chest()) < 30); }, null, WAIT);
   const fan0 = await ev(() => { const a = window.__mobius, w = a.worldChase, fly = w.bombs.items.filter((x) => x.active && x.phase === 'fly'); const T = window.__THREE, c = new T.Vector3(); for (const it of fly) c.add(it.pos); c.divideScalar(fly.length); const o = window.__chest(); const spread = Math.max(...fly.map((it) => it.pos.distanceTo(c))); window.__inj.push({ type: 'fanWeb', t: 0, tContact: 0, open: 'left', fist: 'right', source: 'desktop', origin: o, dir: c.clone().sub(o).normalize() }); return { n: fly.length, spread: +spread.toFixed(1), d: +c.distanceTo(o).toFixed(1) }; });
   await frames(3);
   const fan1 = await ev(() => { const w = window.__mobius.worldChase; return { left: w.bombs.items.filter((x) => x.active && x.phase === 'fly').length, fanP: w.fightStats.fanPumpkins, fans: w.fightStats.fans }; });
@@ -165,10 +166,10 @@ if (FULL) {
   check(`Fan Web enabled in chase for hands / desktop, not for controllers (two triggers = two swings): ${JSON.stringify(ctxs)}`, ctxs.fan === true && ctxs.ctrl === false);
   // ---- phase change never corrupts an attack in progress
   await until(() => window.__mobius.worldChase.fight.state === 'protected'); await quiet();
-  await ev(() => window.__mobius.worldChase.debug.attack('single')); await until(() => window.__mobius.worldChase.held.length > 0, null, 60000);
+  await ev(() => window.__mobius.worldChase.debug.attack('single')); await until(() => window.__mobius.worldChase.held.length > 0, null, WAIT);
   await ev(() => window.__mobius.worldChase.debug.phase(3)); await frames(1);
   f = await F(); const midPhase = f.phase, midState = f.state;
-  await until(() => window.__mobius.worldChase.fight.state === 'protected', null, 60000); await frames(2);
+  await until(() => window.__mobius.worldChase.fight.state === 'protected', null, WAIT); await frames(2);
   f = await F();
   check(`HP crosses into phase 3 mid-telegraph: still phase ${midPhase} (${midState}) → phase ${f.phase} after the attack, the throw completed`, midPhase === 2 && midState === 'telegraph' && f.phase === 3 && f.stats.attacks.single >= 2);
   await shot('fight-phase3');
@@ -181,14 +182,14 @@ if (FULL) {
   await ev(() => { const w = window.__mobius.worldChase; w.fight.t = 99; }); await frames(5);
   // ---- defeat through the fight → results once
   await ev(async () => { const w = window.__mobius.worldChase; if (w.closeRange.state === 'close') (await import('/src/core/settings.js')).settings.closeCombat = false; /* (v0.46: inside close range the web would be the fly-in hit — this check wants the core web's kill) */ w.debug.setBossHp(0.03); w.fight.forceStagger('counter'); w.fight.lastWebT = -99; window.__webTo(w.corePos); }); await frames(4);
-  await until(() => window.__mobius.menus.current === 'worldResults', null, 120000);
+  await until(() => window.__mobius.menus.current === 'worldResults', null, Math.max(WAIT, 120000));
   f = await F(); const res = await ev(() => { const w = window.__mobius.worldChase; return { phase: w.run.phase, outcome: w.run.outcome, frozen: !!window.__mobius.locomotion.frozen, flying: w.bombs.items.filter((x) => x.active).length, icon: w.fightFx.icon.visible, shield: w.fightFx.shield.visible }; });
   check(`last hit → defeated (${f.state}) → results "${res.outcome}", frozen, nothing flying, shield / icon off`, f.state === 'defeated' && res.outcome === 'victory' && res.frozen && res.flying === 0 && !res.icon);
   const late = await ev(() => { const w = window.__mobius.worldChase; return w._fightHit('web', 'core', w.bossPos.clone(), null); });
   check('no hit is accepted after the end', late === null);
   await ev(async () => { (await import('/src/core/settings.js')).settings.closeCombat = true; });
   await ev(() => window.__mobius.menus.panels.worldResults.buttons.find((x) => x.id === 'home').onClick());
-  await until(() => window.__mobius.state === 'title', null, 120000);
+  await until(() => window.__mobius.state === 'title', null, Math.max(WAIT, 120000));
   const after = await ev(() => { const a = window.__mobius; return { shield: a.worldChase.fightFx.shield.visible, core: a.worldChase.fightFx.core.visible, boss: a.boss.root.visible }; });
   check(`Back to Home: fight visuals cleared ${JSON.stringify(after)}`, !after.shield && !after.core && !after.boss);
 }

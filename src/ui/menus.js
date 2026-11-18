@@ -96,9 +96,10 @@ export class Menus {
     const p = this.panels.select, W = p.cw, a = this.app;
     const songs = this.ctx.songs || [];
     const btns = [];
-    songs.slice(0, 4).forEach((s, i) => btns.push({
-      id: `song${i}`, x: 40, y: 180 + i * 92, w: W * 0.56, h: 82,
-      label: s.title, sub: () => (s.chart ? t('select.bpm', { bpm: s.chart.timing.bpm, len: fmtLen(s.chart.song.durationSec || 0) }) : s.id === 'mobius-boss-01' ? t('select.bpm', { bpm: 125, len: '0:56' }) : ''),
+    const shown = songs.slice(0, 6), step = Math.min(92, Math.floor(420 / Math.max(1, shown.length))); // v1.1: three built-in songs + imported ones (up to six rows fit above the controls line)
+    shown.forEach((s, i) => btns.push({
+      id: `song${i}`, x: 40, y: 180 + i * step, w: W * 0.56, h: step - 10,
+      label: s.title, sub: () => (s.chart ? t('select.bpm', { bpm: s.chart.timing.bpm, len: fmtLen(s.chart.song.durationSec || 0) }) : s.bpm ? t('select.bpm', { bpm: s.bpm, len: fmtLen(s.durationSec || 0) }) : ''),
       selected: () => settings.songId === s.id, onClick: () => { settings.songId = s.id; p.dirty = true; },
     }));
     const dx = W * 0.56 + 70, dw = W - dx - 40;
@@ -236,6 +237,8 @@ export class Menus {
       row(() => 'Wall run', () => t(settings.wallRun ? 'common.on' : 'common.off'), () => (settings.wallRun = !settings.wallRun), () => (settings.wallRun = !settings.wallRun));
       row(() => t('settings.webPull'), () => t(settings.webPull ? 'common.on' : 'common.off'), () => (settings.webPull = !settings.webPull), () => (settings.webPull = !settings.webPull)); // v0.44
       row(() => t('settings.palmShield'), () => t(settings.palmShield ? 'common.on' : 'common.off'), () => (settings.palmShield = !settings.palmShield), () => (settings.palmShield = !settings.palmShield)); // v0.44
+      row(() => t('settings.bombPath'), () => t(settings.bombPath !== false ? 'common.on' : 'common.off'), () => (settings.bombPath = settings.bombPath === false), () => (settings.bombPath = settings.bombPath === false)); // v1.1
+      row(() => t('settings.bombTracking'), () => t(settings.bombTracking !== false ? 'common.on' : 'common.off'), () => (settings.bombTracking = settings.bombTracking === false), () => (settings.bombTracking = settings.bombTracking === false)); // v1.1
       row(() => 'Wind effect', () => t(settings.windFx ? 'common.on' : 'common.off'), () => (settings.windFx = !settings.windFx), () => (settings.windFx = !settings.windFx));
       row(() => 'Designed sound', () => t(settings.designedSfx ? 'common.on' : 'common.off'), () => (settings.designedSfx = !settings.designedSfx), () => (settings.designedSfx = !settings.designedSfx)); // v0.45
       row(() => 'Impact time', () => t(settings.impactTime ? 'common.on' : 'common.off'), () => (settings.impactTime = !settings.impactTime), () => (settings.impactTime = !settings.impactTime)); // v0.45

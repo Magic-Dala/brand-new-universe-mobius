@@ -28,8 +28,10 @@ test('aim: limited prediction (≤ maxLead), ballistic launch reaches the aim po
   assert.equal(flightTimeFor(1), BB.flightTime[0]); assert.equal(flightTimeFor(1e4), BB.flightTime[1]);
 });
 
-test('bombs: windup tell, then thrown; a standing player is hit; a player swinging sideways avoids it (no homing)', () => {
-  for (const [vx, expectHit] of [[0, true], [16, false]]) {
+test('bombs: windup tell, then thrown; a standing player is hit; a player swinging sideways avoids it (no homing)', async () => {
+  const { settings } = await import('../src/core/settings.js'); // v1.1: the "never homes" checks are the v1.0 flight (settings.bombTracking = false); with tracking on the sideways dodge must still get away
+  for (const [vx, expectHit, trk] of [[0, true, false], [16, false, false], [0, true, true], [16, false, true]]) {
+    settings.bombTracking = trk;
     const { app, boss, bombs } = fake();
     bombs.reset(7); bombs.timer = 0;
     const chest = new THREE.Vector3(0, 52, 0), vel = new THREE.Vector3(0, 0, 0);
@@ -39,7 +41,7 @@ test('bombs: windup tell, then thrown; a standing player is hit; a player swingi
       bombs.update(1 / 60, { allow: bombs.stats.thrown === 0, boss, chest, playerVel: vel });
       if (bombs.windup) held++;
       const f = bombs.flying[0]; if (f && !launchedVel) launchedVel = f.vel.clone();
-      if (f) assert.ok(Math.abs(f.vel.x - launchedVel.x) < 1e-9 && Math.abs(f.vel.z - launchedVel.z) < 1e-9, 'never steers toward the player');
+      if (f && !trk) assert.ok(Math.abs(f.vel.x - launchedVel.x) < 1e-9 && Math.abs(f.vel.z - launchedVel.z) < 1e-9, 'never steers toward the player');
     }
     assert.ok(held >= Math.round(BB.windup * 60) - 1, `wind-up shown ${held} frames`);
     assert.equal(boss.throws, 1); assert.equal(bombs.stats.thrown, 1);
@@ -47,6 +49,7 @@ test('bombs: windup tell, then thrown; a standing player is hit; a player swingi
     assert.equal(app.flashes > 0, expectHit, 'damage feedback = arcade flash');
     assert.equal(bombs.activeCount, 0, 'recycled after exploding');
   }
+  settings.bombTracking = true;
 });
 
 test('bombs: at most maxActive alive; no new throws while paused (turn / tether / roof); flying bombs finish', () => {

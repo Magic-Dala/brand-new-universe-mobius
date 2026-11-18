@@ -2,6 +2,9 @@
 // music clock; headless Chrome with software rendering). Groups (ONLY=show,play,off,wave,chart2): prints PASS / FAIL lines.
 import { readFileSync } from 'node:fs';
 import { launch, openArcade } from './arcadeharness.mjs';
+// The first song's rhythm events with armored pumpkins off (v0.46–v1.0: 54 / 97 / 126; v1.1: the loader's never-three rule, then the
+// chart rebuilt from its analysis — see docs/CHART_FORMAT.md). The hall-show tests use such numbers only as inputs.
+const OFF_COUNTS = { easy: 39, normal: 60, hard: 66 };
 const ONLY = (process.env.ONLY || 'show,play,off,wave,chart2').split(',');
 let pass = 0, fail = 0;
 const ok = (c, name, detail = '') => { if (c) { pass++; console.log(`PASS ${name}${detail ? ` | ${detail}` : ''}`); } else { fail++; console.log(`FAIL ${name}${detail ? ` | ${detail}` : ''}`); } };
@@ -56,8 +59,9 @@ if (ONLY.includes('show')) {
     // S4: the player stops answering from 34 s to 39 s → misses: the level drops one at a time, the hall dips, he taunts
     X.begin('hard'); X.until(34); const lvBefore = X.ar.show.level; X.ar.debug.autoplay = false;
     let dipMin = 0, lvMin = 9; const seen = [];
-    while (X.sim < 39) { X.step(1); dipMin = Math.min(dipMin, hall.showState.uShow[1]); const l = X.ar.show.level; if (seen.at(-1) !== l) seen.push(l); lvMin = Math.min(lvMin, l); }
-    R.miss = { lvBefore, seen, dipMin, stats: { ...X.ar.showStats }, misses: X.ar.score.counts.miss, light: hall.showState.light };
+    let stepDrops = []; // (v1.1: a missed left + right double is two misses in one frame, so the level can drop twice in one step: one level per miss)
+    while (X.sim < 39) { const m0 = X.ar.score.counts.miss, l0 = X.ar.show.level; X.step(1); dipMin = Math.min(dipMin, hall.showState.uShow[1]); const l = X.ar.show.level; if (l < l0) stepDrops.push({ drop: l0 - l, misses: X.ar.score.counts.miss - m0 }); if (seen.at(-1) !== l) seen.push(l); lvMin = Math.min(lvMin, l); }
+    R.miss = { lvBefore, seen, dipMin, stats: { ...X.ar.showStats }, misses: X.ar.score.counts.miss, light: hall.showState.light, stepDrops };
     X.ar.stop(); R.afterStop = rest(hall.showState);
     return R;
   });
@@ -73,7 +77,7 @@ if (ONLY.includes('show')) {
   ok(r.live.minGain >= -0.65 - 1e-6 && r.live.maxGain <= 0.40 + 1e-6 && r.live.minGain < -0.5 && r.live.maxGain > 0.2, 'the chorus dim (to 35 %) and its burst (at most +40 %) happen on the current song', `${r.live.minGain.toFixed(3)} … ${r.live.maxGain.toFixed(3)}`);
   ok(r.live.levels.join() === '0,1,2,3', 'a perfect run climbs through show levels 0 to 3', r.live.levels.join());
   ok(r.live.stats.ups === 3 && r.live.stats.reacts >= 3 && r.live.stats.taunts === 0 && r.live.stats.downs === 0, 'a perfect Hard run: three level-ups, Green Maniac reacts to runs of 8 hits (those with no throw within 0.6 s), no taunt', JSON.stringify(r.live.stats));
-  ok(r.miss.seen.every((l, i) => i === 0 || l === r.miss.seen[i - 1] - 1) && r.miss.seen.length >= 2 && r.miss.dipMin <= -0.29 && r.miss.dipMin >= -0.30 - 1e-6, 'misses: the show level drops one at a time and the hall dips 30 %', `levels ${r.miss.seen.join(' → ')}, dip ${r.miss.dipMin.toFixed(3)}, ${r.miss.misses} misses`);
+  ok(r.miss.seen.every((l, i) => i === 0 || l < r.miss.seen[i - 1]) && r.miss.stepDrops.every((x) => x.drop <= x.misses) && r.miss.seen.length >= 2 && r.miss.dipMin <= -0.29 && r.miss.dipMin >= -0.30 - 1e-6, 'misses: the show level drops one level per miss and the hall dips 30 %', `drops ${JSON.stringify(r.miss.stepDrops)}; levels ${r.miss.seen.join(' → ')}, dip ${r.miss.dipMin.toFixed(3)}, ${r.miss.misses} misses`);
   ok(r.miss.stats.taunts >= 1 && r.miss.stats.taunts <= 1 && r.miss.stats.downs >= 1, 'two misses in a row: he taunts, once in those 5 s', JSON.stringify(r.miss.stats));
   ok(r.on.programs0 === r.on.programs1 && r.on.programs1 === r.live.programs2, 'no shader program is added during the song', `${r.on.programs0} → ${r.live.programs2}`);
   ok(r.on.lights === 4, 'real-time lights unchanged (4 point lights)', String(r.on.lights));
@@ -97,11 +101,11 @@ if (ONLY.includes('play') || ONLY.includes('off') || ONLY.includes('wave') || ON
       }
       return R;
     });
-    const want = { easy: 54, normal: 97, hard: 126 };
+    const want = OFF_COUNTS;
     for (const d of ['easy', 'normal', 'hard']) {
       const x = r[d];
       ok(x.state === 'results' && !x.failed && x.armored?.sequences === 3 && x.armored.full === 3 && x.armored.miss === 0 && x.armored.partial === 0 && x.armored.shellHits === 9, `${d}: autoplay of the whole song, every armored pumpkin destroyed (3 of 3, all layers off)`, JSON.stringify(x.armored));
-      ok(x.judged === x.total && x.counts.miss === 0 && x.log === 12, `${d}: totals consistent with the event count`, `${x.total} rhythm events (${want[d]} in v0.46), judged ${x.judged}: ${JSON.stringify(x.counts)}, rank ${x.rank}; 12 armored judgements (3 × (3 shell beats + 1 wave))`);
+      ok(x.judged === x.total && x.counts.miss === 0 && x.log === 12, `${d}: totals consistent with the event count`, `${x.total} rhythm events (${want[d]} with armored pumpkins off), judged ${x.judged}: ${JSON.stringify(x.counts)}, rank ${x.rank}; 12 armored judgements (3 × (3 shell beats + 1 wave))`);
       ok(x.real === true && x.stages.join() === '0,1,2,3' && x.maxVisible === 1, `${d}: the real model, stages 0 to 3 shown one at a time`, `stages ${x.stages.join()}, most visible at once ${x.maxVisible}`);
     }
     ok(r.easy.programs === r.hard.programs, 'three songs in a row with armored pumpkins and the show: no shader program added', `${r.easy.programs} → ${r.hard.programs}`);
@@ -116,8 +120,8 @@ if (ONLY.includes('play') || ONLY.includes('off') || ONLY.includes('wave') || ON
       X.settings.arcadeArmored = true;
       return R;
     });
-    ok(r.off.easy.total === 54 && r.off.normal.total === 97 && r.off.hard.total === 126 && r.off.hard.seqs === 0, 'arcadeArmored = false: 54 / 97 / 126 rhythm events, as in v0.46', `${r.off.easy.total} / ${r.off.normal.total} / ${r.off.hard.total}; on: ${r.on.easy.total} / ${r.on.normal.total} / ${r.on.hard.total}`);
-    ok(r.run.counts.perfect + r.run.counts.good === 97 && r.run.counts.miss === 0 && r.run.armored.sequences === 0 && r.run.armored.waves === 0 && !r.run.pumpkin && r.ctx === false, 'arcadeArmored = false: a whole Normal run has no armored pumpkin, no wave, and the wave gesture is not even listened for', JSON.stringify(r.run));
+    ok(r.off.easy.total === OFF_COUNTS.easy && r.off.normal.total === OFF_COUNTS.normal && r.off.hard.total === OFF_COUNTS.hard && r.off.hard.seqs === 0, `arcadeArmored = false: ${OFF_COUNTS.easy} / ${OFF_COUNTS.normal} / ${OFF_COUNTS.hard} rhythm events (the first song's events without its armored ones)`, `${r.off.easy.total} / ${r.off.normal.total} / ${r.off.hard.total}; on: ${r.on.easy.total} / ${r.on.normal.total} / ${r.on.hard.total}`);
+    ok(r.run.counts.perfect + r.run.counts.good === OFF_COUNTS.normal && r.run.counts.miss === 0 && r.run.armored.sequences === 0 && r.run.armored.waves === 0 && !r.run.pumpkin && r.ctx === false, 'arcadeArmored = false: a whole Normal run has no armored pumpkin, no wave, and the wave gesture is not even listened for', JSON.stringify(r.run));
   }
   if (ONLY.includes('wave')) {
     const r = await p.evaluate(async () => {
@@ -151,7 +155,7 @@ if (ONLY.includes('play') || ONLY.includes('off') || ONLY.includes('wave') || ON
       R.three = { layers: q2.seq.layers, stage: ar.armored.stage, charge: q2.seq.charge };
       // pause while it holds: nothing moves
       { ar.pause(); const pos = ar.armored.root.position.clone(), st = q2.state; ar.update(X.dt, 0); ar.update(X.dt, 0); R.pause = { moved: ar.armored.root.position.distanceTo(pos) > 1e-9, state: q2.state === st, layers: q2.seq.layers }; ar.resume(); ar._resumeAt = 0; }
-      X.until(q2.waveTime + 0.03 + 2 * X.dt); { const s0 = snap(); let hit = 0; const m = ar.boss.maniac, ss = m.setState.bind(m); m.setState = (st, v) => { if (st === 'hit') hit++; return ss(st, v); };
+      X.until(q2.waveTime + 0.03 + 2 * X.dt); { const s0 = snap(); let hit = 0; const m = ar.boss.maniac, ss = m.setState.bind(m); m.setState = (st, v) => { if (st === 'hit' && ar._lastWaveAt === X.sim) hit++; return ss(st, v); }; // (v1.1: only the wave's own Head Hit — a run-of-8 reaction can land in the same 40 frames on the new chart)
         ar._onEnergyWave(wave(2 * X.dt), X.sim, 0); const s1 = snap(); const lg = ar.debug.log.filter((l) => l.id === 'a2.w')[0];
         const want = X.sim - 2 * X.dt - q2.waveTime, flare = ar.show._flare, during = { state: q2.state, there: ar.armored.root.visible };
         X.step(40); m.setState = ss;

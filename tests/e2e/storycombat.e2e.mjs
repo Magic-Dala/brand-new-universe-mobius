@@ -303,6 +303,7 @@ if (GROUPS.includes('off')) {
     X.step(30);
     const base = { active: C.active, running: C.running, bank: X.audio.useBank, useStory: X.audio.useStory, hud: !!a.hud.story, storyP: a.hud.storyP.visible, fighting: c._fighting, fanCtx: a.hub.ctx.fanWeb, bombLocked: a.hub.ctx.bombLocked, pools: !!C.bombs };
     // the v0.21 jet tether + counter run: a web on the jet sticks, then he blows it off
+    c.bombs.timer = 1e9; // (v1.1: none of his own throws during this set-up: a tracked pumpkin that hits the held player changes where the jet is when the test throws one)
     let sp = 60; while (sp < 120) { X.at(sp); X.step(4); sp += 1.6; }
     const q = c.jetAnchor.p.clone(); q.y -= 6; q.z += 16; X.hold(q); X.step(2); loco.cling = null;
     const org = X.chest(), dir = c.jetAnchor.p.clone().sub(org).normalize();
@@ -313,7 +314,7 @@ if (GROUPS.includes('off')) {
     // the v0.21 pumpkin shot: bombs.tryShoot destroys a flying pumpkin (the old pool, not the combat's)
     const it = c.bombs._get(); a.boss.throwPoint(it.pos); c.bombs._launch(it, X.chest(), loco.vel); X.step(15);
     const o2 = X.chest(); c._handleWebs({ events: [{ type: 'web', hand: 'right', origin: o2, dir: it.pos.clone().sub(o2).normalize() }] }, loco);
-    const shot = { destroyed: c.bombs.stats.destroyed, active: it.active };
+    const shot = { destroyed: c.bombs.stats.destroyed, active: it.active, dist: +it.pos.distanceTo(o2).toFixed(1), hitsBefore: c.bombs.stats.hits };
     // a web straight at him is NOT a strike: no pressure anywhere
     X.at(c.bossS - 20); X.step(10); X.webBoss(); X.step(1);
     const calm = { pressure: C.stumble.pressure, strikes: C.cstats.strikes, lunging: C.lunging };

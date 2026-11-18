@@ -14,6 +14,9 @@ const errCount = () => errs.length;
 await p.goto(process.env.URL || 'https://localhost:8443/');
 await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: 300000 });
 await ev(() => { const a = window.__mobius, h = a.hub, o = h.update.bind(h); window.__frames = 0; h.update = (f, t) => { o(f, t); window.__frames++; }; });
+// (v1.1: no-fail mode: at software-rendering speed (seconds per frame) the song runs on unanswered and its misses can fail it before the
+// check below has had its few frames — the check is that the Arcade loads and plays, not how a player who does nothing fares)
+await ev(async () => { (await import('/src/core/settings.js')).settings.noFail = true; });
 const mem = () => ev(() => { const r = window.__mobius.renderer.info; return { geo: r.memory.geometries, tex: r.memory.textures, kids: window.__mobius.scene.children.length }; });
 
 // 1) Story mode's Arcade battle: room → story → (after the roof finale) factory interior → arena → boss battle

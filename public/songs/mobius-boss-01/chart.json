@@ -13,9 +13,9 @@
   "role": "arcade-boss-battle"
  },
  "timing": {
-  "beatsPerBar": 4,
   "bpm": 125,
   "offsetSec": 0.31,
+  "beatsPerBar": 4,
   "tempoMap": [
    {
     "beat": 0,
@@ -23,96 +23,133 @@
    }
   ],
   "analysis": {
-   "method": "librosa beat_track + onset phase search",
-   "confidence": "high",
-   "driftMs": 4,
-   "leadingSilenceSec": 0.29
+   "method": "scripts/charts/analyze-song.py (librosa onsets, kick-band beat grid, section entrances / chord changes for the downbeat)",
+   "file": "scripts/charts/mobius-boss-01.analysis.json"
   }
  },
+ "sections": [
+  {
+   "fromBar": 0,
+   "toBar": 5,
+   "kind": "intro"
+  },
+  {
+   "fromBar": 5,
+   "toBar": 17,
+   "kind": "verse"
+  },
+  {
+   "fromBar": 17,
+   "toBar": 29,
+   "kind": "chorus"
+  },
+  {
+   "fromBar": 29,
+   "toBar": 30,
+   "kind": "outro"
+  }
+ ],
  "generator": {
-  "name": "mobius-chartgen",
-  "version": 1,
-  "seed": 125,
-  "sections": [
-   {
-    "fromBar": 0,
-    "toBar": 2,
-    "kind": "intro"
-   },
-   {
-    "fromBar": 2,
-    "toBar": 6,
-    "kind": "verse"
-   },
-   {
-    "fromBar": 6,
-    "toBar": 12,
-    "kind": "verse2"
-   },
-   {
-    "fromBar": 12,
-    "toBar": 13,
-    "kind": "build"
-   },
-   {
-    "fromBar": 13,
-    "toBar": 27,
-    "kind": "chorus"
-   },
-   {
-    "fromBar": 27,
-    "toBar": 29,
-    "kind": "outro"
-   }
-  ]
+  "name": "mobius-chartgen-analysis",
+  "version": 1
  },
  "difficulties": {
   "easy": {
    "travelSec": 2.5,
    "events": [
     {
-     "id": "n0",
+     "id": "n2",
      "beat": 8,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.75,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n1",
-     "beat": 12,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.75,
-      "y": 0.34
-     }
-    },
-    {
-     "id": "n2",
-     "beat": 16,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.49
+      "x": 0.85,
+      "y": 0.5
      }
     },
     {
      "id": "n3",
-     "beat": 20,
+     "beat": 10,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n4",
+     "beat": 12,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.45,
-      "y": 0.64
+      "x": 0.85,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n5",
+     "beat": 14,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.45,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n6",
+     "beat": 16,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n0",
+     "beat": 20,
+     "type": "heavy",
+     "hand": "any",
+     "lane": {
+      "x": 0,
+      "y": 0.6
+     }
+    },
+    {
+     "id": "n7",
+     "beat": 22,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n8",
+     "beat": 24,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n9",
+     "beat": 26,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.45,
+      "y": 0.35
      }
     },
     {
      "id": "f0",
-     "beat": 24,
+     "beat": 28,
      "type": "fan_web_row",
      "hand": "both",
      "tracks": [
@@ -124,176 +161,8 @@
      "practice": true
     },
     {
-     "id": "n5",
-     "beat": 26,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.59
-     }
-    },
-    {
-     "id": "n6",
-     "beat": 28,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.54
-     }
-    },
-    {
-     "id": "n7",
-     "beat": 30,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.34
-     }
-    },
-    {
-     "id": "n8",
-     "beat": 32,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.68
-     }
-    },
-    {
-     "id": "n9",
-     "beat": 34,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.48
-     }
-    },
-    {
      "id": "n10",
-     "beat": 36,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.43
-     }
-    },
-    {
-     "id": "n11",
-     "beat": 38,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.63
-     }
-    },
-    {
-     "id": "n12",
-     "beat": 40,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.58
-     }
-    },
-    {
-     "id": "n13",
-     "beat": 42,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.38
-     }
-    },
-    {
-     "id": "a0",
-     "beat": 43,
-     "type": "armored",
-     "hand": "both",
-     "hits": 3,
-     "gap": 2
-    },
-    {
-     "id": "n14",
-     "beat": 44,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n15",
-     "beat": 46,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.53
-     }
-    },
-    {
-     "id": "n16",
-     "beat": 48,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.3,
-      "y": 0.15
-     }
-    },
-    {
-     "id": "n17",
-     "beat": 49,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.35
-     }
-    },
-    {
-     "id": "n18",
-     "beat": 50,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n19",
-     "beat": 51,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.75,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n20",
-     "beat": 52,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.56
-     }
-    },
-    {
-     "id": "n21",
-     "beat": 54,
+     "beat": 30,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
@@ -302,27 +171,118 @@
      }
     },
     {
-     "id": "n22",
-     "beat": 56,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.36
-     }
-    },
-    {
-     "id": "n23",
-     "beat": 58,
+     "id": "n11",
+     "beat": 32,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.49
+      "y": 0.35
+     }
+    },
+    {
+     "id": "a0",
+     "beat": 34,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 2,
+     "step": 2
+    },
+    {
+     "id": "n12",
+     "beat": 42,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
      }
     },
     {
      "id": "f1",
+     "beat": 44,
+     "type": "fan_web_row",
+     "hand": "both",
+     "tracks": [
+      0,
+      1,
+      2
+     ],
+     "cue": "fan"
+    },
+    {
+     "id": "n13",
+     "beat": 46,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n14",
+     "beat": 48,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n15",
+     "beat": 50,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n16",
+     "beat": 52,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n17",
+     "beat": 54,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.45,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n18",
+     "beat": 56,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n19",
+     "beat": 58,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "f2",
      "beat": 60,
      "type": "fan_web_row",
      "hand": "both",
@@ -334,317 +294,191 @@
      "cue": "fan"
     },
     {
-     "id": "n25",
+     "id": "n20",
      "beat": 62,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.85,
-      "y": 0.55
+      "x": 0.45,
+      "y": 0.42
      }
     },
     {
-     "id": "n26",
+     "id": "n21",
      "beat": 64,
-     "type": "cluster",
-     "hand": "any",
+     "type": "pumpkin",
+     "hand": "R",
      "lane": {
-      "x": -0.44,
-      "y": 0.58
-     },
-     "group": "c26"
+      "x": 0.85,
+      "y": 0.35
+     }
     },
     {
-     "id": "n27",
-     "beat": 64,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0,
-      "y": 0.58
-     },
-     "group": "c26"
-    },
-    {
-     "id": "n28",
-     "beat": 64,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.22,
-      "y": 0.8
-     },
-     "group": "c26"
-    },
-    {
-     "id": "n29",
+     "id": "n22",
      "beat": 66,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
+      "x": 0,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n1",
+     "beat": 68,
+     "type": "heavy",
+     "hand": "any",
+     "lane": {
+      "x": 0,
+      "y": 0.6
+     }
+    },
+    {
+     "id": "n23",
+     "beat": 70,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
       "y": 0.57
      }
     },
     {
-     "id": "n30",
-     "beat": 68,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.66
-     }
-    },
-    {
-     "id": "n31",
-     "beat": 70,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.43
-     }
-    },
-    {
-     "id": "n32",
+     "id": "n24",
      "beat": 72,
      "type": "pumpkin",
-     "hand": "R",
+     "hand": "L",
      "lane": {
-      "x": 0.85,
-      "y": 0.63
+      "x": -0.45,
+      "y": 0.5
      }
     },
     {
-     "id": "n33",
+     "id": "n25",
      "beat": 74,
      "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.32
-     }
-    },
-    {
-     "id": "a1",
-     "beat": 75,
-     "type": "armored",
-     "hand": "both",
-     "hits": 3,
-     "gap": 2
-    },
-    {
-     "id": "n34",
-     "beat": 76,
-     "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.61
+      "y": 0.35
      }
     },
     {
-     "id": "n35",
-     "beat": 78,
+     "id": "n26",
+     "beat": 76,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
-      "y": 0.71
+      "x": 0,
+      "y": 0.57
      }
     },
     {
-     "id": "n36",
+     "id": "n27",
+     "beat": 78,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.45,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n28",
      "beat": 80,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.39
+      "y": 0.35
      }
     },
     {
-     "id": "n37",
+     "id": "a1",
      "beat": 82,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.65
-     }
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 2,
+     "step": 2
     },
     {
-     "id": "n38",
-     "beat": 84,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.74
-     }
-    },
-    {
-     "id": "n39",
-     "beat": 86,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.51
-     }
-    },
-    {
-     "id": "n40",
-     "beat": 88,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.7
-     }
-    },
-    {
-     "id": "n41",
+     "id": "n29",
      "beat": 90,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
-      "y": 0.39
+      "x": 0,
+      "y": 0.35
      }
     },
     {
-     "id": "f2",
+     "id": "n30",
      "beat": 92,
-     "type": "fan_web_row",
-     "hand": "both",
-     "tracks": [
-      0,
-      1,
-      2
-     ],
-     "cue": "fan"
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.57
+     }
     },
     {
-     "id": "n43",
+     "id": "n31",
      "beat": 94,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
-      "y": 0.44
+      "x": -0.45,
+      "y": 0.42
      }
     },
     {
-     "id": "n44",
+     "id": "n32",
      "beat": 96,
-     "type": "cluster",
-     "hand": "any",
+     "type": "pumpkin",
+     "hand": "R",
      "lane": {
-      "x": -0.32,
-      "y": 0.56
-     },
-     "group": "c44"
+      "x": 0.85,
+      "y": 0.35
+     }
     },
     {
-     "id": "n45",
-     "beat": 96,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.12,
-      "y": 0.56
-     },
-     "group": "c44"
-    },
-    {
-     "id": "n46",
-     "beat": 96,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.1,
-      "y": 0.78
-     },
-     "group": "c44"
-    },
-    {
-     "id": "n47",
+     "id": "n33",
      "beat": 98,
      "type": "pumpkin",
-     "hand": "R",
+     "hand": "L",
      "lane": {
-      "x": 0.85,
-      "y": 0.44
+      "x": 0,
+      "y": 0.5
      }
     },
     {
-     "id": "n48",
+     "id": "n34",
      "beat": 100,
      "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n49",
-     "beat": 102,
-     "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n50",
-     "beat": 104,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.71
-     }
-    },
-    {
-     "id": "n51",
-     "beat": 106,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.5
+      "y": 0.42
      }
     },
     {
      "id": "a2",
-     "beat": 108,
+     "beat": 102,
      "type": "armored",
      "hand": "both",
      "hits": 3,
-     "gap": 2
+     "gap": 2,
+     "step": 2
     },
     {
-     "id": "n52",
-     "beat": 108,
-     "type": "heavy",
-     "hand": "any",
-     "lane": {
-      "x": 0,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n53",
-     "beat": 112,
+     "id": "n35",
+     "beat": 110,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.6,
-      "y": 0.5
+      "x": -0.45,
+      "y": 0.42
      }
     }
    ]
@@ -653,88 +487,148 @@
    "travelSec": 2.05,
    "events": [
     {
-     "id": "n0",
+     "id": "n3",
      "beat": 8,
      "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.75,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n1",
-     "beat": 10,
-     "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.75,
-      "y": 0.4
-     }
-    },
-    {
-     "id": "n2",
-     "beat": 12,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.75,
-      "y": 0.34
-     }
-    },
-    {
-     "id": "n3",
-     "beat": 14,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.75,
-      "y": 0.54
+      "x": 0.85,
+      "y": 0.5
      }
     },
     {
      "id": "n4",
-     "beat": 16,
+     "beat": 9,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.45,
-      "y": 0.49
+      "x": 0,
+      "y": 0.57
      }
     },
     {
      "id": "n5",
-     "beat": 18,
+     "beat": 10,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.45,
-      "y": 0.69
+      "x": 0.85,
+      "y": 0.35
      }
     },
     {
      "id": "n6",
-     "beat": 20,
+     "beat": 11,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.64
+      "y": 0.42
      }
     },
     {
      "id": "n7",
-     "beat": 22,
+     "beat": 12,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n8",
+     "beat": 13,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n9",
+     "beat": 14,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.45,
-      "y": 0.44
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n10",
+     "beat": 16,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n0",
+     "beat": 20,
+     "type": "heavy",
+     "hand": "any",
+     "lane": {
+      "x": 0,
+      "y": 0.6
+     }
+    },
+    {
+     "id": "n11",
+     "beat": 22,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n12",
+     "beat": 23,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n13",
+     "beat": 24,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.45,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n14",
+     "beat": 25,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n15",
+     "beat": 26,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
      }
     },
     {
      "id": "f0",
-     "beat": 24,
+     "beat": 28,
      "type": "fan_web_row",
      "hand": "both",
      "tracks": [
@@ -746,501 +640,56 @@
      "practice": true
     },
     {
-     "id": "n10",
-     "beat": 26,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.59
-     }
-    },
-    {
-     "id": "n11",
-     "beat": 27,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.69
-     }
-    },
-    {
-     "id": "n12",
-     "beat": 28,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.54
-     }
-    },
-    {
-     "id": "n13",
-     "beat": 29,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.64
-     }
-    },
-    {
-     "id": "n14",
-     "beat": 30,
-     "type": "heavy",
-     "hand": "any",
-     "lane": {
-      "x": 0,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n15",
-     "beat": 31,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.44
-     }
-    },
-    {
      "id": "n16",
-     "beat": 32,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.95,
-      "y": 0.68
-     }
-    },
-    {
-     "id": "n20",
-     "beat": 32.001,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.95,
-      "y": 0.7
-     }
-    },
-    {
-     "id": "n17",
-     "beat": 33,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.38
-     }
-    },
-    {
-     "id": "n18",
-     "beat": 34,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.48
-     }
-    },
-    {
-     "id": "n19",
-     "beat": 35,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.58
-     }
-    },
-    {
-     "id": "n21",
-     "beat": 36,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.43
-     }
-    },
-    {
-     "id": "n22",
-     "beat": 37,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.53
-     }
-    },
-    {
-     "id": "n23",
-     "beat": 38,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.63
-     }
-    },
-    {
-     "id": "n24",
-     "beat": 39,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n25",
-     "beat": 40,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.58
-     }
-    },
-    {
-     "id": "n26",
-     "beat": 41,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.68
-     }
-    },
-    {
-     "id": "n27",
-     "beat": 42,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.38
-     }
-    },
-    {
-     "id": "a0",
-     "beat": 43,
-     "type": "armored",
-     "hand": "both",
-     "hits": 3,
-     "gap": 2
-    },
-    {
-     "id": "n28",
-     "beat": 43,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.48
-     }
-    },
-    {
-     "id": "n29",
-     "beat": 44,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n30",
-     "beat": 45,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.43
-     }
-    },
-    {
-     "id": "n31",
-     "beat": 46,
-     "type": "heavy",
-     "hand": "any",
-     "lane": {
-      "x": 0,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n32",
-     "beat": 47,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.63
-     }
-    },
-    {
-     "id": "n33",
-     "beat": 48,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.3,
-      "y": 0.15
-     }
-    },
-    {
-     "id": "n34",
-     "beat": 49,
+     "beat": 30,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.45,
-      "y": 0.35
-     }
-    },
-    {
-     "id": "n35",
-     "beat": 50,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "f1",
-     "beat": 52,
-     "type": "fan_web_row",
-     "hand": "both",
-     "tracks": [
-      0,
-      1,
-      2
-     ],
-     "cue": "fan"
-    },
-    {
-     "id": "n39",
-     "beat": 54,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.5
-     }
-    },
-    {
-     "id": "n40",
-     "beat": 54.001,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.9,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n41",
-     "beat": 55,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.34
-     }
-    },
-    {
-     "id": "n42",
-     "beat": 56,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.47
-     }
-    },
-    {
-     "id": "n43",
-     "beat": 57,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.65
-     }
-    },
-    {
-     "id": "n44",
-     "beat": 58,
-     "type": "heavy",
-     "hand": "any",
-     "lane": {
-      "x": 0.28,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n45",
-     "beat": 59,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.59
-     }
-    },
-    {
-     "id": "n46",
-     "beat": 60,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.26
-     }
-    },
-    {
-     "id": "n47",
-     "beat": 61,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.28
-     }
-    },
-    {
-     "id": "n48",
-     "beat": 62,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.5
-     }
-    },
-    {
-     "id": "n49",
-     "beat": 63,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.39
-     }
-    },
-    {
-     "id": "n50",
-     "beat": 64,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.2,
-      "y": 0.62
-     },
-     "group": "c50"
-    },
-    {
-     "id": "n51",
-     "beat": 64,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.24,
-      "y": 0.62
-     },
-     "group": "c50"
-    },
-    {
-     "id": "n52",
-     "beat": 64,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.02,
-      "y": 0.84
-     },
-     "group": "c50"
-    },
-    {
-     "id": "n53",
-     "beat": 65,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n54",
-     "beat": 66,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.62
-     }
-    },
-    {
-     "id": "n55",
-     "beat": 67,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.64
-     }
-    },
-    {
-     "id": "n56",
-     "beat": 68,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
       "y": 0.42
      }
     },
     {
-     "id": "n57",
-     "beat": 69,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.7
-     }
-    },
-    {
-     "id": "n58",
-     "beat": 70,
+     "id": "n17",
+     "beat": 31,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
-      "y": 0.65
+      "x": 0,
+      "y": 0.5
      }
     },
     {
-     "id": "n59",
-     "beat": 70.001,
+     "id": "n18",
+     "beat": 32,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.9,
-      "y": 0.75
+      "x": 0.85,
+      "y": 0.35
      }
     },
     {
-     "id": "f2",
-     "beat": 72,
+     "id": "a0",
+     "beat": 36,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 2
+    },
+    {
+     "id": "n19",
+     "beat": 42,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "f1",
+     "beat": 44,
      "type": "fan_web_row",
      "hand": "both",
      "tracks": [
@@ -1251,38 +700,58 @@
      "cue": "fan"
     },
     {
-     "id": "n63",
-     "beat": 74,
-     "type": "heavy",
-     "hand": "any",
-     "lane": {
-      "x": 0.39,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n64",
-     "beat": 75,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.4
-     }
-    },
-    {
-     "id": "n65",
-     "beat": 76,
+     "id": "n20",
+     "beat": 46,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.55
+      "y": 0.42
      }
     },
     {
-     "id": "n66",
-     "beat": 77,
+     "id": "n1",
+     "beat": 48,
+     "type": "heavy",
+     "hand": "any",
+     "lane": {
+      "x": 0,
+      "y": 0.6
+     }
+    },
+    {
+     "id": "n21",
+     "beat": 50,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n22",
+     "beat": 51,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n23",
+     "beat": 52,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n24",
+     "beat": 53,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
@@ -1291,174 +760,253 @@
      }
     },
     {
-     "id": "n67",
-     "beat": 78,
+     "id": "n25",
+     "beat": 54,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.37
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n26",
+     "beat": 55,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n27",
+     "beat": 56,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.45,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n28",
+     "beat": 57,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n29",
+     "beat": 58,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "f2",
+     "beat": 60,
+     "type": "fan_web_row",
+     "hand": "both",
+     "tracks": [
+      0,
+      1,
+      2
+     ],
+     "cue": "fan"
+    },
+    {
+     "id": "n30",
+     "beat": 62,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n31",
+     "beat": 63,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n32",
+     "beat": 64,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n33",
+     "beat": 65,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n34",
+     "beat": 66,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n2",
+     "beat": 68,
+     "type": "heavy",
+     "hand": "any",
+     "lane": {
+      "x": 0,
+      "y": 0.6
+     }
+    },
+    {
+     "id": "n35",
+     "beat": 70,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.45,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n36",
+     "beat": 71,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n37",
+     "beat": 72,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n38",
+     "beat": 73,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.45,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n39",
+     "beat": 74,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n40",
+     "beat": 75,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n41",
+     "beat": 76,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n42",
+     "beat": 77,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n43",
+     "beat": 78,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.45,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n44",
+     "beat": 79,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n45",
+     "beat": 80,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
      }
     },
     {
      "id": "a1",
-     "beat": 79,
+     "beat": 84,
      "type": "armored",
      "hand": "both",
      "hits": 3,
      "gap": 2
     },
     {
-     "id": "n68",
-     "beat": 79,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.67
-     }
-    },
-    {
-     "id": "n69",
-     "beat": 80,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.32,
-      "y": 0.5
-     },
-     "group": "c69"
-    },
-    {
-     "id": "n70",
-     "beat": 80,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.12,
-      "y": 0.5
-     },
-     "group": "c69"
-    },
-    {
-     "id": "n71",
-     "beat": 80,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.1,
-      "y": 0.72
-     },
-     "group": "c69"
-    },
-    {
-     "id": "n72",
-     "beat": 81,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.66
-     }
-    },
-    {
-     "id": "n73",
-     "beat": 82,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.32
-     }
-    },
-    {
-     "id": "n74",
-     "beat": 83,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.7
-     }
-    },
-    {
-     "id": "n75",
-     "beat": 84,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.44
-     }
-    },
-    {
-     "id": "n76",
-     "beat": 85,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.53
-     }
-    },
-    {
-     "id": "n77",
-     "beat": 86,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.29
-     }
-    },
-    {
-     "id": "n78",
-     "beat": 86.001,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.9,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n79",
-     "beat": 87,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.69
-     }
-    },
-    {
-     "id": "n80",
-     "beat": 88,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.66
-     }
-    },
-    {
-     "id": "n81",
-     "beat": 89,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.53
-     }
-    },
-    {
-     "id": "n82",
+     "id": "n46",
      "beat": 90,
-     "type": "heavy",
-     "hand": "any",
+     "type": "pumpkin",
+     "hand": "L",
      "lane": {
-      "x": -0.03,
-      "y": 0.6
+      "x": 0,
+      "y": 0.35
      }
     },
     {
@@ -1474,194 +1022,101 @@
      "cue": "fan"
     },
     {
-     "id": "n86",
+     "id": "n47",
      "beat": 94,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.69
+      "y": 0.42
      }
     },
     {
-     "id": "n87",
+     "id": "n48",
      "beat": 95,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.74
+      "y": 0.5
      }
     },
     {
-     "id": "n88",
+     "id": "n49",
      "beat": 96,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.22,
-      "y": 0.48
-     },
-     "group": "c88"
-    },
-    {
-     "id": "n89",
-     "beat": 96,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.22,
-      "y": 0.48
-     },
-     "group": "c88"
-    },
-    {
-     "id": "n90",
-     "beat": 96,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0,
-      "y": 0.7
-     },
-     "group": "c88"
-    },
-    {
-     "id": "n91",
-     "beat": 97,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.45,
-      "y": 0.32
-     }
-    },
-    {
-     "id": "n92",
-     "beat": 98,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.28
-     }
-    },
-    {
-     "id": "n93",
-     "beat": 99,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
+      "x": 0.85,
       "y": 0.35
      }
     },
     {
-     "id": "n94",
-     "beat": 100,
+     "id": "n50",
+     "beat": 97,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
-      "y": 0.47
+      "x": 0,
+      "y": 0.42
      }
     },
     {
-     "id": "n95",
-     "beat": 101,
+     "id": "n51",
+     "beat": 98,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.45,
-      "y": 0.34
+      "x": 0.85,
+      "y": 0.5
      }
     },
     {
-     "id": "n96",
-     "beat": 102,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.45
-     }
-    },
-    {
-     "id": "n97",
-     "beat": 102.001,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.9,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n98",
-     "beat": 103,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.46
-     }
-    },
-    {
-     "id": "n99",
-     "beat": 104,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.71
-     }
-    },
-    {
-     "id": "n100",
-     "beat": 105,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.48
-     }
-    },
-    {
-     "id": "n101",
-     "beat": 106,
-     "type": "heavy",
-     "hand": "any",
-     "lane": {
-      "x": -0.13,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n102",
-     "beat": 107,
+     "id": "n52",
+     "beat": 99,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.43
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n53",
+     "beat": 100,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n54",
+     "beat": 100,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.95,
+      "y": 0.7
      }
     },
     {
      "id": "a2",
-     "beat": 108,
+     "beat": 104,
      "type": "armored",
      "hand": "both",
      "hits": 3,
      "gap": 2
     },
     {
-     "id": "n103",
-     "beat": 112,
+     "id": "n55",
+     "beat": 110,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.6,
-      "y": 0.5
+      "x": 0.85,
+      "y": 0.42
      }
     }
    ]
@@ -1670,88 +1125,188 @@
    "travelSec": 1.7,
    "events": [
     {
-     "id": "n0",
+     "id": "n3",
      "beat": 8,
      "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.75,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n1",
-     "beat": 10,
-     "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.75,
-      "y": 0.4
-     }
-    },
-    {
-     "id": "n2",
-     "beat": 12,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.75,
-      "y": 0.34
-     }
-    },
-    {
-     "id": "n3",
-     "beat": 14,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.75,
-      "y": 0.54
+      "x": 0.85,
+      "y": 0.5
      }
     },
     {
      "id": "n4",
-     "beat": 16,
+     "beat": 9,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.45,
-      "y": 0.49
+      "x": 0,
+      "y": 0.57
      }
     },
     {
      "id": "n5",
-     "beat": 18,
+     "beat": 10,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.45,
-      "y": 0.69
+      "x": 0.85,
+      "y": 0.35
      }
     },
     {
      "id": "n6",
-     "beat": 20,
+     "beat": 11,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.64
+      "y": 0.42
      }
     },
     {
      "id": "n7",
-     "beat": 22,
+     "beat": 12,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n8",
+     "beat": 13,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n9",
+     "beat": 14,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.45,
-      "y": 0.44
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n10",
+     "beat": 15,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n11",
+     "beat": 16,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n12",
+     "beat": 17,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n13",
+     "beat": 18,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n0",
+     "beat": 20,
+     "type": "heavy",
+     "hand": "any",
+     "lane": {
+      "x": 0,
+      "y": 0.6
+     }
+    },
+    {
+     "id": "n14",
+     "beat": 22,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.45,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n15",
+     "beat": 23,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n16",
+     "beat": 24,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n17",
+     "beat": 24,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n18",
+     "beat": 25,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n19",
+     "beat": 26,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.35
      }
     },
     {
      "id": "f0",
-     "beat": 24,
+     "beat": 28,
      "type": "fan_web_row",
      "hand": "both",
      "tracks": [
@@ -1763,191 +1318,51 @@
      "practice": true
     },
     {
-     "id": "n10",
-     "beat": 26,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.59
-     }
-    },
-    {
-     "id": "n11",
-     "beat": 27,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.69
-     }
-    },
-    {
-     "id": "n12",
-     "beat": 28,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.54
-     }
-    },
-    {
-     "id": "n13",
-     "beat": 29,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.64
-     }
-    },
-    {
-     "id": "n14",
+     "id": "n20",
      "beat": 30,
-     "type": "heavy",
-     "hand": "any",
+     "type": "pumpkin",
+     "hand": "R",
      "lane": {
-      "x": 0,
-      "y": 0.55
+      "x": 0.85,
+      "y": 0.42
      }
     },
     {
-     "id": "n15",
+     "id": "n21",
      "beat": 31,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.44
+      "y": 0.5
      }
     },
     {
-     "id": "n16",
+     "id": "n22",
      "beat": 32,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.95,
-      "y": 0.68
-     }
-    },
-    {
-     "id": "n20",
-     "beat": 32.001,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.95,
-      "y": 0.7
-     }
-    },
-    {
-     "id": "n17",
-     "beat": 33,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.38
-     }
-    },
-    {
-     "id": "n18",
-     "beat": 34,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
       "x": 0.85,
-      "y": 0.48
-     }
-    },
-    {
-     "id": "n19",
-     "beat": 35,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.58
+      "y": 0.35
      }
     },
     {
      "id": "a0",
-     "beat": 36,
+     "beat": 37,
      "type": "armored",
      "hand": "both",
      "hits": 3,
      "gap": 1
     },
     {
-     "id": "n21",
-     "beat": 36,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.43
-     }
-    },
-    {
-     "id": "n22",
-     "beat": 37,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.53
-     }
-    },
-    {
      "id": "n23",
-     "beat": 38,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.63
-     }
-    },
-    {
-     "id": "n24",
-     "beat": 39,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n25",
-     "beat": 40,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.58
-     }
-    },
-    {
-     "id": "n26",
-     "beat": 41,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.68
-     }
-    },
-    {
-     "id": "n27",
      "beat": 42,
      "type": "pumpkin",
-     "hand": "R",
+     "hand": "L",
      "lane": {
-      "x": 0.85,
-      "y": 0.38
+      "x": 0,
+      "y": 0.35
      }
     },
     {
@@ -1963,301 +1378,128 @@
      "cue": "fan"
     },
     {
-     "id": "n31",
+     "id": "n24",
      "beat": 46,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n1",
+     "beat": 48,
      "type": "heavy",
      "hand": "any",
      "lane": {
       "x": 0,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n32",
-     "beat": 47,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.63
-     }
-    },
-    {
-     "id": "n33",
-     "beat": 48,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.3,
-      "y": 0.15
-     }
-    },
-    {
-     "id": "n34",
-     "beat": 48.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.38,
-      "y": 0.25
-     }
-    },
-    {
-     "id": "n35",
-     "beat": 49,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.35
-     }
-    },
-    {
-     "id": "n36",
-     "beat": 49.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.52,
-      "y": 0.45
-     }
-    },
-    {
-     "id": "n37",
-     "beat": 50,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n38",
-     "beat": 50.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.68,
-      "y": 0.65
-     }
-    },
-    {
-     "id": "n39",
-     "beat": 51,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.75,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n40",
-     "beat": 51.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.82,
-      "y": 0.85
-     }
-    },
-    {
-     "id": "n41",
-     "beat": 52,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.56
-     }
-    },
-    {
-     "id": "n42",
-     "beat": 53,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.42
-     }
-    },
-    {
-     "id": "n43",
-     "beat": 53.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.42
-     }
-    },
-    {
-     "id": "n44",
-     "beat": 54,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.49
-     }
-    },
-    {
-     "id": "n45",
-     "beat": 54.001,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.9,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n46",
-     "beat": 55,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.56
-     }
-    },
-    {
-     "id": "n47",
-     "beat": 55.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.53
-     }
-    },
-    {
-     "id": "n48",
-     "beat": 56,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.44,
-      "y": 0.58
-     },
-     "group": "c48"
-    },
-    {
-     "id": "n49",
-     "beat": 56,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0,
-      "y": 0.58
-     },
-     "group": "c48"
-    },
-    {
-     "id": "n50",
-     "beat": 56,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.22,
-      "y": 0.8
-     },
-     "group": "c48"
-    },
-    {
-     "id": "n51",
-     "beat": 57,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.57
-     }
-    },
-    {
-     "id": "n52",
-     "beat": 57.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
       "y": 0.6
      }
     },
     {
-     "id": "n53",
-     "beat": 58,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.43
-     }
-    },
-    {
-     "id": "n54",
-     "beat": 59,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.63
-     }
-    },
-    {
-     "id": "n55",
-     "beat": 59.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.39
-     }
-    },
-    {
-     "id": "n56",
-     "beat": 60,
+     "id": "n25",
+     "beat": 50,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.61
+      "y": 0.5
      }
     },
     {
-     "id": "n57",
-     "beat": 61,
+     "id": "n26",
+     "beat": 51,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n27",
+     "beat": 52,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n28",
+     "beat": 52,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n29",
+     "beat": 53,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n30",
+     "beat": 54,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n31",
+     "beat": 55,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n32",
+     "beat": 56,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.71
+      "y": 0.5
      }
     },
     {
-     "id": "n58",
-     "beat": 61.5,
+     "id": "n33",
+     "beat": 57,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.6,
-      "y": 0.43
+      "x": 0.85,
+      "y": 0.57
      }
     },
     {
-     "id": "n59",
-     "beat": 62,
+     "id": "n34",
+     "beat": 58,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
-      "y": 0.65
+      "x": 0,
+      "y": 0.35
      }
     },
     {
      "id": "f2",
-     "beat": 64,
+     "beat": 60,
      "type": "fan_web_row",
      "hand": "both",
      "tracks": [
@@ -2268,249 +1510,128 @@
      "cue": "fan"
     },
     {
-     "id": "n66",
-     "beat": 65.5,
+     "id": "n35",
+     "beat": 62,
      "type": "pumpkin",
-     "hand": "L",
+     "hand": "R",
      "lane": {
-      "x": -0.6,
-      "y": 0.47
+      "x": 0.45,
+      "y": 0.42
      }
     },
     {
-     "id": "n67",
+     "id": "n36",
+     "beat": 63,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n37",
+     "beat": 64,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n38",
+     "beat": 65,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n39",
      "beat": 66,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
       "x": 0.85,
-      "y": 0.42
+      "y": 0.5
      }
     },
     {
-     "id": "n68",
-     "beat": 67,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.52
-     }
-    },
-    {
-     "id": "n69",
-     "beat": 67.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.46
-     }
-    },
-    {
-     "id": "n70",
+     "id": "n2",
      "beat": 68,
-     "type": "pumpkin",
-     "hand": "L",
+     "type": "heavy",
+     "hand": "any",
      "lane": {
-      "x": -0.85,
+      "x": 0,
       "y": 0.6
      }
     },
     {
-     "id": "n71",
-     "beat": 69,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n72",
-     "beat": 69.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.62
-     }
-    },
-    {
-     "id": "n73",
+     "id": "n40",
      "beat": 70,
      "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.5
-     }
-    },
-    {
-     "id": "n74",
-     "beat": 70.001,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.9,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n75",
-     "beat": 71,
-     "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.52
-     }
-    },
-    {
-     "id": "n76",
-     "beat": 71.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.5
-     }
-    },
-    {
-     "id": "a1",
-     "beat": 72,
-     "type": "armored",
-     "hand": "both",
-     "hits": 3,
-     "gap": 1
-    },
-    {
-     "id": "n77",
-     "beat": 72,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.01,
-      "y": 0.64
-     },
-     "group": "c77"
-    },
-    {
-     "id": "n78",
-     "beat": 72,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.45,
-      "y": 0.64
-     },
-     "group": "c77"
-    },
-    {
-     "id": "n79",
-     "beat": 72,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.23,
-      "y": 0.86
-     },
-     "group": "c77"
-    },
-    {
-     "id": "n80",
-     "beat": 73,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.72
-     }
-    },
-    {
-     "id": "n81",
-     "beat": 73.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
       "y": 0.57
      }
     },
     {
-     "id": "n82",
+     "id": "n41",
+     "beat": 71,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "n42",
+     "beat": 72,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n43",
+     "beat": 72,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n44",
+     "beat": 73,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n45",
      "beat": 74,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
-      "x": -0.85,
-      "y": 0.64
-     }
-    },
-    {
-     "id": "n83",
-     "beat": 75,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.31
-     }
-    },
-    {
-     "id": "n84",
-     "beat": 75.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.42
-     }
-    },
-    {
-     "id": "n85",
-     "beat": 76,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.37
-     }
-    },
-    {
-     "id": "n86",
-     "beat": 77,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.57
-     }
-    },
-    {
-     "id": "n87",
-     "beat": 77.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.49
-     }
-    },
-    {
-     "id": "n88",
-     "beat": 78,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.27
+      "x": 0,
+      "y": 0.35
      }
     },
     {
      "id": "f3",
-     "beat": 80,
+     "beat": 76,
      "type": "fan_web_row",
      "hand": "both",
      "tracks": [
@@ -2521,263 +1642,8 @@
      "cue": "fan"
     },
     {
-     "id": "n95",
-     "beat": 81.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.62
-     }
-    },
-    {
-     "id": "n96",
-     "beat": 82,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.69
-     }
-    },
-    {
-     "id": "n97",
-     "beat": 83,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.58
-     }
-    },
-    {
-     "id": "n98",
-     "beat": 83.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.52
-     }
-    },
-    {
-     "id": "n99",
-     "beat": 84,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.41
-     }
-    },
-    {
-     "id": "n100",
-     "beat": 85,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.56
-     }
-    },
-    {
-     "id": "n101",
-     "beat": 85.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.57
-     }
-    },
-    {
-     "id": "n102",
-     "beat": 86,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.29
-     }
-    },
-    {
-     "id": "n103",
-     "beat": 86.001,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.9,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n104",
-     "beat": 87,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.58
-     }
-    },
-    {
-     "id": "n105",
-     "beat": 87.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.37
-     }
-    },
-    {
-     "id": "n106",
-     "beat": 88,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.52,
-      "y": 0.52
-     },
-     "group": "c106"
-    },
-    {
-     "id": "n107",
-     "beat": 88,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.08,
-      "y": 0.52
-     },
-     "group": "c106"
-    },
-    {
-     "id": "n108",
-     "beat": 88,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.3,
-      "y": 0.74
-     },
-     "group": "c106"
-    },
-    {
-     "id": "n109",
-     "beat": 89,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.44
-     }
-    },
-    {
-     "id": "n110",
-     "beat": 89.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.52
-     }
-    },
-    {
-     "id": "n111",
-     "beat": 90,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n112",
-     "beat": 91,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.65
-     }
-    },
-    {
-     "id": "n113",
-     "beat": 91.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.48
-     }
-    },
-    {
-     "id": "n114",
-     "beat": 92,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.85,
-      "y": 0.33
-     }
-    },
-    {
-     "id": "n115",
-     "beat": 93,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.28
-     }
-    },
-    {
-     "id": "n116",
-     "beat": 93.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.51
-     }
-    },
-    {
-     "id": "n117",
-     "beat": 94,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.52
-     }
-    },
-    {
-     "id": "f4",
-     "beat": 96,
-     "type": "fan_web_row",
-     "hand": "both",
-     "tracks": [
-      0,
-      1,
-      2
-     ],
-     "cue": "fan"
-    },
-    {
-     "id": "n124",
-     "beat": 97.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.56
-     }
-    },
-    {
-     "id": "n125",
-     "beat": 98,
+     "id": "n46",
+     "beat": 78,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
@@ -2786,194 +1652,171 @@
      }
     },
     {
-     "id": "n126",
-     "beat": 99,
+     "id": "n47",
+     "beat": 79,
      "type": "pumpkin",
      "hand": "L",
      "lane": {
       "x": -0.45,
-      "y": 0.47
-     }
-    },
-    {
-     "id": "n127",
-     "beat": 99.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n128",
-     "beat": 100,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.28
-     }
-    },
-    {
-     "id": "n129",
-     "beat": 101,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.57
-     }
-    },
-    {
-     "id": "n130",
-     "beat": 101.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
       "y": 0.5
      }
     },
     {
-     "id": "n131",
-     "beat": 102,
+     "id": "n48",
+     "beat": 80,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n49",
+     "beat": 80,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.85,
-      "y": 0.63
+      "x": 0.95,
+      "y": 0.7
      }
     },
     {
-     "id": "n132",
-     "beat": 102.001,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.9,
-      "y": 0.75
-     }
-    },
-    {
-     "id": "n133",
-     "beat": 103,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.27
-     }
-    },
-    {
-     "id": "n134",
-     "beat": 103.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.36
-     }
-    },
-    {
-     "id": "n135",
-     "beat": 104,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.42,
-      "y": 0.61
-     },
-     "group": "c135"
-    },
-    {
-     "id": "n136",
-     "beat": 104,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": 0.02,
-      "y": 0.61
-     },
-     "group": "c135"
-    },
-    {
-     "id": "n137",
-     "beat": 104,
-     "type": "cluster",
-     "hand": "any",
-     "lane": {
-      "x": -0.2,
-      "y": 0.83
-     },
-     "group": "c135"
-    },
-    {
-     "id": "n138",
-     "beat": 105,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.45,
-      "y": 0.55
-     }
-    },
-    {
-     "id": "n139",
-     "beat": 105.5,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.6,
-      "y": 0.6
-     }
-    },
-    {
-     "id": "n140",
-     "beat": 106,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.85,
-      "y": 0.37
-     }
-    },
-    {
-     "id": "n141",
-     "beat": 107,
-     "type": "pumpkin",
-     "hand": "R",
-     "lane": {
-      "x": 0.45,
-      "y": 0.29
-     }
-    },
-    {
-     "id": "n142",
-     "beat": 107.5,
-     "type": "pumpkin",
-     "hand": "L",
-     "lane": {
-      "x": -0.6,
-      "y": 0.38
-     }
-    },
-    {
-     "id": "a2",
-     "beat": 109,
+     "id": "a1",
+     "beat": 85,
      "type": "armored",
      "hand": "both",
      "hits": 3,
      "gap": 1
     },
     {
-     "id": "n143",
-     "beat": 112,
+     "id": "n50",
+     "beat": 90,
      "type": "pumpkin",
      "hand": "R",
      "lane": {
-      "x": 0.6,
+      "x": 0.85,
+      "y": 0.35
+     }
+    },
+    {
+     "id": "f4",
+     "beat": 92,
+     "type": "fan_web_row",
+     "hand": "both",
+     "tracks": [
+      0,
+      1,
+      2
+     ],
+     "cue": "fan"
+    },
+    {
+     "id": "n51",
+     "beat": 94,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n52",
+     "beat": 95,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
       "y": 0.5
+     }
+    },
+    {
+     "id": "n53",
+     "beat": 96,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n54",
+     "beat": 96,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n55",
+     "beat": 97,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.42
+     }
+    },
+    {
+     "id": "n56",
+     "beat": 98,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": 0,
+      "y": 0.5
+     }
+    },
+    {
+     "id": "n57",
+     "beat": 99,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.57
+     }
+    },
+    {
+     "id": "n58",
+     "beat": 100,
+     "type": "pumpkin",
+     "hand": "L",
+     "lane": {
+      "x": -0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "n59",
+     "beat": 100,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.95,
+      "y": 0.7
+     }
+    },
+    {
+     "id": "a2",
+     "beat": 105,
+     "type": "armored",
+     "hand": "both",
+     "hits": 3,
+     "gap": 1
+    },
+    {
+     "id": "n60",
+     "beat": 110,
+     "type": "pumpkin",
+     "hand": "R",
+     "lane": {
+      "x": 0.85,
+      "y": 0.42
      }
     }
    ]

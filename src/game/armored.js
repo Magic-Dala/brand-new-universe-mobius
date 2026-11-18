@@ -3,19 +3,24 @@
 // hand cracks one layer), then the energy-wave beat `gap` beats after the last shell beat. One chart event starts a
 // sequence on the centre lane:  { "id": "a0", "beat": 44, "type": "armored", "hand": "both", "hits": 3, "gap": 2 }
 // `beat` is the FIRST shell beat. Song-agnostic: nothing here knows a song.
+// v1.1 `step` (optional, default 1): beats between shell beats — shell beats must be at least the difficulty's minGap
+// apart (src/game/chartRules.js), so at 170 BPM Easy and Normal use step 2. A chart without `step` loads as before.
 export const ARMORED = { hits: 3, waveGap: { easy: 2, normal: 2, hard: 1 }, waveWeight: 3, perChart: 3, freeBeats: 8, everyBars: 32 };
 export const ARMORED_TYPE = 'armored';
 
 /** Sections of a chart (hand-authored `sections`, or the generator's), or null. [{ fromBar, toBar, kind }] */
 export function chartSections(chart) { const s = chart?.sections || chart?.generator?.sections; return Array.isArray(s) && s.length ? s : null; }
 /** Beats of a sequence that starts on `beat`: its shell beats, its wave beat, and the beats it needs free of other notes. */
-export function seqBeats(beat, hits = ARMORED.hits, gap = 2, freeBeats = ARMORED.freeBeats) {
-  const shells = Array.from({ length: hits }, (_, i) => beat + i), wave = beat + hits - 1 + gap;
-  return { shells, wave, from: wave - freeBeats + 1, to: wave + 1 }; // other notes with from − ε < beat < to are dropped
+export function seqBeats(beat, hits = ARMORED.hits, gap = 2, freeBeats = ARMORED.freeBeats, step = 1) {
+  const shells = Array.from({ length: hits }, (_, i) => beat + i * step), wave = beat + (hits - 1) * step + gap;
+  const free = Math.max(freeBeats, (hits - 1) * step + gap + 2); // (v1.1: a longer sequence keeps its hold beat free too)
+  return { shells, wave, from: wave - free + 1, to: wave + 1 }; // other notes with from − ε < beat < to are dropped
 }
+/** v1.1: beats between shell beats so that they are at least `minGap` s apart at `bpm` (1, or more for a fast song). */
+export function armoredStep(bpm, minGap) { return Math.max(1, Math.ceil((minGap * bpm) / 60 - 1e-9)); }
 const EPS = 1e-6;
 /** True when `beat` lies inside the free window of an armored event (the window is closed at its start, open at its end). */
-export function inWindow(beat, ev, cfg = ARMORED) { const w = seqBeats(ev.beat, ev.hits ?? cfg.hits, ev.gap ?? 2, cfg.freeBeats); return beat > w.from - EPS && beat < w.to - EPS; }
+export function inWindow(beat, ev, cfg = ARMORED) { const w = seqBeats(ev.beat, ev.hits ?? cfg.hits, ev.gap ?? 2, cfg.freeBeats, ev.step ?? 1); return beat > w.from - EPS && beat < w.to - EPS; }
 
 /**
  * Where the sequences of a chart start (first shell beat of each), for one difficulty.
@@ -57,16 +62,21 @@ export function placeArmored(chart, difficulty, cfg = ARMORED) {
   }
   return taken.sort((a, b) => a - b).map((w) => w - span);
 }
-/** The chart events for a difficulty (ids a0, a1, …). */
-export function armoredEvents(chart, difficulty, cfg = ARMORED) {
-  const gap = cfg.waveGap[difficulty] ?? 2;
-  return placeArmored(chart, difficulty, cfg).map((beat, k) => ({ id: `a${k}`, beat, type: ARMORED_TYPE, hand: 'both', hits: cfg.hits, gap }));
+/**
+ * The chart events for a difficulty (ids a0, a1, …). minGap (v1.1, s, optional): shell beats at least this far apart —
+ * when one beat is shorter, the sequence gets a `step` and starts earlier, so its wave stays where placeArmored put it.
+ */
+export function armoredEvents(chart, difficulty, cfg = ARMORED, minGap = 0) {
+  const gap = cfg.waveGap[difficulty] ?? 2, step = minGap && chart?.timing?.bpm ? armoredStep(chart.timing.bpm, minGap) : 1;
+  return placeArmored(chart, difficulty, cfg).map((beat, k) => (step === 1
+    ? { id: `a${k}`, beat, type: ARMORED_TYPE, hand: 'both', hits: cfg.hits, gap }
+    : { id: `a${k}`, beat: beat - (cfg.hits - 1) * (step - 1), type: ARMORED_TYPE, hand: 'both', hits: cfg.hits, gap, step }));
 }
 /** Add armored events to every difficulty of a chart (generator and import path). Existing ones are replaced. Nothing else is removed. */
-export function addArmored(chart, cfg = ARMORED) {
+export function addArmored(chart, cfg = ARMORED, minGap = null) {
   for (const [d, diff] of Object.entries(chart.difficulties || {})) {
     diff.events = diff.events.filter((e) => e.type !== ARMORED_TYPE);
-    diff.events.push(...armoredEvents(chart, d, cfg));
+    diff.events.push(...armoredEvents(chart, d, cfg, minGap?.[d] || 0));
     diff.events.sort((a, b) => a.beat - b.beat || String(a.id).localeCompare(String(b.id)));
   }
   return chart;
@@ -83,13 +93,13 @@ export function applyArmored(events, on, cfg = ARMORED) {
 
 /** One sequence at run time: which layers are still on, and how it ends. */
 export class ArmoredSeq {
-  constructor({ beat, hits = ARMORED.hits, gap = 2 }) {
-    this.beat = beat; this.hits = hits; this.gap = gap;
+  constructor({ beat, hits = ARMORED.hits, gap = 2, step = 1 }) {
+    this.beat = beat; this.hits = hits; this.gap = gap; this.step = step;
     this.shell = new Array(hits).fill(null); // null = not judged yet | 'hit' | 'miss'
     this.outcome = null; // null | 'full' | 'partial' | 'miss'
   }
-  get shellBeats() { return this.shell.map((_, i) => this.beat + i); }
-  get waveBeat() { return this.beat + this.hits - 1 + this.gap; }
+  get shellBeats() { return this.shell.map((_, i) => this.beat + i * this.step); }
+  get waveBeat() { return this.beat + (this.hits - 1) * this.step + this.gap; }
   /** layers still on */
   get layers() { return this.hits - this.shell.filter((s) => s === 'hit').length; }
   /** which mesh shows: stage_<n>, n = layers removed (0 … hits) */

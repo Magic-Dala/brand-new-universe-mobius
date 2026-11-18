@@ -9,8 +9,20 @@ export const BUILTIN_SONGS = [
     id: 'mobius-boss-01',
     title: 'Brand New Universe - Mobius',
     chartUrl: `${BASE}songs/mobius-boss-01/chart.json`,
-    builtin: true,
+    builtin: true, bpm: 125, offsetSec: 0.31, durationSec: 56.89, // (shown in the song lists before the chart is loaded)
     // source mapping: original file "Brand_New_Universe-Mobius(Music).mp3" (unmodified copy)
+  },
+  { // v1.1: 150 BPM, 2 min 19 s (the audio is the source file with its tags removed, not re-encoded)
+    id: 'cyber-boss-phase-2',
+    title: 'Cyber Boss: Phase 2',
+    chartUrl: `${BASE}songs/cyber-boss-phase-2/chart.json`,
+    builtin: true, bpm: 150, offsetSec: 0.818, durationSec: 139.27,
+  },
+  { // v1.1: 170 BPM, 2 min 36 s
+    id: 'catch-the-light',
+    title: 'Catch the Light',
+    chartUrl: `${BASE}songs/catch-the-light/chart.json`,
+    builtin: true, bpm: 170, offsetSec: 0.204, durationSec: 156.05,
   },
 ];
 
@@ -66,6 +78,22 @@ async function fetchChart(url) {
   return chart;
 }
 
+// ------------------------------------------------------------- decoded song audio (v1.1)
+// audio.buffers keeps every decoded file for the whole visit; three built-in songs would hold about 133 MB. The first song
+// stays (Story prefetches it for its factory fight); of the others at most ONE is kept: loading another song releases it.
+export const KEEP_SONG = 'mobius-boss-01';
+const songKeys = new Map(); // song id → its key in audio.buffers
+function keepOnly(id, key) {
+  songKeys.set(id, key);
+  for (const [sid, k] of [...songKeys]) if (sid !== id && sid !== KEEP_SONG) { audio.buffers.delete(k); songKeys.delete(sid); }
+}
+/** The song buffers held now: [{ id, key, bytes (decoded, 32-bit float PCM), seconds }]. */
+export function songBuffers() {
+  const out = [];
+  for (const [id, key] of songKeys) { const b = audio.buffers.get(key); if (b) out.push({ id, key, bytes: b.length * b.numberOfChannels * 4, seconds: +b.duration.toFixed(2) }); }
+  return out;
+}
+
 /** Load chart + decoded audio. Throws Error with .code ('reselect' | 'audio' | 'chart'). */
 export async function loadSong(id) {
   const b = BUILTIN_SONGS.find((s) => s.id === id);
@@ -73,7 +101,9 @@ export async function loadSong(id) {
     let chart;
     try { chart = await fetchChart(b.chartUrl); } catch (e) { const err = new Error(e.message); err.code = 'chart'; throw err; }
     let buffer;
-    try { buffer = await audio.loadBuffer(`${BASE}${chart.song.audio.src}`); } catch (e) { const err = new Error(e.message); err.code = 'audio'; throw err; }
+    const key = `${BASE}${chart.song.audio.src}`;
+    try { buffer = await audio.loadBuffer(key); } catch (e) { const err = new Error(e.message); err.code = 'audio'; throw err; }
+    keepOnly(id, key);
     return { id, title: chart.song.title, chart, buffer };
   }
   const rec = (await idbGet('songs', id)) || memSongs.get(id);
@@ -82,6 +112,7 @@ export async function loadSong(id) {
   const key = `import:${id}:${rec.audio.size}`;
   let buffer = audio.buffers.get(key);
   if (!buffer) { buffer = await audio.decode(await rec.audio.arrayBuffer()); audio.buffers.set(key, buffer); }
+  keepOnly(id, key);
   return { id, title: rec.title, chart: validateChart(rec.chart), buffer };
 }
 
@@ -174,7 +205,7 @@ export async function importSongFile(file) {
   const rec = { id, title, chart, audio: new Blob([buf], { type: file.type || 'audio/mpeg' }), analysis: a, importedAt: Date.now() };
   let stored = true;
   try { await idbPut('songs', rec); } catch { stored = false; memSongs.set(id, rec); }
-  audio.buffers.set(`import:${id}:${rec.audio.size}`, decoded);
+  audio.buffers.set(`import:${id}:${rec.audio.size}`, decoded); keepOnly(id, `import:${id}:${rec.audio.size}`);
   return { id, title, bpm: a.bpm, offsetSec: a.offsetSec, confidence: a.confidence, autoFailed, stored };
 }
 /** Manually override BPM / first-beat offset of an imported song and rebuild its chart. */

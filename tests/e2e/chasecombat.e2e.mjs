@@ -8,6 +8,7 @@
 import { chromium } from 'playwright';
 const OUT = process.env.OUT || '.';
 const MODE = process.env.MODE || 'combat';
+const WAIT = +(process.env.WAIT || 120000); // (v1.1: game-clock waits in real ms; raise on a slow software renderer)
 const MAPS = (process.env.MAPS || 'foldscape,forest,redrock,neon,moonlit,cloudpalace,aurora,molten').split(',');
 const FULL = new Set((process.env.FULL || 'molten,neon,foldscape').split(','));
 const b = await chromium.launch({ executablePath: process.env.CHROME || undefined, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required', '--ignore-certificate-errors'] });
@@ -20,7 +21,7 @@ const ev = (fn, arg) => p.evaluate(fn, arg);
 const frames = async (n) => { const f0 = await ev(() => window.__frames || 0); await p.waitForFunction((x) => (window.__frames || 0) >= x, f0 + n, { timeout: 600000, polling: 100 }); };
 
 await p.goto(process.env.URL || 'https://localhost:8443/', { waitUntil: 'load' });
-await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: 200000 });
+await p.waitForFunction(() => window.__mobius && !document.getElementById('enter').disabled, null, { timeout: +(process.env.BOOT || 600000) }); // (v1.1: BOOT, default 10 min: software rendering on a slow machine)
 // test hooks: frame counter + input injection after the real hub update
 await ev(async () => {
   const a = window.__mobius, hub = a.hub, orig = hub.update.bind(hub), T = window.__THREE;
@@ -31,7 +32,7 @@ await ev(async () => {
   window.__chest = () => a.locomotion.feet(new T.Vector3()).add(new T.Vector3(0, 1.3, 0));
 });
 const waitWorld = (id) => p.waitForFunction((id) => { const a = window.__mobius; return a.state === 'world' && a.worldChase.state && a.worldChase.mapId === id && !a.loader.visible; }, id, { timeout: 900000, polling: 500 });
-const waitChase = () => p.waitForFunction(() => window.__mobius.worldChase.state === 'chase', null, { timeout: 120000, polling: 250 });
+const waitChase = () => p.waitForFunction(() => window.__mobius.worldChase.state === 'chase', null, { timeout: WAIT, polling: 250 });
 
 /** Launch one pumpkin from Green Maniac's hand at the player (same code path as his throws). */
 const launchPumpkin = () => ev(() => {
@@ -104,7 +105,7 @@ for (const mapId of MODE === 'combat' ? MAPS : []) {
   await frames(2);
   const lb2 = await ev(() => { const w = window.__mobius.worldChase; return { pick: w.lightBombs.lastPick, ready: w.lightBombs.ready, locked: window.__mobius.hub.ctx.bombLocked }; });
   await ev(() => { const a = window.__mobius, T = window.__THREE, o = window.__chest(); window.__inj.push({ type: 'bombThrow', hand: 'right', origin: o, dir: new T.Vector3(0, 0, -1), worldVelocity: new T.Vector3(0, 0, -4) }); });
-  await p.waitForFunction(() => window.__mobius.worldChase.lightBombs.active.length === 0, null, { timeout: 120000, polling: 100 });
+  await p.waitForFunction(() => window.__mobius.worldChase.lightBombs.active.length === 0, null, { timeout: WAIT, polling: 100 });
   const lb3 = await ev(() => { const w = window.__mobius.worldChase; return { hp: w.bossHp.hp, thrown: w.lightBombs.stats.thrown, hits: w.lightBombs.stats.hitsBoss, log: w.bossHp.log.slice(-2), chip: w.fight.cfg.dmg.protected.lightBomb.hp, shield: w.fight.stability, shieldMax: w.fight.cfg.shield.max }; });
   check(`${mapId}: Light Bomb at 18 m/s → locked on Green Maniac (${lb.dist} m), one hit on the shield ${lb.hp}→${lb3.hp} (v0.42: protected = shield damage, little HP); cooldown blocks the 2nd throw (hub bombLocked ${lb2.locked})`, lb2.pick === 'boss' && Math.abs(lb3.hp - (lb.hp - lb3.chip)) < 1e-9 && lb3.shield < lb3.shieldMax && lb3.thrown === 1 && lb2.locked === true, JSON.stringify(lb3));
   // ---- Light Bomb clears a pumpkin
@@ -112,7 +113,7 @@ for (const mapId of MODE === 'combat' ? MAPS : []) {
   id = await launchPumpkin(); await frames(1);
   await ev(() => { const a = window.__mobius, T = window.__THREE, w = a.worldChase, it = w.bombs.items.find((x) => x.active && x.phase === 'fly'); const o = window.__chest(); const d = it.pos.clone().sub(o).normalize(); window.__inj.push({ type: 'bombThrow', hand: 'right', origin: o, dir: d, worldVelocity: d.clone().multiplyScalar(4) }); });
   await frames(2);
-  await p.waitForFunction(() => window.__mobius.worldChase.lightBombs.active.length === 0, null, { timeout: 120000, polling: 100 });
+  await p.waitForFunction(() => window.__mobius.worldChase.lightBombs.active.length === 0, null, { timeout: WAIT, polling: 100 });
   const pk = await ev(() => { const w = window.__mobius.worldChase; return { thrown: w.lightBombs.stats.thrown, pick: w.lightBombs.lastPick, pumpkins: w.lightBombs.stats.pumpkins, left: w.bombs.items.filter((x) => x.active).length, hp: w.hp.hp }; });
   check(`${mapId}: Light Bomb destroys an incoming pumpkin`, pk.pumpkins >= 1 && pk.left === 0, JSON.stringify(pk));
   // ---- pause is excluded from the chase time
@@ -141,7 +142,7 @@ for (const mapId of MODE === 'combat' ? MAPS : []) {
   await ev(() => { const w = window.__mobius.worldChase; w.bossHp.hp = 4; w._bossHit(4, w.bossPos.clone(), null, 'test'); });
   const frozen0 = await ev(() => { const r = window.__mobius.locomotion.rig.position; return [r.x, r.y, r.z]; });
   await frames(8); await shot(`combat-${mapId}-victory-effect`);
-  await p.waitForFunction(() => window.__mobius.menus.current === 'worldResults', null, { timeout: 120000, polling: 100 });
+  await p.waitForFunction(() => window.__mobius.menus.current === 'worldResults', null, { timeout: WAIT, polling: 100 });
   await ev(() => { window.__w0 = performance.now(); }); await frames(20); // ≥ 20 more frames (+ the transition) with the panel up
   const held = await ev(() => ((performance.now() - window.__w0) / 1000).toFixed(1));
   await ev(() => { window.__mobius.hub.desk.keys.delete('KeyE'); });
@@ -162,9 +163,10 @@ for (const mapId of MODE === 'combat' ? MAPS : []) {
   // ---- Back to Home (the button's own handler) → title page; then a second run starts clean
   const g0 = await ev(() => window.__mobius.renderer.info.memory.geometries);
   await ev(() => window.__mobius.menus.panels.worldResults.buttons.find((x) => x.id === 'home').onClick());
-  await p.waitForFunction(() => window.__mobius.state === 'title', null, { timeout: 120000, polling: 200 });
-  const home = await ev(() => { const a = window.__mobius; return { title: getComputedStyle(document.getElementById('title')).display !== 'none', ws: a.worldChase.state, frozen: !!a.locomotion.frozen, lb: a.worldChase.lightBombs.active.length, bombs: a.worldChase.bombs.items.filter((x) => x.active).length, menus: a.menus.current, sel: document.getElementById('map-select').value, stored: (() => { try { return localStorage.getItem('mobius.map.v1') || 'foldscape'; } catch { return '?'; } })() }; });
-  check(`${mapId}: Back to Home → title page (map selector "${home.sel}" = saved selection), world gone, nothing left running`, home.title && home.ws === null && !home.frozen && home.lb === 0 && home.bombs === 0 && home.menus === null && home.sel === home.stored, `stored ${home.stored}`);
+  await p.waitForFunction(() => window.__mobius.state === 'title', null, { timeout: WAIT, polling: 200 });
+  const home = await ev(() => { const a = window.__mobius; return { title: getComputedStyle(document.getElementById('title')).display !== 'none', ws: a.worldChase.state, frozen: !!a.locomotion.frozen, lb: a.worldChase.lightBombs.active.length, bombs: a.worldChase.bombs.items.filter((x) => x.active).length, menus: a.menus.current, sel: document.getElementById('map-select')?.value ?? null, stored: (() => { try { return localStorage.getItem('mobius.map.v1') || 'foldscape'; } catch { return '?'; } })() }; });
+  // (v0.49 moved the map picker into VR: the title page has none, so the saved selection must simply still be a map)
+  check(`${mapId}: Back to Home → title page (no map picker, saved map "${home.stored}" valid), world gone, nothing left running`, home.title && home.ws === null && !home.frozen && home.lb === 0 && home.bombs === 0 && home.menus === null && home.sel === null && MAPS.includes(home.stored), `stored ${home.stored}`);
   if (mapId === MAPS[0]) await shot(`combat-home`);
   void g0;
 }
@@ -183,12 +185,12 @@ if (MODE === 'combat') {
   check(`re-entry: gravity restored (fell ${(g - g1).toFixed(2)} m in 6 frames)`, g - g1 > 0.05);
   // five pumpkin blasts (damage protection between them) → defeat
   for (let i = 0; i < 6; i++) await ev((i) => { const w = window.__mobius.worldChase; w.clock += 2; w._playerHit(20, `test${i}`, 'pumpkin'); }, i);
-  await p.waitForFunction(() => window.__mobius.menus.current === 'worldResults', null, { timeout: 120000, polling: 100 });
+  await p.waitForFunction(() => window.__mobius.menus.current === 'worldResults', null, { timeout: WAIT, polling: 100 });
   const df = await ev(() => { const a = window.__mobius, w = a.worldChase; return { outcome: w.run.outcome, hp: w.hp.hp, frozen: !!a.locomotion.frozen, log: w.hp.log.length }; });
   check(`defeat: player HP 0 → results (defeat), frozen, ${df.log} hits counted`, df.outcome === 'defeat' && df.hp === 0 && df.frozen && df.log === 5);
   await ev(() => window.__mobius.menus.placeInFront(window.__mobius.menus.panels.worldResults)); await frames(4); await shot('combat-defeat-results');
   await ev(() => window.__mobius.menus.panels.worldResults.buttons.find((x) => x.id === 'home').onClick());
-  await p.waitForFunction(() => window.__mobius.state === 'title', null, { timeout: 120000, polling: 200 });
+  await p.waitForFunction(() => window.__mobius.state === 'title', null, { timeout: WAIT, polling: 200 });
   check('defeat: Back to Home → title', true);
   // story mode never shows chase results / HP
   const story = await ev(() => { const a = window.__mobius; return { storyHasRun: !!a.story.run, chaseState: a.worldChase.state }; });
@@ -204,10 +206,10 @@ if (MODE === 'xr') {
   const xr0 = await ev(() => ({ xr: window.__mobius.xrActive, hud: window.__mobius.hud.mode }));
   await shot('xr-chase-hud');
   await ev(() => { const w = window.__mobius.worldChase; w.bossHp.hp = 4; w._bossHit(4, w.bossPos.clone(), null, 'test'); });
-  await p.waitForFunction(() => window.__mobius.menus.current === 'worldResults', null, { timeout: 120000, polling: 100 });
+  await p.waitForFunction(() => window.__mobius.menus.current === 'worldResults', null, { timeout: WAIT, polling: 100 });
   await frames(10); await shot('xr-results');
   await ev(() => window.__mobius.menus.panels.worldResults.buttons.find((x) => x.id === 'home').onClick());
-  await p.waitForFunction(() => window.__mobius.state === 'title' && !window.__mobius.xrActive, null, { timeout: 120000, polling: 200 });
+  await p.waitForFunction(() => window.__mobius.state === 'title' && !window.__mobius.xrActive, null, { timeout: WAIT, polling: 200 });
   const xr1 = await ev(() => ({ xr: window.__mobius.xrActive, title: getComputedStyle(document.getElementById('title')).display !== 'none', ws: window.__mobius.worldChase.state }));
   check(`xr: in VR (${xr0.xr}, HUD ${xr0.hud}) → victory → Back to Home ends the session → title page`, xr0.xr && xr0.hud === 'chase' && !xr1.xr && xr1.title && xr1.ws === null);
   // and Enter VR Game again starts a fresh run

@@ -1,6 +1,6 @@
 {
   "name": "brand-new-universe-mobius",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Brand New Universe - Mobius: WebXR rhythm-action VR game for Meta Quest 3 (IWSDK + three.js)",
   "type": "module",

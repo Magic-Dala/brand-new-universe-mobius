@@ -21,7 +21,7 @@ import { CLOSE } from '../data/closeCombat.js';
 import { GREEN_MANIAC_THROW_RELEASE } from '../art/enemies.js';
 import { Stumble } from './stumble.js';
 import { StoryAttacks, pacedSpeed, hitVelocity } from './storyAttacks.js';
-import { ChaseBombs, flightTimeFor } from './chaseBombs.js';
+import { ChaseBombs, flightTimeFor, planHeldThrows } from './chaseBombs.js';
 import { Flow } from './flow.js';
 import { FanWebFx } from './fanWebFx.js';
 import { CHASE_COMBAT, selectTarget, shotIntent } from '../worlds/chaseCombat.js';
@@ -107,6 +107,7 @@ export class StoryCombat {
     const go = (o) => { try { r.compile(o, app.camera, app.scene); } catch (e) { console.warn('storyCombat compile', e?.message || e); } };
     for (const lvl of [1, 2, 0]) { for (const it of this.bombs.items) it.p.setHighlight?.(lvl); go(this.bombs.root); }
     go(this.lightBombs.root);
+    if (this.bombs.pathFx) { this.bombs.pathFx.prewarm(true); go(this.bombs.pathFx.mesh); this.bombs.pathFx.prewarm(false); } // v1.1 the path preview
     for (const f of this.fanFx.fans) { const m0 = f.m.material; for (const m of [f.mat, f.mat2]) if (m) { f.m.material = m; go(f.m); } f.m.material = m0; }
     go(this.fanFx.root); go(app.boss.jet.root);
     // the Story chase's own pooled visuals, first shown mid-chase until now (the v0.30 compile test counted them): the pooled
@@ -448,6 +449,7 @@ export class StoryCombat {
         else it.pos.copy(_w);
         it.p.root.position.copy(it.pos); it.p.setGlow(0.5 + 0.5 * Math.abs(Math.sin(T.t * (T.kind === 'heavy' ? 9 : 14)))); it.p.update(dt); it.p.root.lookAt(chest);
       });
+      planHeldThrows(B, this.held, T, k, chest, boss.root.position); // v1.1 path preview: the flight each held pumpkin would take if released now
     }
   }
   _freeHeld() { for (const it of this.held) if (it.active && it.phase === 'held') this.bombs._free(it); this.held.length = 0; this._tele = null; }
@@ -455,7 +457,7 @@ export class StoryCombat {
     const app = this.app, boss = app.boss, B = this.bombs, H = FIGHT.heavy, loco = app.locomotion;
     switch (e.type) {
       case 'telegraph': {
-        const k = e.attack; this._freeHeld(); this._tele = { kind: k, t: 0, threw: false, turned: false };
+        const k = e.attack; this._freeHeld(); this._tele = { kind: k, t: 0, threw: false, turned: false, heavyT: k === 'heavy' ? H.flight[0] + this.attacks.peek() * (H.flight[1] - H.flight[0]) : 0 }; // (v1.1: the heavy flight time the release will roll, for the path preview)
         for (let i = 0, n = k === 'spread' ? 3 : 1; i < n; i++) { const it = B._get(k === 'heavy' ? 'giant' : 'normal'); if (it) { it.phase = 'held'; boss.throwPoint(it.pos); it.p.root.position.copy(it.pos); this.held.push(it); } }
         if (k === 'heavy') {
           boss.maniac.setState('angry'); audio.play('alarm'); audio.playOr('heavyWindup', 'heavyWindupStory'); // (the sample, else the Story's own synthesized wind-up: 'heavyWindup' itself stays silent as in v0.44)
