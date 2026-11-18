@@ -133,8 +133,8 @@ const CASES = ['steady', 'failed', 'stall', 'slow', 'dodge'];
  *   slow:   under 4 m/s, any direction, on a roof
  *   dodge:  steady, then 10 m/s sideways for the last 0.45 s before arrival
  */
-function volley(kind, mode, R) {
-  const B = mkBombs(); let hits = 0; B.onPlayerHit = () => { hits++; };
+function volley(kind, mode, R, over = null) {
+  const B = mkBombs(); if (over) Object.assign(B.trackCfg, over); let hits = 0; B.onPlayerHit = () => { hits++; };
   const h = mode === 'failed' || mode === 'stall' ? 4 + R() * 16 : 6 + R() * 20, dist = 14 + R() * 46;
   const chest = V(0, h, 0), vel = V(), side = R() < 0.5 ? -1 : 1;
   const speed = mode === 'slow' ? R() * 4 : mode === 'stall' ? R() * 8 : 15 + R() * 10, ang = R() * Math.PI * 2, bob = R() * Math.PI * 2;
@@ -161,13 +161,13 @@ function volley(kind, mode, R) {
   }
   return [hits > 0 ? 1 : 0, hits, n]; // a volley hits when any of its pumpkins hits (a spread's outer two are meant to miss a player who stays put)
 }
-export function simulate(throws = 240, seed = 0x11) {
+export function simulate(throws = 240, seed = 0x11, over = null, modes = CASES) {
   const rows = [];
-  for (const kind of ['single', 'spread']) for (const mode of CASES) {
+  for (const kind of ['single', 'spread']) for (const mode of modes) {
     const out = { kind, mode };
     for (const trk of [false, true]) {
       settings.bombTracking = trk; const R = mulberry32(seed + CASES.indexOf(mode) * 101 + (kind === 'spread' ? 7 : 0));
-      let v = 0, h = 0, n = 0; for (let k = 0; k < throws; k++) { const [a, b, c] = volley(kind, mode, R); v += a; h += b; n += c; }
+      let v = 0, h = 0, n = 0; for (let k = 0; k < throws; k++) { const [a, b, c] = volley(kind, mode, R, over); v += a; h += b; n += c; }
       out[trk ? 'v11' : 'v10'] = (100 * v) / throws; out[trk ? 'p11' : 'p10'] = (100 * h) / n; out.n = throws; out.np = n;
     }
     rows.push(out);
@@ -194,9 +194,35 @@ test('simulation (Goal 3.3): ≥ 200 throws per case, 14–60 m, single and spre
   console.log(printTable(rows));
   console.log(v.map((x) => `${x.ok ? 'MET    ' : 'NOT MET'} ${x.kind} ${x.mode}`).join('\n'));
   for (const x of v) if (x.mode !== 'failed') assert.ok(x.ok, `${x.kind} ${x.mode}`);
-  // the failed swing cannot reach 60 % inside the fixed limits (maxShift 8 m, the 0.45 s let-go): a player who keeps
-  // swinging speed or falls at the thrusters' 11 m/s leaves the reach of the aim. It must not get worse than v1.0.0,
-  // and the slow fall (a stalled swing) must clearly improve. Reported, and listed to tune on the headset.
+  // the failed swing cannot reach 60 % inside the fixed limits of constraint 2.4 (the next test shows why): it must not
+  // get worse than v1.0.0, and the slow fall (a stalled swing) must clearly improve. Reported, and listed to tune.
   for (const r of rows) if (r.mode === 'failed' || r.mode === 'stall') assert.ok(r.v11 >= r.v10, `${r.kind} ${r.mode}: ${r.v10.toFixed(1)} → ${r.v11.toFixed(1)}`);
   for (const r of rows) if (r.mode === 'stall') assert.ok(r.v11 >= r.v10 + 15, `${r.kind} stall improves`);
+});
+
+test('failed swing (Goal 3.3): 60 % needs limits beyond constraint 2.4, so the fixed limits are kept and the gap is reported', () => {
+  // The same seeded failed-swing volleys, re-run with the hard limits relaxed (test only; the game keeps BOMB_PATH).
+  // Shows which limit holds the hit rate down: a player who lets go at 15–25 m/s keeps most of that speed (air drag
+  // 0.05/s) and lands 20–40 m from where he was at the release, while the aim may move at most maxShift = 8 m.
+  const variants = [
+    ['shipped: maxShift 8 m, letGo 0.45 s / 6 m', {}],
+    ['maxShift 16 m', { maxShift: 16 }],
+    ['maxShift 24 m', { maxShift: 24 }],
+    ['maxShift 32 m', { maxShift: 32 }],
+    ['maxShift unlimited', { maxShift: 1e9 }],
+    ['maxShift unlimited, accel ×3', { maxShift: 1e9, accel: { normal: 36, giant: 18 } }],
+    ['maxShift unlimited, accel ×3, letGo 0.2 s / 3 m', { maxShift: 1e9, accel: { normal: 36, giant: 18 }, letGo: 0.2, letGoDist: 3 }],
+    ['all of the above + full lead (not the 3.2 aim)', { maxShift: 1e9, accel: { normal: 36, giant: 18 }, letGo: 0.2, letGoDist: 3, leadFactor: 1, maxLead: 1e9 }],
+  ];
+  const lines = ['failed swing, 240 volleys each      single   spread (volley)   (tracking off: v1.0.0)'];
+  const got = variants.map(([name, over]) => {
+    const rows = simulate(240, 0x11, over, ['failed']);
+    const s = rows.find((r) => r.kind === 'single'), p = rows.find((r) => r.kind === 'spread');
+    lines.push(`${name.padEnd(48)} ${s.v11.toFixed(1).padStart(5)} %  ${p.v11.toFixed(1).padStart(5)} %   (${s.v10.toFixed(1)} % / ${p.v10.toFixed(1)} %)`);
+    return { name, single: s.v11, spread: p.v11 };
+  });
+  console.log(lines.join('\n'));
+  const shipped = got[0];
+  assert.ok(shipped.single < 60 && shipped.spread < 60, 'inside the limits the target is not reached (reported as NOT MET)');
+  assert.ok(got.some((g, i) => i > 0 && g.single > shipped.single + 10), 'relaxing maxShift, a hard limit, is what raises the hit rate');
 });
